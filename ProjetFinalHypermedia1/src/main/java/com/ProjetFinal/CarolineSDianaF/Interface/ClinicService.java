@@ -4,10 +4,15 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
+import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
+import java.util.List;
+import java.util.Optional;
+
 /**
  *
  * @author Diana
  */
 public interface ClinicService {
-    
+    // Method to add or upgrade
+    ClinicModel save(ClinicModel clinic);
 }

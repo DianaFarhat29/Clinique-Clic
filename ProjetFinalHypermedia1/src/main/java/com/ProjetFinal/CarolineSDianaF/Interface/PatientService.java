@@ -4,10 +4,14 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
+import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
+import java.util.List;
+import java.util.Optional;
 /**
  *
  * @author Diana
  */
 public interface PatientService {
-    
+    PatientModel save(PatientModel patient);
 }

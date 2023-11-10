@@ -4,10 +4,19 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Repository;
 
+import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
+import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author Diana
  */
-public interface DoctorRepository {
-    
+@Repository
+public interface DoctorRepository extends JpaRepository<DoctorModel, Long>{
+    // Method to add or upgrade
+    DoctorModel save(DoctorModel doctor);
 }

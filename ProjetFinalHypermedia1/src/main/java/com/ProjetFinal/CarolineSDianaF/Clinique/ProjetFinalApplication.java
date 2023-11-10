@@ -1,4 +1,4 @@
-package com.ProjetFinal.CarolineSDianaF;
+package com.ProjetFinal.CarolineSDianaF.Clinique;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"com.ProjetFinal.CarolineSDianaF.Modeles"})
+@EntityScan(basePackages = {"com.ProjetFinal.CarolineSDianaF.Models"})
 public class ProjetFinalApplication {
 
 	public static void main(String[] args) {

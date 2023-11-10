@@ -4,6 +4,11 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
+import com.ProjetFinal.CarolineSDianaF.Models.AdministratorModel;
+import java.util.List;
+import java.util.Optional;
+
+
 /**
  *
  * @author Diana
