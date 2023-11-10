@@ -17,8 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ClinicRepository extends JpaRepository<ClinicModel, Long> {
+    // Les méthodes standard de JpaRepository sont déjà incluses (save, findById, deleteById, etc.)
 
-    // Method to add or upgrade
-    ClinicModel save(ClinicModel clinic);
-    
 }

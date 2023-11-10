@@ -14,6 +14,9 @@ import java.util.Optional;
  * @author Diana
  */
 public interface DoctorService {
-    // Method to add or upgrade
+
+    // Méthode par le JPARepository qui ajoute et update
     DoctorModel save(DoctorModel doctor);
+
+
 }
