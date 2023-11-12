@@ -5,6 +5,8 @@
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
 import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
+import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,14 +16,16 @@ import java.util.Optional;
  */
 public interface ClinicService {
 
-    // Méthode par le JPARepository qui ajoute et update
-    ClinicModel saveClinic(ClinicModel clinic);
+    // JPARepository method that add and update
+    ClinicModel save(ClinicModel clinic);
 
-    // Méthode pour lister les détails d'une clinique
+    // Method to list clinic details
     Optional<ClinicModel> viewClinicDetails(Long clinicId);
 
-    // Méthode pour lister les médecins travaillant dans une clinique
+    // Method to list clinic's doctors details
     List<DoctorModel> listClinicDoctors(Long clinicId);
 
-    // Méthode pour lister les patients d'une clinique
+    // Method to list clinic's patients details
     List<PatientModel> listClinicPatients(Long clinicId);
+
+}

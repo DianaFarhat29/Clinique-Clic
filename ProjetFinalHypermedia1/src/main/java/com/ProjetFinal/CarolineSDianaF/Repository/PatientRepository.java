@@ -4,9 +4,9 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Repository;
 
-import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
-import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +20,31 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PatientRepository extends JpaRepository<PatientModel, Long> {
-    PatientModel save(PatientModel patient);
+
+    // Standard methods of the JpaRepository already included (save, findById, deleteById, etc.)
+
+    // Method to find patient by first name
+    List<PatientModel> findByFirstName(String firstName);
+
+    // Method to find patient by last name
+    List<PatientModel> findByLastName(String lastName);
+
+    // Method to find patient by first and last name
+    List<PatientModel> findByFirstNameAndLastName(String firstName, String lastName);
+
+    // Method to find patient by date of birth
+    List<PatientModel> findByDateBirth(LocalDate dateBirth);
+
+    // Method to find patient by gender
+    List<PatientModel> findByGender(String gender);
+
+    // Method to find patient by Health Insurance Number
+    Optional<PatientModel> findByHealthInsuranceNumber(Long healthInsuranceNumber);
+
+    // Method to find patient by Health Sequential Number
+    Optional<PatientModel> findByHealthSequentialNumber(Long sequentialNumber);
+
+    // Method to find patient by clinic
+    List<PatientModel> findByClinicsId(Long clinicId);
+
 }

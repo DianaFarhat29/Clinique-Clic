@@ -4,10 +4,7 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
-import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
-import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
-import java.util.List;
-import java.util.Optional;
+import com.ProjetFinal.CarolineSDianaF.Models.*;
 
 /**
  *
@@ -15,8 +12,23 @@ import java.util.Optional;
  */
 public interface DoctorService {
 
-    // Méthode par le JPARepository qui ajoute et update
-    DoctorModel save(DoctorModel doctor);
+    // Method to Save or update a doctor's information
+    DoctorModel saveDoctor(DoctorModel doctor);
+
+    // Method to set a doctor's availability
+    ScheduleModel setAvailability(ScheduleModel schedule);
+
+    // Method to update a doctor's availability
+    void updateAvailability(ScheduleModel newSchedule);
+
+    // Method to send an appointment invitation
+    void sendInvitation(AppointmentModel appointment);
+
+    // Method to send an email reminder for an appointment
+    void sendEmailReminder(AppointmentModel appointment);
+
+    // Method to share documents with a patient
+    void shareDocumentsWithPatient(Long patientId, DocumentModel document);
 
 
 }

@@ -27,14 +27,14 @@ public class AdministratorModel {
     @Column(nullable = false)
     private String username;
 
-    // Contructors
+    // Constructors
     public AdministratorModel(Long id, String username) {
         this.id = id;
         this.username = username;
     }
 
     public AdministratorModel() {
-        //Empty Contructor
+        //Empty Constructor
     }
     
     // Setters and Getters

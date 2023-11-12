@@ -4,12 +4,9 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -18,6 +15,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "doctors") 
 public class DoctorModel {
+
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +31,7 @@ public class DoctorModel {
     private String speciality;
     
     @Column(nullable = false)
-    private Long proffesionalNumber;
+    private Long professionalNumber;
     
     @Column(nullable = false)
     private Double expectedSalary;
@@ -43,20 +42,34 @@ public class DoctorModel {
     @Column(nullable = false)
     private String location;
 
-    // Contructors
-    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long proffesionalNumber, Double expectedSalary, String coordinate, String location) {
+    @Embedded
+    @Column(nullable = false)
+    private ContactDetailsModel contactDetails;
+
+    @ManyToMany
+    @JoinTable(
+            name = "doctor_clinic",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "clinic_id")
+    )
+    private Set<ClinicModel> clinics = new HashSet<>();
+
+    // Constructors
+    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.speciality = speciality;
-        this.proffesionalNumber = proffesionalNumber;
+        this.professionalNumber = professionalNumber;
         this.expectedSalary = expectedSalary;
         this.coordinate = coordinate;
         this.location = location;
+        this.contactDetails = contactDetails;
+        this.clinics = clinics;
     }
 
     public DoctorModel() {
-        // Empty Contructor
+        // Empty Constructor
     }
 
     // Getters and Setters
@@ -92,12 +105,12 @@ public class DoctorModel {
         this.speciality = speciality;
     }
 
-    public Long getProffesionalNumber() {
-        return proffesionalNumber;
+    public Long getProfessionalNumber() {
+        return professionalNumber;
     }
 
-    public void setProffesionalNumber(Long proffesionalNumber) {
-        this.proffesionalNumber = proffesionalNumber;
+    public void setProfessionalNumber(Long professionalNumber) {
+        this.professionalNumber = professionalNumber;
     }
 
     public Double getExpectedSalary() {
@@ -124,9 +137,25 @@ public class DoctorModel {
         this.location = location;
     }
 
+    public ContactDetailsModel getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(ContactDetailsModel contactDetails) {
+        this.contactDetails = contactDetails;
+    }
+
+    public Set getClinics() {
+        return clinics;
+    }
+
+    public void setClinics(Set<ClinicModel> clinics) {
+        this.clinics = clinics;
+    }
+
     // ToString() Method
     @Override
     public String toString() {
-        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", proffesionalNumber=" + proffesionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + '}';
+        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + '}';
     }
 }

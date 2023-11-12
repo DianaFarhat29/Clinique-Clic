@@ -4,12 +4,7 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /**
  *
@@ -18,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "clinics") 
 public class ClinicModel {
-    
+
     // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,13 +27,18 @@ public class ClinicModel {
     
     @Column(nullable = false)
     private String services;
-    
-    // Contructors
-    public ClinicModel(Long id, String name, String coordinate, String services) {
+
+    @Embedded
+    @Column(nullable = false)
+    private ContactDetailsModel contactDetails;
+
+    // Constructors
+    public ClinicModel(Long id, String name, String coordinate, String services, ContactDetailsModel contactDetails) {
         this.id = id;
         this.name = name;
         this.coordinate = coordinate;
         this.services = services;
+        this.contactDetails = contactDetails;
     }
     
     public ClinicModel() {
@@ -77,11 +77,19 @@ public class ClinicModel {
     public void setServices(String services) {
         this.services = services;
     }
+
+    public ContactDetailsModel getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(ContactDetailsModel contactDetails) {
+        this.contactDetails = contactDetails;
+    }
     
     // ToString() Method
     @Override
     public String toString() {
-        return "ClinicModel{" + "id=" + id + ", name=" + name + ", coordinate=" + coordinate + ", services=" + services + '}';
+        return "ClinicModel{" + "id=" + id + ", name=" + name + ", coordinate=" + coordinate + ", services=" + services + ", contactDetails=" + contactDetails + '}';
     }
        
 }

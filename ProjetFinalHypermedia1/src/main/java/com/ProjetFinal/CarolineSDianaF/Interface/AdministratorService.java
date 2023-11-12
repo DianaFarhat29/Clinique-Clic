@@ -4,10 +4,9 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
-import com.ProjetFinal.CarolineSDianaF.Models.AdministratorModel;
-import java.util.List;
-import java.util.Optional;
-
+import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
+import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 
 /**
  *
@@ -15,53 +14,25 @@ import java.util.Optional;
  */
 public interface AdministratorService {
 
-    // Injection de dépendances pour que Spring crée les intances des différents repositories
-    @Autowired
-    private PatientRepository patientRepository;
-    @Autowired
-    private DoctorRepository doctorRepository;
-    @Autowired
-    private ClinicRepository clinicRepository;
+    // Patient management
+    public PatientModel addPatient(PatientModel patient);
 
-    // Gestion des patients
-    public PatientModel addPatient(PatientModel patient) {
-        return patientRepository.save(patient);
-    }
+    public void removePatient(Long patientId);
 
-    public void removePatient(Long patientId) {
-        patientRepository.deleteById(patientId);
-    }
+    public PatientModel updatePatient(PatientModel patient);
 
-    public PatientModel updatePatient(PatientModel patient) {
-        return patientRepository.save(patient);
-    }
+    // Doctor management
+    public DoctorModel addDoctor(DoctorModel doctor);
 
-    // Gestion des médecins
-    public DoctorModel addDoctor(DoctorModel doctor) {
-        return doctorRepository.save(doctor);
-    }
+    public void removeDoctor(Long doctorId);
 
-    public void removeDoctor(Long doctorId) {
-        doctorRepository.deleteById(doctorId);
-    }
+    public DoctorModel updateDoctor(DoctorModel doctor);
 
-    public DoctorModel updateDoctor(DoctorModel doctor) {
-        return doctorRepository.save(doctor);
-    }
+    // Clinic management
+    public ClinicModel addClinic(ClinicModel clinic);
 
-    // Gestion des cliniques
-    public ClinicModel addClinic(ClinicModel clinic) {
-        return clinicRepository.save(clinic);
-    }
+    public void removeClinic(Long clinicId);
 
-    public void removeClinic(Long clinicId) {
-        clinicRepository.deleteById(clinicId);
-    }
-
-    public ClinicModel updateClinic(ClinicModel clinic) {
-        return clinicRepository.save(clinic);
-    }
-
-
+    public ClinicModel updateClinic(ClinicModel clinic);
 
 }

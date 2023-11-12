@@ -4,13 +4,11 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -19,6 +17,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "patients") 
 public class PatientModel {
+
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,8 +41,22 @@ public class PatientModel {
     @Column(nullable = false)
     private String gender;
 
-    // Contructors
-    public PatientModel(Long id, String lastName, String firstName, Long healthInsuranceNumber, Long sequentialNumber, LocalDate dateBirth, String gender) {
+    @Embedded
+    @Column(nullable = false)
+    private ContactDetailsModel contactDetails;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "patient_clinic",
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "clinic_id")
+    )
+    private Set<ClinicModel> clinics = new HashSet<>();
+
+
+    // Constructors
+    public PatientModel(Long id, String lastName, String firstName, Long healthInsuranceNumber, Long sequentialNumber, LocalDate dateBirth, String gender, ContactDetailsModel contactDetails, Set clinics) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -50,6 +64,8 @@ public class PatientModel {
         this.sequentialNumber = sequentialNumber;
         this.dateBirth = dateBirth;
         this.gender = gender;
+        this.contactDetails = contactDetails;
+        this.clinics = clinics;
     }
 
     public PatientModel() {
@@ -112,10 +128,26 @@ public class PatientModel {
         this.gender = gender;
     }
 
+    public ContactDetailsModel getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(ContactDetailsModel contactDetails) {
+        this.contactDetails = contactDetails;
+    }
+
+    public Set getClinics() {
+        return clinics;
+    }
+
+    public void setClinics(Set<ClinicModel> clinics) {
+        this.clinics = clinics;
+    }
+
     // toString() Method
     @Override
     public String toString() {
-        return "PatientModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", healthInsuranceNumber=" + healthInsuranceNumber + ", sequentialNumber=" + sequentialNumber + ", dateBirth=" + dateBirth + ", gender=" + gender + '}';
+        return "PatientModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", healthInsuranceNumber=" + healthInsuranceNumber + ", sequentialNumber=" + sequentialNumber + ", dateBirth=" + dateBirth + ", gender=" + gender + ", contactDetails=" + contactDetails + ", clinics=" + clinics + '}';
     }
    
 }
