@@ -5,6 +5,7 @@
 package com.ProjetFinal.CarolineSDianaF.Models;
 
 import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,6 +47,8 @@ public class DoctorModel {
     @Column(nullable = false)
     private ContactDetailsModel contactDetails;
 
+
+
     @ManyToMany
     @JoinTable(
             name = "doctor_clinic",
@@ -54,8 +57,11 @@ public class DoctorModel {
     )
     private Set<ClinicModel> clinics = new HashSet<>();
 
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ScheduleModel> schedules = new HashSet<>();
+
     // Constructors
-    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics) {
+    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics, Set<ScheduleModel> schedules) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -66,6 +72,7 @@ public class DoctorModel {
         this.location = location;
         this.contactDetails = contactDetails;
         this.clinics = clinics;
+        this.schedules = schedules;
     }
 
     public DoctorModel() {
@@ -153,9 +160,17 @@ public class DoctorModel {
         this.clinics = clinics;
     }
 
+    public Set<ScheduleModel> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<ScheduleModel> schedules) {
+        this.schedules = schedules;
+    }
+
     // ToString() Method
     @Override
     public String toString() {
-        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + '}';
+        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", schedules=" + schedules + '}';
     }
 }

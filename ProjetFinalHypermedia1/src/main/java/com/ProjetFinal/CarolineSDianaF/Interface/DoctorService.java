@@ -4,7 +4,13 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
-import com.ProjetFinal.CarolineSDianaF.Models.*;
+import com.ProjetFinal.CarolineSDianaF.Models.AppointmentModel;
+import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import com.ProjetFinal.CarolineSDianaF.Models.DocumentModel;
+import com.ProjetFinal.CarolineSDianaF.Models.ScheduleModel;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -30,5 +36,28 @@ public interface DoctorService {
     // Method to share documents with a patient
     void shareDocumentsWithPatient(Long patientId, DocumentModel document);
 
+    // Method to get a doctor's schedule
+    public List<ScheduleModel> getDoctorSchedule(Long doctorId);
 
+    // Method to edit a doctor's schedule
+    public ScheduleModel editSchedule(ScheduleModel schedule);
+
+    // Method to get a doctor's appointments
+    public List<AppointmentModel> getDoctorAppointments(Long doctorId);
+
+    // Method to manage (update or cancel) an appointment
+    public AppointmentModel manageAppointment(AppointmentModel appointment);
+
+    // Method to get a specific schedule by ID
+    Optional<ScheduleModel> getScheduleById(Long scheduleId);
+
+
+    // Method to get a specific appointment by ID
+    Optional<AppointmentModel> getAppointmentById(Long appointmentId);
+
+    // Method to get doctor by id
+    Optional<DoctorModel> getDoctorById(Long id);
+
+    // Method to get all doctors
+    List<DoctorModel> getAllDoctors();
 }

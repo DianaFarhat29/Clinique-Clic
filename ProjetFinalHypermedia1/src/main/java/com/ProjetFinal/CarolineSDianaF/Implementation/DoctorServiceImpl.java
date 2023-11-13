@@ -12,6 +12,12 @@ import com.ProjetFinal.CarolineSDianaF.Repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -29,6 +35,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @Autowired
     private DocumentRepository documentRepository;
@@ -116,4 +125,84 @@ public class DoctorServiceImpl implements DoctorService {
         // Associate the document with the patient
         document.setPatient(patient);
     }
+
+    // Implementation for getting a doctor's schedule
+    @Override
+    public List<ScheduleModel> getDoctorSchedule(Long doctorId) {
+        return scheduleRepository.findByDoctorId(doctorId);
+    }
+
+
+    // Implementation of editing doctor's schedule
+    @GetMapping("/{doctorId}/schedule")
+    public String viewDoctorSchedule(@PathVariable Long doctorId, Model model) {
+        List<ScheduleModel> schedules = doctorService.getDoctorSchedule(doctorId);  // Fetch schedules from service
+        model.addAttribute("schedules", schedules);
+        return "doctorSchedule"; // Replace with the name of your view template
+    }
+
+    // Implementation for getting a doctor's appointments
+    @GetMapping("/{doctorId}/appointments")
+    public String viewDoctorAppointments(@PathVariable Long doctorId, Model model) {
+        List<AppointmentModel> appointments = doctorService.getDoctorAppointments(doctorId);  // Fetch appointments from service
+        model.addAttribute("appointments", appointments);
+        return "doctorAppointments"; // Replace with the name of your view template
+    }
+
+
+    // Implementation for managing (update or cancel) an appointment
+    public AppointmentModel manageAppointment(AppointmentModel appointment) {
+        // Update or cancel the appointment based on its status or other fields
+        return appointmentRepository.save(appointment);
+    }
+
+    // Implementation for getting schedule by id
+    @Override
+    public Optional<ScheduleModel> getScheduleById(Long scheduleId) {
+        return scheduleRepository.findById(scheduleId);
+    }
+
+    // Implementation for getting appointment by id
+    public Optional<AppointmentModel> getAppointmentById(Long appointmentId) {
+        return appointmentRepository.findById(appointmentId);
+    }
+
+    // Implementation for editing a doctor's schedule
+    @Override
+    public ScheduleModel editSchedule(ScheduleModel schedule) {
+        // Check if the schedule exists
+        ScheduleModel existingSchedule = scheduleRepository.findById(schedule.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Schedule not found with ID: " + schedule.getId()));
+
+        // Update fields of the existing schedule
+        existingSchedule.setStartTime(schedule.getStartTime());
+        existingSchedule.setEndTime(schedule.getEndTime());
+        existingSchedule.setDayOfWeek(schedule.getDayOfWeek());
+        existingSchedule.setStatus(schedule.getStatus());
+        existingSchedule.setType(schedule.getType());
+
+        // Save the updated schedule
+        return scheduleRepository.save(existingSchedule);
+    }
+
+    // Implementation for getting a doctor's appointments
+    @Override
+    public List<AppointmentModel> getDoctorAppointments(Long doctorId) {
+        // Fetch and return the list of appointments for the doctor
+        return appointmentRepository.findByDoctorId(doctorId);
+    }
+
+    // Implementation for getting a doctor by id
+    @Override
+    public Optional<DoctorModel> getDoctorById(Long id) {
+        return doctorRepository.findById(id);
+    }
+
+    // Implementation for getting all doctor
+    @Override
+    public List<DoctorModel> getAllDoctors() {
+        return doctorRepository.findAll();
+    }
+
+
 }

@@ -15,6 +15,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  *
  * @author Diana
@@ -116,4 +119,37 @@ public class AdministratorServiceImpl implements AdministratorService{
 
         return clinicRepository.save(existingClinic);
     }
+
+    // Implementation for method to get all patients
+    public List<PatientModel> getAllPatients() {
+        return patientRepository.findAll();
+    }
+
+    // Implementation for method to get a patient by ID
+    public Optional<PatientModel> getPatientById(Long id) {
+        return patientRepository.findById(id);
+    }
+
+    // Implementation for method to get all doctors
+    public List<DoctorModel> getAllDoctors() {
+        return doctorRepository.findAll();
+    }
+
+    // Implementation for method to get a doctor by ID
+    public Optional<DoctorModel> getDoctorById(Long id) {
+        return doctorRepository.findById(id);
+    }
+
+    // Implementation for method to get all clinics
+    public List<ClinicModel> getAllClinics() {
+        return clinicRepository.findAll();
+    }
+
+    // Implementation for method to get a clinic by ID
+    public Optional<ClinicModel> getClinicById(Long id) {
+        return clinicRepository.findById(id);
+    }
+
+
+
 }

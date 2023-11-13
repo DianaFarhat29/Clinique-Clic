@@ -8,6 +8,9 @@ import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  *
  * @author Diana
@@ -34,5 +37,23 @@ public interface AdministratorService {
     public void removeClinic(Long clinicId);
 
     public ClinicModel updateClinic(ClinicModel clinic);
+
+    // Method to get all patients
+    public List<PatientModel> getAllPatients();
+
+    // Method to get a patient by ID
+    public Optional<PatientModel> getPatientById(Long id);
+
+    // Method to get all doctors
+    public List<DoctorModel> getAllDoctors();
+
+    // Method to get a doctor by ID
+    public Optional<DoctorModel> getDoctorById(Long id);
+
+    // Method to get all clinics
+    public List<ClinicModel> getAllClinics();
+
+    // Method to get a clinic by ID
+    public Optional<ClinicModel> getClinicById(Long id);
 
 }

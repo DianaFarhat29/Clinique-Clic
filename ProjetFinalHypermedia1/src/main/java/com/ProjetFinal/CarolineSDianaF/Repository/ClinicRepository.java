@@ -5,12 +5,13 @@
 package com.ProjetFinal.CarolineSDianaF.Repository;
 
 import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
-import java.util.List;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 /**

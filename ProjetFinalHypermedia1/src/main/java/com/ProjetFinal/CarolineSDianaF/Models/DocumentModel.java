@@ -1,6 +1,7 @@
 package com.ProjetFinal.CarolineSDianaF.Models;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,12 +25,10 @@ public class DocumentModel {
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    @Column(nullable = false)
     private PatientModel patient;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    @Column(nullable = false)
     private DoctorModel doctor;
 
     @Column(nullable = false)

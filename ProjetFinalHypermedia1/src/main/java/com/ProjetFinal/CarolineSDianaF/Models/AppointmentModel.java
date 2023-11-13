@@ -18,12 +18,10 @@ public class AppointmentModel {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    @Column(nullable = false)
     private DoctorModel doctor;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    @Column(nullable = false)
     private PatientModel patient;
 
     @Column(nullable = false)

@@ -14,7 +14,17 @@ import com.ProjetFinal.CarolineSDianaF.Repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,6 +48,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private EmailService emailService;
+
+    // Logger for logging error messages
+    private static final Logger LOGGER = Logger.getLogger(PatientServiceImpl.class.getName());
 
     @Autowired
     public PatientServiceImpl(PatientRepository patientRepository) {
@@ -111,4 +124,26 @@ public class PatientServiceImpl implements PatientService {
         String message = "Patient contact details: " + contactDetails.getEmail();
         emailService.sendSimpleMessage(doctorEmail, subject, message);
     }
+
+    // Implementation of method to upload files
+    String saveUploadedFile(MultipartFile file) {
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();
+            Path path = Paths.get("uploads/" + fileName);
+            try {
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                return fileName;
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Failed to save uploaded file", e);
+            }
+        }
+        return null;
+    }
+
+    // Implementation of method to get a specific appointment by ID
+    @Override
+    public Optional<AppointmentModel> getAppointmentById(Long appointmentId) {
+        return appointmentRepository.findById(appointmentId);
+    }
+
 }

@@ -5,14 +5,15 @@
 package com.ProjetFinal.CarolineSDianaF.Implementation;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
+import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import com.ProjetFinal.CarolineSDianaF.Repository.ClinicRepository;
-import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Repository.DoctorRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -60,5 +61,10 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public List<PatientModel> listClinicPatients(Long clinicId) {
         return patientRepository.findByClinicsId(clinicId);
+    }
+
+    @Override
+    public List<ClinicModel> getAllClinics() {
+        return clinicRepository.findAll();
     }
 }

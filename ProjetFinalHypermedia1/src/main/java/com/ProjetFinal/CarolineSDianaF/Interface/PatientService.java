@@ -5,7 +5,10 @@
 package com.ProjetFinal.CarolineSDianaF.Interface;
 
 import com.ProjetFinal.CarolineSDianaF.Models.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -36,4 +39,8 @@ public interface PatientService {
 
     // Method to Contact a healthcare provider
     void contactHealthcareProvider(Long providerId, ContactDetailsModel contactDetails);
+
+    // Method to get a specific appointment by ID
+    Optional<AppointmentModel> getAppointmentById(Long appointmentId);
+
 }

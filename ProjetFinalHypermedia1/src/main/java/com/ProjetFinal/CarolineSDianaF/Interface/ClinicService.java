@@ -7,6 +7,7 @@ package com.ProjetFinal.CarolineSDianaF.Interface;
 import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +29,6 @@ public interface ClinicService {
     // Method to list clinic's patients details
     List<PatientModel> listClinicPatients(Long clinicId);
 
+    // Implementation of method to list all clinics
+    List<ClinicModel> getAllClinics();
 }
