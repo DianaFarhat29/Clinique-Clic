@@ -1,0 +1,141 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    background-color: #598BC5;
+}
+
+/* Fond de la barre de navigation */
+.navbar-custom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    margin-top: 4em;
+    margin-left: 6em;
+    height: 6em; 
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+/* Styles du logo à gauche */
+.navbar-header {
+    display: flex;
+    align-items: center; /* Centrage vertical du logo */
+}
+
+/* Styles du logo et du texte */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0.5em;
+}
+
+/* Styles du menu et du bouton de connexion à droite */
+.navbar-collapse {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 5em;
+}
+
+
+
+.navbar-brand img {
+    height: 80px; /* Ajustez selon la maquette */
+}
+
+
+/* Styles du menu dropdown */
+.navbar-custom .dropdown {
+    margin-left: 10em; 
+    margin-right: 5em;
+}
+
+.navbar-custom .dropdown-toggle {
+    color: #25455E;
+    font-weight: bold;
+    background-color: #fff;
+}
+
+
+.navbar-custom .dropdown-toggle:active {
+    color: #fff;
+    background-color: #25455E; 
+}
+
+.navbar-custom .dropdown.open .dropdown-toggle {
+    color: #25455E; /* Définit la couleur du texte en blanc */
+    background-color: #fff; /* Optionnel: change la couleur d'arrière-plan si vous le souhaitez */
+}
+
+
+.navbar-custom .dropdown-toggle:hover {
+    background-color: #fff;
+    color: #25455E;
+    font-weight: bold;
+    background-color: fff;
+
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: #fff;
+    border: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: none;
+}
+
+
+
+.navbar-custom .dropdown-menu > li > a {
+    color: #25455E; 
+    font-weight: bold;
+}
+
+
+.navbar-custom .dropdown-menu > li > a:hover {
+    background-color: #fff; 
+    color: #E89255; 
+    font-weight: bold;
+}
+
+
+/* Styles du bouton Connexion */
+.btn-connexion {
+    background-color: #E89255;
+    border: none;
+    border-radius: 10px;
+    min-width: 13em;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    color: #25455E;
+}
+
+.btn-connexion:hover {
+    background-color: #E69500;
+    color: white;
+}
+
+.container.text-center {
+    margin-top: 10em;
+}
+
+.container.text-center .services {
+    background-color: #fff;
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-radius: 10px;
+    color: #25455E; 
+    font-size: bold;
+    text-align: left;
+}
+
+.container.text-center.services.services-list {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: small;
+  }
+
