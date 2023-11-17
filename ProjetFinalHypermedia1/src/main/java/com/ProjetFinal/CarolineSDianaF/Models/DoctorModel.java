@@ -47,8 +47,6 @@ public class DoctorModel {
     @Column(nullable = false)
     private ContactDetailsModel contactDetails;
 
-
-
     @ManyToMany
     @JoinTable(
             name = "doctor_clinic",
@@ -57,11 +55,23 @@ public class DoctorModel {
     )
     private Set<ClinicModel> clinics = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "doctor_patient",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "patient_id")
+    )
+    private Set<ClinicModel> patients = new HashSet<>();
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ScheduleModel> schedules = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserModel user;
+
     // Constructors
-    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics, Set<ScheduleModel> schedules) {
+    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics, Set patients,Set<ScheduleModel> schedules, UserModel user) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -72,7 +82,9 @@ public class DoctorModel {
         this.location = location;
         this.contactDetails = contactDetails;
         this.clinics = clinics;
+        this.patients = patients;
         this.schedules = schedules;
+        this.user = user;
     }
 
     public DoctorModel() {
@@ -160,6 +172,14 @@ public class DoctorModel {
         this.clinics = clinics;
     }
 
+    public Set getPatients() {
+        return patients;
+    }
+
+    public void setPatients(Set<ClinicModel> patients) {
+        this.patients = patients;
+    }
+
     public Set<ScheduleModel> getSchedules() {
         return schedules;
     }
@@ -168,9 +188,17 @@ public class DoctorModel {
         this.schedules = schedules;
     }
 
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
     // ToString() Method
     @Override
     public String toString() {
-        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", schedules=" + schedules + '}';
+        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedules=" + schedules + ", user=" + user + '}';
     }
 }

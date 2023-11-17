@@ -45,7 +45,6 @@ public class PatientModel {
     @Column(nullable = false)
     private ContactDetailsModel contactDetails;
 
-
     @ManyToMany
     @JoinTable(
             name = "patient_clinic",
@@ -54,9 +53,20 @@ public class PatientModel {
     )
     private Set<ClinicModel> clinics = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "patient_doctor",
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor_id")
+    )
+    private Set<ClinicModel> doctors = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserModel user;
 
     // Constructors
-    public PatientModel(Long id, String lastName, String firstName, Long healthInsuranceNumber, Long sequentialNumber, LocalDate dateBirth, String gender, ContactDetailsModel contactDetails, Set clinics) {
+    public PatientModel(Long id, String lastName, String firstName, Long healthInsuranceNumber, Long sequentialNumber, LocalDate dateBirth, String gender, ContactDetailsModel contactDetails, Set clinics, Set doctors, UserModel user) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -66,6 +76,8 @@ public class PatientModel {
         this.gender = gender;
         this.contactDetails = contactDetails;
         this.clinics = clinics;
+        this.doctors = doctors;
+        this.user = user;
     }
 
     public PatientModel() {
@@ -144,10 +156,26 @@ public class PatientModel {
         this.clinics = clinics;
     }
 
+    public Set getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(Set<ClinicModel> doctors) {
+        this.doctors = doctors;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
     // toString() Method
     @Override
     public String toString() {
-        return "PatientModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", healthInsuranceNumber=" + healthInsuranceNumber + ", sequentialNumber=" + sequentialNumber + ", dateBirth=" + dateBirth + ", gender=" + gender + ", contactDetails=" + contactDetails + ", clinics=" + clinics + '}';
+        return "PatientModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", healthInsuranceNumber=" + healthInsuranceNumber + ", sequentialNumber=" + sequentialNumber + ", dateBirth=" + dateBirth + ", gender=" + gender + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", doctors=" + doctors + ", user=" + user + '}';
     }
    
 }

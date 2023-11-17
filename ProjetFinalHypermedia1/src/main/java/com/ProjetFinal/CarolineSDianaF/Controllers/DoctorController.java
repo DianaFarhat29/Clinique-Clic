@@ -4,13 +4,17 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
+import com.ProjetFinal.CarolineSDianaF.Interface.CustomUserDetailsService;
 import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
 import com.ProjetFinal.CarolineSDianaF.Models.AppointmentModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.ScheduleModel;
+import com.ProjetFinal.CarolineSDianaF.Models.UserModel;
 import com.ProjetFinal.CarolineSDianaF.Repository.AppointmentRepository;
+import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

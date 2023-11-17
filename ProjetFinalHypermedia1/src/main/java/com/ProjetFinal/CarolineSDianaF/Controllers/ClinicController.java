@@ -6,8 +6,12 @@ package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
 import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
+import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import com.ProjetFinal.CarolineSDianaF.Models.UserModel;
+import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,5 +75,6 @@ public class ClinicController {
         clinicService.save(clinic); // Using save for both add and update operations
         return "redirect:/clinics";
     }
+
     
 }

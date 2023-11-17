@@ -22,10 +22,15 @@ public class AdministratorModel {
     @Column(nullable = false)
     private String username;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserModel user;
+
     // Constructors
-    public AdministratorModel(Long id, String username) {
+    public AdministratorModel(Long id, String username, UserModel user) {
         this.id = id;
         this.username = username;
+        this.user = user;
     }
 
     public AdministratorModel() {
@@ -49,10 +54,18 @@ public class AdministratorModel {
         this.username = username;
     }
 
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
     // toString()
     @Override
     public String toString() {
-        return "AdministratorModel{" + "id=" + id + ", username=" + username + '}';
+        return "AdministratorModel{" + "id=" + id + ", username=" + username + ", user=" + user + '}';
     }  
     
 }
