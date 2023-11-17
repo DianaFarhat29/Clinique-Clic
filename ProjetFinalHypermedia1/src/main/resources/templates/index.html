@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Spring Boot App</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}"> <!-- This is your compiled TailwindCSS file -->
+</head>
+<body class="bg-gray-200">
+
+    <form th:action="@{/logout}" method="POST" class="container mx-auto mt-10">
+        <h1 class="text-2xl font-bold text-blue">Hello, Spring Boot with Thymeleaf and TailwindCSS!</h1>
+        <p th:text="${message}"> </p>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Log out
+        </button>
+    </form>
+    </div>
+
+</body>
+</html>
