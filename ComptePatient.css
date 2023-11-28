@@ -1,0 +1,134 @@
+body {
+    display: flex;
+    background-color: #E89255;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+}
+
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    max-width: 900px;
+    height: 100%;
+    margin-right: 0;
+}
+
+img {
+    width: auto;
+    height: 100%;
+}
+
+h2 {
+    margin-left: 15%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    color: #25455E;
+    font-weight: bold;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#prenom,
+#nom,
+#noMaladie,
+#pwd,
+#passwordConfirm  {
+    margin-left: 15%;
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+#prenom::placeholder,
+#nom::placeholder,
+#noMaladie::placeholder,
+#pwd::placeholder,
+#passwordConfirm::placeholder  {
+    color: #598BC5;
+    /* Couleur du texte du placeholder */
+}
+
+
+.errorForm{
+    color:#E89255;
+    margin-left: 17%;
+}
+
+button[type="submit"] {
+    background-color: #E89255;
+    color: #25455E;
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 70%;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #E89255;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+
+button[type="submit"]:active {
+    background-color: #25455E !important; /* Couleur de fond au clic */
+    color: #E89255!important; /* Couleur du texte au clic */
+    border: none !important;
+}
+
+
+.no-account {
+    color: #598BC5;
+    margin-left: 15%;
+    margin-top: 3%;
+}
+
+.no-account .signup-link {
+    font-weight: bold;
+    color: #E89255;
+}
+
+.no-account .signup-link:hover {
+    color: #25455E;
+    text-decoration: none;
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    img {
+        display: none;
+    }
+}

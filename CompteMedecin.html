@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Créer un compte médecin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="CompteMedecin.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <a href="index.html">
+        <img src="Images/LogoMedecinBlanc.png" alt="LogoMedecinBlanc">
+    </a>
+    <div class="container">
+
+        <h2>Créer un compte</h2>
+        <form id="registrationForm">
+
+            <div class="form-group">
+                <label for="prenom"></label>
+                <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom">
+                <div id="userPrenomCheck" class="errorForm">
+                    Entrez votre prénom.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nom"></label>
+                <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom">
+                <div id="userCheck" class="errorForm">
+                    Entrez votre nom.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="noLicence"></label>
+                <input type="text" class="form-control" id="noLicence" placeholder="Numéro de licence" name="noLicence">
+                <div id="noLicenceCheck" class="errorForm">
+                    Entrez votre numéro de licence.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pwd"></label>
+                <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd">
+                <div id="passCheck" class="errorForm">
+                    Le mot de passe doit contenir entre 3 et 10 caractères.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordConfirm"></label>
+                <input type="password" class="form-control" id="passwordConfirm"
+                    placeholder="Confirmation du mot de passe" name="passwordConfirm">
+                <div id="passwordConfirmCheck" class="errorForm">
+                    Les mots de passe ne concordent pas.
+                </div>
+
+            </div>
+
+            <input type="submit" id="submitbtn" value="Soumettre" class="btn btn-default">
+        </form>
+        <p class="no-account">Vous avez déjà un compte? <a href="loginMedecin.html" class="signup-link">Se connecter</a></p>
+
+    </div>
+
+    <script src="CompteMedecin.js"></script>
+</body>
+
+</html>

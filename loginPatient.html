@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Clinique clic - Connexion patient</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="loginPatient.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <a href="index.html">
+        <img src="Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+    </a>
+    <div class="container">
+        <h2>Se connecter</h2>
+        <form id="patientLoginForm">
+   
+
+            <div class="form-group">
+                <label for="noMaladie"></label>
+                <input type="text" class="form-control" id="noMaladie" placeholder="Numéro d'assurance maladie" name="noMaladie">
+                <div id="NAMCheck" class="errorForm">Entrer votre numéro d'assurance maladie.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="pwd"></label>
+                <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd">
+                <div id="passcheck" class="errorForm">Le mot de passe est incorect</div>
+            </div>
+
+            <button type="submit" id="submitbtn" class="btn btn-default">Soumettre</button>
+        </form>
+        <p class="no-account">Vous n'avez pas de compte? <a href="ComptePatient.html" class="signup-link">S'inscrire</a></p>
+    </div>
+    <script src="loginPatient.js"></script>
+</body>
+</html>

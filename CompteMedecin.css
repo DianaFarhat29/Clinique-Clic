@@ -1,17 +1,13 @@
-
-
-
 body {
     display: flex;
     background-color: #E89255;
     font-family: 'Open Sans', sans-serif;
-    justify-content: flex-start;
-    align-items: flex-end !important;
     margin: 0;
     height: 100vh;
     width: 100vw;
     padding: 0;
 }
+
 
 .container {
     background-color: #fff;
@@ -23,12 +19,15 @@ body {
     margin-right: 0;
 }
 
-
+img {
+    width: auto;
+    height: 100%;
+}
 
 h2 {
     margin-left: 15%;
     margin-top: 10%;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
     color: #25455E;
     font-weight: bold;
 }
@@ -39,10 +38,11 @@ label {
     margin-bottom: 5px;
 }
 
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="prenom"],
-.form-group input[type="nom"] {
+#prenom,
+#nom,
+#noLicence,
+#pwd,
+#passwordConfirm {
     margin-left: 15%;
     width: 70%;
     padding: 5px;
@@ -53,14 +53,21 @@ label {
     box-shadow: none;
 }
 
-.form-group input[type="email"]::placeholder,
-.form-group input[type="password"]::placeholder,
-.form-group input[type="prenom"]::placeholder,
-.form-group input[type="nom"]::placeholder {
-    color: #598BC5; /* Couleur du texte du placeholder */
+#prenom::placeholder,
+#nom::placeholder,
+#noLicence::placeholder,
+#pwd::placeholder,
+#passwordConfirm::placeholder {
+    color: #598BC5;
+    /* Couleur du texte du placeholder */
+}
+.errorForm{
+    color:#E89255;
+    margin-left: 17%;
+
 }
 
-button[type="submit"] {
+input[type="submit"] {
     background-color: #E89255;
     color: #25455E;
     font-weight: bold;
@@ -73,10 +80,15 @@ button[type="submit"] {
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
+input[type="submit"]:hover {
     background-color: #E89255;
     color: #fff;
     font-weight: bold;
+}
+input[type="submit"]:active {
+    background-color: #25455E !important; /* Couleur de fond au clic */
+    color: #E89255!important; /* Couleur du texte au clic */
+    border: none !important;
 }
 
 .no-account {
@@ -86,8 +98,8 @@ button[type="submit"]:hover {
 }
 
 .no-account .signup-link {
-    font-weight: bold; 
-    color: #E89255; 
+    font-weight: bold;
+    color: #E89255;
 }
 
 .no-account .signup-link:hover {
@@ -96,10 +108,23 @@ button[type="submit"]:hover {
 }
 
 
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
         width: 90%;
         padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    img {
+        display: none;
     }
 }

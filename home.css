@@ -37,13 +37,14 @@ body {
 }
 
 .navbar-toggle .icon-bar {
-    background-color: #25455E !important; 
+    background-color: #25455E !important;
 }
 
 /* Couleur de fond du bouton au survol */
 .navbar-toggle:hover {
-    background-color: #E89255 !important; 
+    background-color: #E89255 !important;
 }
+
 .navbar-toggle:focus {
     background-color: #fff !important;
 }
@@ -55,44 +56,51 @@ body {
 .navbar-nav .dropdown-menu {
     position: absolute;
     margin-right: 50px;
-    border: none; 
-    box-shadow: none; 
-    -webkit-box-shadow: none; /* Supprime l'ombre pour Safari et les anciennes versions de Chrome */
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    /* Supprime l'ombre pour Safari et les anciennes versions de Chrome */
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
 .navbar-nav .dropdown a.dropdown-toggle {
-    font-weight: bold; 
+    background-color: #E89255;
+    border-radius: 10px;
+    min-width: 10em;
+    text-align: center;
+    font-weight: bold;
     color: #25455E;
-    margin-right: 50px; 
+    margin-right: 50px;
 }
 
 /* Style au survol pour le dropdown */
 .navbar-nav .dropdown a.dropdown-toggle:hover {
-    color: #E89255; 
+    color: #E89255;
 }
 
 
 /* Style des éléments de la liste déroulante lorsqu'on ne survole pas */
 .navbar-nav .dropdown .dropdown-menu li a {
-    color: #25455E; 
+    color: #25455E;
 }
 
 /* Style des éléments de la liste déroulante lorsqu'on survole */
 .navbar-nav .dropdown .dropdown-menu li a:hover {
-    color: #E89255; 
+    color: #E89255;
 }
 
 /* Supprimer la surbrillance  au survol des éléments de la liste déroulante */
-.navbar-nav .dropdown-menu li a:hover, .navbar-nav .dropdown-menu li a:focus {
-    background-color: transparent; 
+.navbar-nav .dropdown-menu li a:hover,
+.navbar-nav .dropdown-menu li a:focus {
+    background-color: transparent;
 }
 
 /* Supprimer la surbrillance du dropdown quand elle est active/déroulée */
-.navbar-nav .dropdown.active a.dropdown-toggle, .navbar-nav .dropdown.open a.dropdown-toggle {
-    background-color: transparent; 
-    color: #25455E !important; 
+.navbar-nav .dropdown.active a.dropdown-toggle,
+.navbar-nav .dropdown.open a.dropdown-toggle {
+    background-color: transparent;
+    color: #25455E !important;
 }
 
 
@@ -100,21 +108,24 @@ body {
 .navbar-nav .btn-login {
     margin-right: 50px;
     margin-top: 5px;
-    background-color: #E89255; 
+    background-color: #E89255;
     color: #25455E !important;
     font-weight: bold;
-    border-radius: 15px; 
-    padding: 10px 45px; /* Espacement interne pour agrandir le bouton */
-    border: none; 
-    transition: background-color 0.3s ease; /* Transition pour l'effet au survol */
-    
+    border-radius: 15px;
+    padding: 10px 45px;
+    /* Espacement interne pour agrandir le bouton */
+    border: none;
+    transition: background-color 0.3s ease;
+    /* Transition pour l'effet au survol */
+
 }
 
 /* Style au survol pour le bouton Login */
 .navbar-nav .btn-login:hover {
-    background-color: #25455E !important; 
-    color: #CED9F6 !important; 
-    text-decoration: none; /* Enlever le soulignement du texte au survol */
+    background-color: #25455E !important;
+    color: #CED9F6 !important;
+    text-decoration: none;
+    /* Enlever le soulignement du texte au survol */
 }
 
 
@@ -140,6 +151,7 @@ body {
 .container.text-center .services .services-title {
     font-weight: bold;
 }
+
 .container.text-center .services .services-list a {
     color: #25455E !important;
 }
@@ -153,7 +165,7 @@ body {
 
 .container.text-center .slogan {
     font-weight: bold;
-    font-size: 5em; 
+    font-size: 5em;
     line-height: 0.9;
     color: #CED9F6;
 }
@@ -161,7 +173,7 @@ body {
 /* taille responsive */
 @media (max-width: 1100px) {
     .container.text-center .slogan {
-        font-size: 4em; 
+        font-size: 4em;
     }
 }
 
@@ -194,7 +206,7 @@ body {
 }
 
 .container.map .map-title {
- 
+
     color: #CED9F6;
     font-weight: bold;
     font-size: larger;
