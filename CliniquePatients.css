@@ -40,6 +40,7 @@ font-weight:600;
   .nav.navbar-nav li a {
     color: #25455E; 
     font-weight: bold; 
+    fon
 
   }
 
@@ -56,6 +57,18 @@ font-weight:600;
     height: 100%;
 }
 
+#submitbtn {
+  background-color: #E89255;
+  color: #25455E;
+  font-weight: bold;
+  margin-left: 15%;
+  margin-top: 5%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  width: 70%;
+  cursor: pointer;
+}
 
 table th {
     color: #E89255;

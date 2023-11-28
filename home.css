@@ -65,7 +65,7 @@ body {
 }
 
 .navbar-nav .dropdown a.dropdown-toggle {
-    background-color: #E89255;
+   
     border-radius: 10px;
     min-width: 10em;
     text-align: center;
@@ -195,7 +195,14 @@ body {
     min-height: 15em;
     border-radius: 10px;
     color: #25455E;
-    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container.box-center .col-sm-3 .box img {
+  max-width: 100%;
+  height: auto;
 }
 
 .container.map {
