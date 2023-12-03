@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Espace patient - Messages</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="PatientFiche.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Patient Très-Patient</p>
+        <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="PatientFiche.html">Compte et documents</a></li>
+            <li><a href="PatientMessage.html">Rendez-vous </a></li>
+            <li><a href="PatientClinique.html">Liste des cliniques</a></li>  
+        </ul>
+    </nav>
+
+    <a href="index.html">
+        <img src="Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+    </a>
+
+    <div class="container">
+
+
+        <!-- Section rendez-vous -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Liste des rendez-vous</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="appointment-list">
+                    <div th:each="appointment : ${appointments}" class="appointment-item">
+                        <div class="appointment-details">
+                            <span th:text="${appointment.date}">Date du Rendez-Vous</span><br>
+                            <span th:text="${appointment.heure}">Heure du Rendez-Vous</span><br>
+                            <span th:text="${appointment.clinique}">Clinique</span><br>
+                            <span th:text="${appointment.docteur}">Médecin</span>
+
+                        </div>
+                        <div class="appointment-actions">
+                            <button
+                                th:onclick="'javascript:editAppointment(' + ${appointment.id} + ')'">Modifier</button>
+                            <button
+                                th:onclick="'javascript:cancelAppointment(' + ${appointment.id} + ')'">Annuler</button>
+                            <button
+                                th:onclick="'javascript:confirmAppointment(' + ${appointment.id} + ')'">Courriel de confirmation</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <form id="patientRdvForm">
+
+            <!-- Section raison de consultation -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    <h5>Prendre rendez-vous</h5>
+                </div>
+                <div class="col-md-7">
+                    <h5 class="raison-consultation">Raison de la consultation</h5>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="urgenceMineure" value="urgenceMineure"> Urgence
+                            mineure</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="medFamille" value="medFamille"> Médecine
+                            familiale</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="obyn" value="obyn"> Gynécologie</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="pediatrie" value="pediatrie"> Pédiatrie</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="analyse" value="analyse"> Analyses et
+                            vaccination</label><br><br>
+                    </div>
+
+                </div>
+
+
+                <!-- Choisir Clinique -->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <h5 class="raison-consultation">Choisir la clinique</h5>
+                    <select class="form-control" id="cliniqueSelection">
+                        <option>clinique 1</option>
+                        <option>clinique 2</option>
+                        <option>clinique 3</option>
+                        <option>clinique 4</option>
+                        <option>clinique 5</option>
+                    </select><br><br>
+                </div>
+
+                <!-- Choisir medecin -->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <h5 class="raison-consultation">Choisir le professionnel de la santé</h5>
+                    <select class="form-control" id="docteurSelection">
+                        <option>médecin 1</option>
+                        <option>infirmière 2</option>
+                        <option>médecin 3</option>
+                        <option>médecin 4</option>
+                        <option>médecin 5</option>
+                    </select><br><br>
+                </div>
+
+                <!-- Choisir date -->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <h5 class="raison-consultation">Choisir la date</h5>
+                    <select class="form-control" id="dateSelection">
+                        <option>date 1</option>
+                        <option>date 2</option>
+                        <option>date 3</option>
+                        <option>date 4</option>
+                        <option>date 5</option>
+                    </select><br><br>
+                </div>
+
+                <!-- Choisir heure -->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <h5 class="raison-consultation">Choisir l'heure</h5>
+                    <select class="form-control" id="heureSelection">
+                        <option>heure 1</option>
+                        <option>heure 2</option>
+                        <option>heure 3</option>
+                        <option>heure 4</option>
+                        <option>heure 5</option>
+                    </select><br><br>
+                </div>
+
+
+                <!-- Message au medecin -->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <h5 class="raison-consultation">Détails sur la raison de consultation</h5>
+                    <textarea class="form-control" id="detailConsultation" rows="2">
+
+                </textarea><br><br>
+                </div>
+
+
+                <!-- Envoyer document -->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <h5 class="raison-consultation">Envoyer un document</h5>
+                    <input type="file" class="form-control-file" id="patientSendFile"><br><br>
+                </div>
+
+
+
+
+            </div>
+
+
+            <!-- Bouton de soumission 2 et déconnection -->
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" id="submitbtn2" class="btn btn-default">Demander le rendez-vous</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
+                </div>
+
+
+            </div>
+
+        </form>
+
+
+
+
+
+
+
+    </div>
+
+
+    <script src="PatientMessage"></script>
+
+</body>
+
+</html>

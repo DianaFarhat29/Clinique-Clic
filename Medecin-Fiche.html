@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Espace medecin - Fiche</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="MedecinFiche.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Dr Médecin Médecine</p>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="MedecinPatient.html">Liste des patients</a></li>
+            <li><a href="Medecin-Fiche.html">Fiche du médecin</a></li>
+        </ul>
+    </nav>
+
+    <a href="index.html">
+        <img src="Images/LogoMedecinBlanc.png" alt="Logo Clinique Clic">
+    </a>
+
+    <div class="container">
+        <form id="medecinForm">
+
+            <!-- Section Adresse -->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Adresse</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
+                            name="noCivique">
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue">
+                        <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
+                            name="noLocal">
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville">
+                        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
+                            name="codePostal">
+                        <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
+                            name="noTel">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Heures dispoibilité semaine-->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Heures de pratique</h5>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Lundi</h5>
+                            <input type="time" class="form-control" name="lundiOuverture">
+                            <input type="time" class="form-control" name="lundiFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Mardi</h5>
+                            <input type="time" class="form-control" name="mardiOuverture">
+                            <input type="time" class="form-control" name="mardiFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Mercredi</h5>
+                            <input type="time" class="form-control" name="mercrediOuverture">
+                            <input type="time" class="form-control" name="mercrediFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Jeudi</h5>
+                            <input type="time" class="form-control" name="jeudiOuverture">
+                            <input type="time" class="form-control" name="jeudiFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Vendredi</h5>
+                            <input type="time" class="form-control" name="vendrediOuverture">
+                            <input type="time" class="form-control" name="vendrediFermeture">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Heures d'ouverture  weekend-->
+            <div class="row">
+                <div class="col-md-2">
+                    <!-- Espace vide pour alignement -->
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Samedi</h5>
+                            <input type="time" class="form-control" name="samediOuverture">
+                            <input type="time" class="form-control" name="samediFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Dimanche</h5>
+                            <input type="time" class="form-control" name="dimancheOuverture">
+                            <input type="time" class="form-control" name="dimancheFermeture">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Section tarif de consultation -->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Tarif de consultation</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="tarif" placeholder="Utiliser la flèche pour entrer votre tarif"
+                               name="tarif" min="0" step="5.00">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Bouton de soumission -->
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" id="submitbtn" class="btn btn-default">Soumettre</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!--script src="#"></script-->
+
+</body>
+
+</html>

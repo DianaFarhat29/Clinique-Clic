@@ -1,0 +1,148 @@
+body {
+    display: flex;
+    background-color: #598BC5;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+}
+
+img {
+    margin-top: 7em;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 1000;
+
+}
+
+.navbar-text {
+    color: #25455E !important;
+    font-size: large;
+    font-weight: 600;
+}
+
+.nav.navbar-nav li {
+    margin: 0 5px;
+}
+
+.nav.navbar-nav li:last-child {
+    margin-right: 50px;
+}
+
+.nav.navbar-nav li a {
+    color: #25455E;
+    font-weight: bold;
+}
+
+
+.row {
+    margin-bottom: 20px; 
+}
+
+h5{
+    color: #25455E;
+    font-weight: bold;
+}
+
+
+/* Style pour les champs de formulaire */
+input[type='text'],
+input[type='time'],
+input[type='number']  {
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+}
+
+/* Style pour les placeholders des champs de formulaire */
+input[type='text']::placeholder,
+input[type='time']::placeholder,
+input[type='number']::placeholder {
+    color: #598BC5;
+}
+
+
+
+/* Style pour le label des cases à cocher */
+.checkbox label {
+    margin-left: 3em; 
+    color: #598BC5;
+
+}
+
+.jour-semaine {
+    margin-left: 3em;
+}
+
+#submitbtn {
+    background-color: #598BC5;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 70%;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    max-width: 1200px;
+    margin-right: 0;
+    margin-top: 7em;
+    height: fit-content;
+}
+
+
+
+/* Style pour le label des cases à cocher */
+.checkbox label {
+    margin-left: 3em; 
+    color: #598BC5;
+
+}
+
+.jour-semaine {
+    margin-left: 3em;
+}
+
+#submitbtn {
+    background-color: #598BC5;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 70%;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    max-width: 1200px;
+    margin-right: 0;
+    margin-top: 7em;
+    height: fit-content;
+}

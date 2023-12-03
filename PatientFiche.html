@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Espace patient - Fiche</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="PatientFiche.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Patient Très-Patient</p>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="PatientFiche.css">Compte et documents</a></li>
+            <li><a href="PatientMessage.html">Rendez-vous</a></li>
+            <li><a href="PatientClinique.html">Liste des cliniques</a></li>  
+        </ul>
+    </nav>
+
+    <a href="index.html">
+        <img src="Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+    </a>
+
+    <div class="container">
+        <form id="patientForm">
+
+            <!-- Section Adresse -->
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Adresse</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
+                            name="noCivique">
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue">
+                        <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
+                            name="noLocal">
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville">
+                        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
+                            name="codePostal">
+                        <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
+                            name="noTel">
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Courriel">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Bouton de soumission -->
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-8">
+                    <button type="submit" id="submitbtn" class="btn btn-default">Enregistrer les changements</button>
+                </div>
+
+            </div>
+
+        </form>
+
+
+        <!-- Section d'échange de documents -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Échange de documents</h5>
+            </div>
+            <div class="col-md-7">
+
+                <h5 class="raison-consultation">Téléchargez les documents échangés avec votre médecin.</p>
+                </h5>
+
+                <!-- List of Documents -->
+                <div class="document-list">
+                    <div th:each="document : ${documents}" class="document-item">
+                        <span class="document-title" th:text="${document}">Document Name</span>
+                        <a th:href="@{/documents/{document}(document=${document})}" download
+                            class="download-button">Télécharger</a> <br><br>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bouton de soumission 2 et déconnection -->
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+
+            <div class="col-md-8">
+                <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!--script src="#"></script-->
+
+</body>
+
+</html>
