@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Espace patient - Messages</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="EspaceConsultation.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Patient Très-Patient</p>
+        <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="PatientFiche.html">Compte et documents</a></li>
+            <li><a href="PatientMessage.html">Rendez-vous </a></li>
+            <li><a href="PatientClinique.html">Liste des cliniques</a></li>
+        </ul>
+    </nav>
+
+    <a href="index.html">
+        <img src="Images/LogoMedecinBlanc.png" alt="Logo Clinique Clic">
+    </a>
+
+    <div class="container">
+
+
+        <!-- Section infos -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Informations personnelles</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="info-list">
+                    <div th:each="info : ${info}" class="info-item">
+                        <div class="info-details">
+                            <span th:text="${info.nam}">Numréro d'assurance maladie</span><br>
+                            <span th:text="${info.nom}">Nom</span><br>
+                            <span th:text="${info.prénom}">Prénom</span><br>
+                            <span th:text="${info.birthday}">date de naissance</span><br>
+                            <span th:text="${info.noTel}">Numéro de téléphone</span><br>
+                            <span th:text="${info.email}">Courriel</span><br>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!-- Section rendez-vous -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Liste des rendez-vous</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="appointment-list">
+                    <div th:each="appointment : ${appointments}" class="appointment-item">
+                        <div class="appointment-details">
+                            <span th:text="${appointment.date}">Date du Rendez-Vous</span><br>
+                            <span th:text="${appointment.heure}">Heure du Rendez-Vous</span><br>
+                            <span th:text="${appointment.clinique}">Clinique</span><br>
+                            <span th:text="${appointment.docteur}">Médecin</span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <!-- Message au medecin -->
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-8">
+                <h5 class="raison-consultation">Détails sur la raison de consultation</h5>
+                <textarea class="form-control" id="detailConsultation" rows="2">
+
+                </textarea><br><br>
+            </div>
+        </div>
+
+        <!-- Envoyer document -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Échange de documents</h5>
+            </div>
+            <div class="col-md-8">
+                <h5 class="raison-consultation">Envoyer un document</h5>
+                <input type="file" class="form-control-file" id="patientSendFile"><br><br>
+            </div>
+        </div>
+
+
+        <!-- Section d'échange de documents -->
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-7">
+
+                <h5 class="raison-consultation">Téléchargez les documents échangés entre médecin et patients.</p>
+                </h5>
+
+                <!-- List of Documents -->
+                <div class="document-list">
+                    <div th:each="document : ${documents}" class="document-item">
+                        <span class="document-title" th:text="${document}">Document Name</span>
+                        <a th:href="@{/documents/{document}(document=${document})}" download
+                            class="download-button">Télécharger</a> <br><br>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+   
+
+
+    <!-- Bouton de soumission 2 et déconnection -->
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+            <button type="submit" id="submitbtn2" class="btn btn-default">Demander le rendez-vous</button>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+    <script src="#"></script>
+
+</body>
+
+</html>

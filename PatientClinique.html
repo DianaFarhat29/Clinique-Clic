@@ -22,7 +22,7 @@
     <nav class="navbar navbar-default">
         <p class="navbar-text">Patient Très-Patient</p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="PatientFiche.css">Compte et documents</a></li>
+            <li><a href="PatientFiche.html">Compte et documents</a></li>
             <li><a href="PatientMessage.html">Rendez-vous</a></li> 
             <li><a href="PatientClinique.html">Liste des cliniques</a></li>        
         </ul>
@@ -41,6 +41,7 @@
                 <tr>
                     <th data-field="nom" data-sortable="true">Nom</th>
                     <th data-field="service" data-sortable="true">Services</th>
+                    <th data-field="noTel" data-sortable="true">Numéro de téléphone</th>
                     <th data-field="professionel" data-sortable="true">Adresse</th>
                 </tr>
             </thead>
@@ -49,31 +50,40 @@
                 <tr th:each="clinique : ${cliniques}">
                     <td th:text="${clinique.nom}">Nom de la clinique</td>
                     <td th:text="${clinique.services}">Services</td>
-                    <td th:text="${clinique.adresse}">Adresse</td>
+                    <td th:text="${clinique.noTel}">Numréro de téléphone</td>
+                    <td>
+                        <a th:href="@{'https://www.google.com/maps/search/?api=1&query=' 
+                        + ${clinique.adresse}}" target="_blank" th:text="${clinique.adresse}">Adresse</a>
+                    </td>
                 </tr>
                 <tr>
                     <td>Clinique A</td>
                     <td>Vaccins, medecine familiale</td>
+                    <td>514-555-5555</td>
                     <td>123 rue, local1, Montréal, Qc</td>
                 </tr>
                 <tr>
                     <td>Clinique B</td>
                     <td>Vaccins, medecine familiale</td>
+                    <td>514-555-5555</td>
                     <td>456 rue, local1, Montréal, Qc</td>
                 </tr>
                 <tr>
                     <td>Clinique C</td>
                     <td>Vaccins, medecine familiale</td>
+                    <td>514-555-5555</td>
                     <td>789 rue, local1, Montréal, Qc</td>
                 </tr>
                 <tr>
                     <td>Clinique D</td>
                     <td>Vaccins, medecine familiale</td>
+                    <td>514-555-5555</td>
                     <td>657 rue, local1, Montréal, Qc</td>
                 </tr>
                 <tr>
                     <td>Clinique E</td>
                     <td>Vaccins, medecine familiale</td>
+                    <td>514-555-5555</td>
                     <td>321 rue, local1, Montréal, Qc</td>
                 </tr>
             </tbody>

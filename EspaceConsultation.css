@@ -4,7 +4,7 @@ html, body {
 }
 body {
     display: flex;
-    background-color: #E89255;
+    background-color: #CED9F6;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     height: 100vh;
@@ -67,28 +67,32 @@ h5 {
 
 }
 
-/* Style pour la liste des rendez-vous */
-.appointment-list {
+/* Style pour la liste des rendez-vous et info patients */
+.appointment-list,
+.info-list {
     margin-left: 3em;
     margin-bottom: 3em;
     margin-top: 0;
 }
 
-.appointment-details {
+.appointment-details,
+.info-details {
     color: #598BC5;
     font-weight: bold;
 }
 
-/* Style pour chaque élément de rendez-vous */
-.appointment-item {
+/* Style pour chaque élément de rendez-vous et info patients */
+.appointment-item,
+.info-item {
     padding: 2em;
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Style pour les détails de chaque rendez-vous */
-.appointment-details span {
+/* Style pour les détails de chaque rendez-vous et info patients */
+.appointment-details span,
+.info-details span {
     display: block;
     /* Afficher chaque détail sur sa propre ligne */
 }
@@ -192,7 +196,7 @@ textarea#detailConsultation {
 #submitbtn,
 #submitbtn2,
 #disconnectbtn {
-    background-color: #E89255;
+    background-color: #CED9F6;
     color: #25455E;
     font-weight: bold;
     margin-bottom: 5%;

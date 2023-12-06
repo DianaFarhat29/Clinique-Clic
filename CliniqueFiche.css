@@ -1,3 +1,5 @@
+
+
 body {
     display: flex;
     background-color: #E89255;
@@ -10,6 +12,8 @@ body {
 
 img {
     margin-top: 7em;
+    width: auto;
+    height: 100%;
 }
 
 .navbar {
@@ -86,18 +90,21 @@ input[type='time']::placeholder {
     margin-left: 3em;
 }
 
-#submitbtn {
+#submitbtn,
+#submitbtn2,
+#disconnectbtn {
     background-color: #E89255;
     color: #25455E;
     font-weight: bold;
-    margin-left: 15%;
-    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 3em;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    width: 70%;
+    width: 100%;
     cursor: pointer;
 }
+
 
 .container {
     background-color: #fff;

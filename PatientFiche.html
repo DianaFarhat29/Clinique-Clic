@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="PatientFiche.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -16,9 +18,9 @@
     <nav class="navbar navbar-default">
         <p class="navbar-text">Patient Très-Patient</p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="PatientFiche.css">Compte et documents</a></li>
+            <li><a href="PatientFiche.html">Compte et documents</a></li>
             <li><a href="PatientMessage.html">Rendez-vous</a></li>
-            <li><a href="PatientClinique.html">Liste des cliniques</a></li>  
+            <li><a href="PatientClinique.html">Liste des cliniques</a></li>
         </ul>
     </nav>
 
@@ -47,6 +49,18 @@
                         <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
                             name="noTel">
                         <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Courriel">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section date de naissance -->
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Date de naissance</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="date" id="birthday" name="birthday">
                     </div>
                 </div>
             </div>
