@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Clinique clic - Créer un compte patient</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/ComptePatient.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<a href="/templates/Index.html">
+    <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+</a>
+    <div class="container">
+        <h2>Créer un compte</h2>
+        <form id="patientRegistrationForm">
+            <div class="form-group">
+                <label for="prenom"></label>
+                <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom">
+                <div id="userFnamecheck" class="errorForm">Entrer votre prénom.</div>
+            </div>
+            <div class="form-group">
+                <label for="nom"></label>
+                <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom">
+                <div id="userLnameCheck" class="errorForm">Entrer votre nom.</div>
+            </div>
+            <div class="form-group">
+                <label for="noMaladie"></label>
+                <input type="text" class="form-control" id="noMaladie" placeholder="Numéro d'assurance maladie" name="noMaladie">
+                <div id="NAMCheck" class="errorForm">Entrer votre numéro d'assurance maladie.</div>
+            </div>
+            <div class="form-group">
+                <label for="pwd"></label>
+                <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd">
+                <div id="passcheck" class="errorForm">Choisir un mot de passe entre 3 et 10 caractères.</div>
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm"></label>
+                <input type="password" class="form-control" id="passwordConfirm" placeholder="Confirmation du mot de passe" name="passwordConfirm">
+                <div id="passwordConfirmCheck" class="errorForm">Les mots de passe ne concordent pas.</div>
+            </div>
+            <button type="submit" id="submitbtn" class="btn btn-default">Soumettre</button>
+        </form>
+        <p class="no-account">Vous avez déjà un compte? <a href="#" class="signup-link">Se connecter</a></p>
+    </div>
+
+    <script src="/javascript/ComptePatient.js"></script>
+</body>
+</html>

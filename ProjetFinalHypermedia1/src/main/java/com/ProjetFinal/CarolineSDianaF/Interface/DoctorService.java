@@ -51,7 +51,6 @@ public interface DoctorService {
     // Method to get a specific schedule by ID
     Optional<ScheduleModel> getScheduleById(Long scheduleId);
 
-
     // Method to get a specific appointment by ID
     Optional<AppointmentModel> getAppointmentById(Long appointmentId);
 

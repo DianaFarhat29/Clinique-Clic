@@ -1,0 +1,233 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+body {
+    display: flex;
+    background-color: #CED9F6;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+}
+
+img {
+    margin-top: 7em;
+    width: auto;
+    height: 100%;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 1000;
+
+}
+
+.navbar-text {
+    color: #25455E !important;
+    font-size: large;
+    font-weight: 600;
+}
+
+.nav.navbar-nav li {
+    margin: 0 5px;
+}
+
+.nav.navbar-nav li:last-child {
+    margin-right: 50px;
+}
+
+.nav.navbar-nav li a {
+    color: #25455E;
+    font-weight: bold;
+}
+
+
+.row {
+    margin-bottom: 20px;
+}
+
+h5 {
+    color: #25455E;
+    font-weight: bold;
+}
+
+/* Style pour l'échange de documents dans PatientMessage */
+.document-list {
+    color: #598BC5;
+    margin-left: 3em;
+    margin-bottom: 5em;
+    padding: 2em;
+    border-radius: 5px;
+
+}
+
+/* Style pour la liste des rendez-vous et info patients */
+.appointment-list,
+.info-list {
+    margin-left: 3em;
+    margin-bottom: 3em;
+    margin-top: 0;
+}
+
+.appointment-details,
+.info-details {
+    color: #598BC5;
+    font-weight: bold;
+}
+
+/* Style pour chaque élément de rendez-vous et info patients */
+.appointment-item,
+.info-item {
+    padding: 2em;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour les détails de chaque rendez-vous et info patients */
+.appointment-details span,
+.info-details span {
+    display: block;
+    /* Afficher chaque détail sur sa propre ligne */
+}
+
+/* Style pour les petits boutons dans PatientMessage */
+.appointment-actions button {
+    background-color: #25455E;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Style pour les petits boutons dans PatientMessage */
+.download-button {
+    background-color: #25455E;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 3em;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Style pour les champs de formulaire */
+input[type='text'],
+input[type='email'],
+input[type='date'],
+input[type='file'] {
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+}
+
+/* Style pour les placeholders des champs de formulaire */
+input[type='text']::placeholder,
+input[type='email']::placeholder,
+input[type='date']::-webkit-input-placeholder,
+input[type='file']::placeholder {
+    color: #598BC5 !important;
+}
+
+/* style pour formulaire*/
+select#cliniqueSelection,
+select#dateSelection,
+select#heureSelection,
+select#docteurSelection {
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+    color: #598BC5;
+    /* Default text color, change as needed */
+    background-color: #fff;
+    /* Default background, change as needed */
+}
+
+/* Style for the textarea for consultation details */
+textarea#detailConsultation {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+    color: #598BC5;
+    /* Default text color, change as needed */
+    background-color: #fff;
+    /* Default background, change as needed */
+}
+
+
+
+/* Style pour le label des cases à cocher */
+.checkbox label {
+    margin-left: 3em;
+    color: #598BC5;
+
+}
+
+.jour-semaine {
+    margin-left: 3em;
+}
+
+#submitbtn,
+#submitbtn2,
+#disconnectbtn {
+    background-color: #CED9F6;
+    color: #25455E;
+    font-weight: bold;
+    margin-bottom: 5%;
+    margin-left: 3em;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    max-width: 1200px;
+    margin-right: 0;
+    margin-top: 7em;
+    height: fit-content;
+}
+
+
+
+/* Style pour le label des cases à cocher */
+.checkbox label {
+    margin-left: 3em;
+    color: #598BC5;
+
+}
+
+.raison-consultation {
+    margin-left: 3em;
+}

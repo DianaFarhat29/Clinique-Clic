@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Espace clinique - Fiche</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/css/CliniqueFiche.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Clinique médicale ABC</p>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="CliniquePatients.html">Liste des patients</a></li>
+            <li><a href="CliniqueMedecin.html">Liste des médecins</a></li>
+            <li><a href="CliniqueFiche.html">Fiche de la clinique</a></li>
+        </ul>
+    </nav>
+
+    <a href="/templates/Index.html">
+        <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+    </a>
+
+    <div class="container">
+        <form id="cliniqueForm">
+            <!-- Section Nom de la clinique -->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Nom de la clinique</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nom" placeholder="Entrez le nom de la clinique"
+                            name="nom">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Adresse -->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Adresse</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
+                            name="noCivique">
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue">
+                        <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
+                            name="noLocal">
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville">
+                        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
+                            name="codePostal">
+                        <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
+                            name="noTel">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Heures d'ouverture  semaine-->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Heures d'ouverture</h5>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Lundi</h5>
+                            <input type="time" class="form-control" name="lundiOuverture">
+                            <input type="time" class="form-control" name="lundiFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Mardi</h5>
+                            <input type="time" class="form-control" name="mardiOuverture">
+                            <input type="time" class="form-control" name="mardiFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Mercredi</h5>
+                            <input type="time" class="form-control" name="mercrediOuverture">
+                            <input type="time" class="form-control" name="mercrediFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Jeudi</h5>
+                            <input type="time" class="form-control" name="jeudiOuverture">
+                            <input type="time" class="form-control" name="jeudiFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Vendredi</h5>
+                            <input type="time" class="form-control" name="vendrediOuverture">
+                            <input type="time" class="form-control" name="vendrediFermeture">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Heures d'ouverture  weekend-->
+            <div class="row">
+                <div class="col-md-2">
+                    <!-- Espace vide pour alignement -->
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Samedi</h5>
+                            <input type="time" class="form-control" name="samediOuverture">
+                            <input type="time" class="form-control" name="samediFermeture">
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="jour-semaine">Dimanche</h5>
+                            <input type="time" class="form-control" name="dimancheOuverture">
+                            <input type="time" class="form-control" name="dimancheFermeture">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section services offerts -->
+            <div class="row">
+
+                <div class="col-md-2">
+                    <h5>Services offerts</h5>
+                </div>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="urgenceMineure" value="urgenceMineure"> Urgence
+                            mineure</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="medFamille" value="medFamille"> Médecine familiale</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="obyn" value="obyn"> Gynécologie</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="pediatrie" value="pediatrie"> Pédiatrie</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="analyse" value="analyse"> Analyses et vaccination</label>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <!-- Bouton de soumission 2 et déconnection -->
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" id="submitbtn2" class="btn btn-default">Soumettre</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
+                </div>
+
+
+            </div>
+
+        </form>
+    </div>
+
+    <!--script src="/javascript/"></script-->
+
+</body>
+
+</html>

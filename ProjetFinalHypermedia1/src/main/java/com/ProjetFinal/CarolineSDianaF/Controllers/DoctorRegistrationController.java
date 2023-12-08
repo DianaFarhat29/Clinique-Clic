@@ -49,6 +49,6 @@ public class DoctorRegistrationController {
         doctorService.saveDoctor(doctor);
 
         // Redirect to a confirmation page or login page
-        return "redirect:/login";
+        return "redirect:/loginMedecin";
     }
 }

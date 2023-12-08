@@ -2,6 +2,7 @@ package com.ProjetFinal.CarolineSDianaF.Configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan("com.ProjetFinal.CarolineSDianaF.Configuration")
 public class SecurityConfig {
 
     @Autowired
@@ -20,25 +22,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(requests -> requests
-
+                // Pages disponibles sans authentification
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/AdminLogin.html", "/loginMedecin", "/loginClinique", "/loginPatient", "/CompteMedecin", "/CompteClinique", "/ComptePatient", "/Index").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login.html").permitAll()
-                                .loginProcessingUrl("/perform_login")
-                                .successHandler(customSuccessHandler)
-                                .defaultSuccessUrl("/index.html", true)
-                                .failureUrl("/login?error=true")
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .successHandler(customSuccessHandler)
+                        .failureUrl("/login?error=true")
                 )
-                .logout(logout ->
-                        logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .logoutUrl("/index.html")
-                                .logoutSuccessUrl("/login?logout=true")
-                                .deleteCookies("JSESSIONID")
-
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login?logout=true")
+                        .deleteCookies("JSESSIONID")
                 )
                 .csrf(csrf -> csrf.disable());
 

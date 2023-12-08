@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Clinique Clic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/templates/Index.html">
+                    <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- S'inscrire Dropdown -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            Créer un compte <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a href="ComptePatient.html">Patient</a></li>
+                            <li><a href="CompteClinique.html">Clinique</a></li>
+                            <li><a href="CompteMedecin.html">Médecin</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Login Dropdown -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            Connexion <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a href="loginPatient.html">Patient</a></li>
+                            <li><a href="loginClinique.html">Clinique</a></li>
+                            <li><a href="loginMedecin.html">Médecin</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <!-- ---------------- service et slogan---------- -->
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-4">
+                <div class="services">
+                    <p class="services-title">
+                        Services clics
+                    </p>
+                    <hr>
+                    <p class="services-list">
+                        <a href="#">Prendre rendez-vous</a><br>
+                        <a href="#">Consulter un rendez-vous</a><br>
+                        <a href="#">Annuler un rendez-vous</a><br>
+                        <a href="#">Recevoir une confirmation</a><br>
+                        <a href="#">Envoyer un document à votre médecin</a><br>
+                        <a href="PatientClinique.html">Consulter la liste des cliniques</a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6">
+                <div class="slogan">
+                    <p>Les rendez-vous <span class="highlight">clinique</span> en quelques <span
+                            class="highlight">clics</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ---------------- boites oranges du centre ---------- -->
+    <div class="container box-center">
+        <div class="row">
+            <!--  Colonne vide pour l'espacement -->
+            <div class="col-sm-1"></div>
+
+            <!-- Première boîte orange -->
+            <div class="col-sm-3">
+                <div class="box">
+                    <img src="/Images/ServiceAnalyse.png" alt="Service d'analyse">
+
+                </div>
+            </div>
+            <!--  Colonne vide pour l'espacement -->
+            <div class="col-sm-1"></div>
+
+            <!-- Deuxième boîte orange -->
+            <div class="col-sm-3">
+                <div class="box">
+                    <img src="/Images/ServicePediatrie.png" alt="Service de pédiatrie">
+
+                </div>
+            </div>
+            <!--  Colonne vide pour l'espacement -->
+            <div class="col-sm-1"></div>
+
+            <!-- Toisième boîte orange -->
+            <div class="col-sm-3">
+                <div class="box">
+                    <img src="/Images/ServiceMedecine.png" alt="Service de médecine">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ---------------- carte du site en bas ---------- -->
+    <div class="container map">
+        <div class="row">
+            <!--  Titre-->
+            <div class="col-sm-3">
+                <div class="map-title">
+                    <p>Carte du site</p>
+                </div>
+            </div>
+
+            <!-- Carte, section 1 patient -->
+            <div class="col-sm-3">
+                <div class="map-content">
+                    <p class="content-title">Patient</p>
+                    <hr>
+                    <p class="content-list">
+                        <a href="#">Prendre rendez-vous</a><br>
+                        <a href="#">Consulter un rendez-vous</a><br>
+                        <a href="#">Modifier un rendez-vous</a><br>
+                        <a href="#">Annuler un rendez-vous</a><br>
+                        <a href="#">Recevoir une confirmation</a><br>
+                        <a href="#">Envoyer un document</a><br>
+                        <a href="#">Joindre un professionnel de la santé</a><br><br>
+                    </p>
+                </div>
+            </div>
+            <!-- Carte, section 2 clinique -->
+            <div class="col-sm-3">
+                <div class="map-content">
+                    <p class="content-title">Clinique</p>
+                    <hr>
+                    <p class="content-list">
+                        <a href="#">Consulter la liste des rendez-vous</a><br>
+                        <a href="#">Mettre à jour les informations de la clinique</a><br><br>
+                    </p>
+                </div>
+            </div>
+            <!-- Carte, section 3 medecin -->
+            <div class="col-sm-3">
+                <div class="map-content">
+                    <p class="content-title">Médecin</p>
+                    <hr>
+                    <p class="content-list">
+                        <a href="#">Gestion des rendez-vous</a><br>
+                        <a href="#">Espace consultation</a><br>
+                        <a href="#">Échange de documents</a><br>
+                        <a href="#">Coordonnées</a><br>
+                        <a href="#">Horaire de visite</a><br>
+                        <a href="#">Tarif de consultation</a><br><br>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ---------------- copyright---------- -->
+    <div class="credit">
+        <p>© Farhat et Steele 2023 </p>
+    </div>
+
+</body>
+
+</html>

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-
+// Les informations des utilisateurs pour l'authentification sont chargées à partir de la base de données
 @Service
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 
