@@ -8,13 +8,21 @@ public class ContactDetailsModel {
     // Attributes
     private String phoneNumber;
     private String email;
-    private String address;
+    private int noCivique;
+    private String rue;
+    private String noLocal;
+    private String ville;
+    private String codePostal;
 
     // Constructors
-    public ContactDetailsModel(String phoneNumber, String email, String address) {
+    public ContactDetailsModel(String phoneNumber, String email, int noCivique,String rue,String noLocal, String ville, String codePostal) {
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.address = address;
+        this.noCivique = noCivique;
+        this.rue = rue;
+        this.noLocal = noLocal;
+        this.ville = ville;
+        this.codePostal = codePostal;
     }
 
     public ContactDetailsModel() {
@@ -38,12 +46,44 @@ public class ContactDetailsModel {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public int getNoCivique() {
+        return noCivique;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setNoCivique(int noCivique) {
+        this.noCivique = noCivique;
+    }
+
+    public String getRue() {
+        return rue;
+    }
+
+    public void setRue(String rue) {
+        this.rue = rue;
+    }
+
+    public String getNoLocal() {
+        return noLocal;
+    }
+
+    public void setNoLocal(String noLocal) {
+        this.noLocal = noLocal;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
     }
 
     // toString method
@@ -52,7 +92,6 @@ public class ContactDetailsModel {
         return "ContactDetailsModel{" +
                 "phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+                ", address='" + noCivique + '\'' + ", rue='" + rue + '\'' + ", noLocal='" + noLocal + '\'' + ", ville='" + ville + '\'' + ", codePostal='" + codePostal + '\'';
     }
 }

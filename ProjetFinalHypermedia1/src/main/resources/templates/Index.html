@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
-    <title>Clinique Clic</title>
+    <title>Clinique Clics</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/home.css">
+    <base href="/">
+    <link rel="stylesheet" th:href="@{/css/Index.css}">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-
-    </style>
 </head>
 
 <body>
@@ -25,8 +24,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/templates/Index.html">
-                    <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+                <a th:href="@{/Index}">
+                    <img th:src="@{/images/LogoCliniqueClic.png}" alt="Description">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -38,23 +37,15 @@
                             Créer un compte <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a href="ComptePatient.html">Patient</a></li>
-                            <li><a href="CompteClinique.html">Clinique</a></li>
-                            <li><a href="CompteMedecin.html">Médecin</a></li>
+                            <li><a th:href="@{/ComptePatient}">Patient</a></li>
+                            <li><a th:href="@{/CompteClinique}">Clinique</a></li>
+                            <li><a th:href="@{/CompteMedecin}">Médecin</a></li>
                         </ul>
                     </li>
 
                     <!-- Login Dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">
-                            Connexion <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a href="loginPatient.html">Patient</a></li>
-                            <li><a href="loginClinique.html">Clinique</a></li>
-                            <li><a href="loginMedecin.html">Médecin</a></li>
-                        </ul>
+                        <a class="dropdown-toggle" th:href="@{/login}">Connexion</a>
                     </li>
 
                 </ul>
@@ -106,7 +97,7 @@
             <!-- Première boîte orange -->
             <div class="col-sm-3">
                 <div class="box">
-                    <img src="/Images/ServiceAnalyse.png" alt="Service d'analyse">
+                    <img src="/images/ServiceAnalyse.png" alt="Service d'analyse">
 
                 </div>
             </div>
@@ -116,7 +107,7 @@
             <!-- Deuxième boîte orange -->
             <div class="col-sm-3">
                 <div class="box">
-                    <img src="/Images/ServicePediatrie.png" alt="Service de pédiatrie">
+                    <img src="/images/ServicePediatrie.png" alt="Service de pédiatrie">
 
                 </div>
             </div>
@@ -126,7 +117,7 @@
             <!-- Toisième boîte orange -->
             <div class="col-sm-3">
                 <div class="box">
-                    <img src="/Images/ServiceMedecine.png" alt="Service de médecine">
+                    <img src="/images/ServiceMedecine.png" alt="Service de médecine">
                 </div>
             </div>
 

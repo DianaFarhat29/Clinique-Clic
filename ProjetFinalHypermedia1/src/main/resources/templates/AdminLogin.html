@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/static/css/AdminLogin.css">
+    <link rel="stylesheet" th:href="@{/css/AdminLogin.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -18,7 +17,7 @@
    
 
     <div class="container">
-        <img src="/Images/LogoCliniqueClic.png" alt="Logo" class="img">
+        <img src="/images/LogoCliniqueClic.png" alt="Logo" class="img">
         <h2>Se connecter</h2>
         <form id="ConnexionForm">
 
@@ -46,7 +45,7 @@
 
     </div>
 
-    <script src="/javascript/"></script>
+ <!-- <script src="@{/javascript/}"></script> -->
 </body>
 
 </html>

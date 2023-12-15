@@ -36,7 +36,6 @@ public class DoctorServiceImpl implements DoctorService {
     @Autowired
     private EmailService emailService;
 
-    @Autowired
     private DoctorService doctorService;
 
     @Autowired
@@ -204,5 +203,10 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepository.findAll();
     }
 
+    // Implementation for finding doctor by Professional Number
+    @Override
+    public Optional<DoctorModel> getDoctorByProfessionalNumber(Long professionalNumber) {
+        return doctorRepository.findByProfessionalNumber(professionalNumber);
+    }
 
 }

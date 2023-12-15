@@ -31,4 +31,7 @@ public interface ClinicService {
 
     // Implementation of method to list all clinics
     List<ClinicModel> getAllClinics();
+
+    // Method to find clinic by Email
+    Optional<ClinicModel> getClinicByEmail(String email);
 }

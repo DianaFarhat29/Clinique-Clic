@@ -6,19 +6,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/CompteMedecin.css">
+    <link rel="stylesheet" th:href="@{/css/CompteMedecin.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<a href="/templates/Index.html">
-    <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+<a th:href="@{/Index}" id="logoContainer">
+    <img src="/images/LogoMedecinBlanc.png" alt="Logo Clinique Clic">
 </a>
     <div class="container">
 
-        <h2>Créer un compte</h2>
-        <form th:action="@{/register/doctor}" th:object="${doctor}" method="post" id="registrationForm">
+        <h2>Créer un compte médecin</h2>
+        <form th:action="@{/CompteMedecin}" th:object="${doctor}" method="post" id="registrationForm">
+
+            <!-- Section Informations Personnelles -->
+            <div class="row">
+                <h5>Informations Personnelles</h5>
+            </div>
 
             <div class="form-group">
                 <label for="prenom"></label>
@@ -30,23 +35,115 @@
 
             <div class="form-group">
                 <label for="nom"></label>
-                <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom">
+                <input type="text" class="form-control" id="nom" th:field="*{lastName}" placeholder="Nom" name="nom">
                 <div id="userCheck" class="errorForm">
                     Entrez votre nom.
                 </div>
             </div>
             <div class="form-group">
+                <label for="specialite"></label>
+                <input type="text" class="form-control" id="specialite" th:field="*{speciality}" placeholder="Spécialité" name="specialite">
+                <div id="specialiteCheck" class="errorForm">
+                    Entrez votre profession (spécialité).
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="noLicence"></label>
-                <input type="text" class="form-control" id="noLicence" placeholder="Numéro de licence" name="noLicence">
+                <input type="text" class="form-control" id="noLicence" th:field="*{professionalNumber}" placeholder="Numéro de licence" name="username">
                 <div id="noLicenceCheck" class="errorForm">
                     Entrez votre numéro de licence.
                 </div>
             </div>
+
+            <!-- Section tarif de consultation -->
             <div class="form-group">
-                <label for="pwd"></label>
-                <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd">
+                <input type="number" class="form-control" id="tarif" th:field="*{expectedSalary}" placeholder="Tarif de consultation" name="tarif" min="0" step="5.00">
+                <div id="tarifCheck" class="errorForm">
+                </div>
+            </div>
+
+
+
+            <!-- Section coordonnées -->
+            <div class="row">
+                    <h5>Coordonnées</h5>
+            </div>
+
+                    <div class="form-group col">
+                        <label for="phoneNumber"></label>
+                        <input type="text" class="form-control" id="phoneNumber" th:field="*{contactDetails.phoneNumber}" placeholder="Numéro de téléphone" name="phoneNumber">
+                        <div id="phoneNumberCheck" class="errorForm">
+                            Entrez un numéro de téléphone valide pour les contacts professionnels. (ajouter le poste si nécessaire).
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"></label>
+                        <input type="email" class="form-control" id="email" th:field="*{contactDetails.email}" placeholder="Adresse courriel" name="email">
+                        <div id="courrielCheck" class="errorForm">
+                            Entrez une adresse courriel professionnelle valide.
+                        </div>
+                    </div>
+
+            <div class="row">
+                    <h5>Adresse</h5>
+            </div>
+
+
+                            <div class="form-group">
+                                <label for="noCivique"></label>
+                                <input type="text" class="form-control" id="noCivique" th:field="*{contactDetails.noCivique}" placeholder="Numéro civique"
+                                       name="noCivique">
+                                <div id="noCiviqueCheck" class="errorForm">
+                                    Entrez un numéro civique valide.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="rue"></label>
+                                    <input type="text" class="form-control" id="rue" th:field="*{contactDetails.rue}" placeholder="Nom de la rue" name="rue">
+                                    <div id="rueCheck" class="errorForm">
+                                        Entrez un nom de rue valide.
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="noLocal"></label>
+                                    <input type="text" class="form-control" id="noLocal" th:field="*{contactDetails.noLocal}" placeholder="Numéro de local"
+                                           name="noLocal">
+                                    <div id="noLocalCheck" class="errorForm">
+                                        Entrez un numéro de local valide.
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                  <label for="ville"></label>
+                                  <input type="text" class="form-control" id="ville" th:field="*{contactDetails.ville}" placeholder="Ville" name="ville">
+                                <div id="villeCheck" class="errorForm">
+                                    Entrez un nom de ville valide.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="codePostal"></label>
+                                <input type="text" class="form-control" id="codePostal" th:field="*{contactDetails.codePostal}" placeholder="Code postal"
+                                       name="codePostal">
+                                <div id="codePostalCheck" class="errorForm">
+                                    Entrez un code postal valide.
+                                </div>
+                            </div>
+
+            <div class="row">
+                    <h5>Informations de connexion</h5>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="password"></label>
+                <input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password">
                 <div id="passCheck" class="errorForm">
-                    Le mot de passe doit contenir entre 3 et 10 caractères.
+                    Le mot de passe doit contenir un minimum de 6 caractères, un minimum de 1 chiffre et un minimum de 1 caractère spéciale  (/, %, . ou ;).
                 </div>
             </div>
 
@@ -62,11 +159,11 @@
 
             <input type="submit" id="submitbtn" value="Soumettre" class="btn btn-default">
         </form>
-        <p class="no-account">Vous avez déjà un compte? <a href="loginMedecin.html" class="signup-link">Se connecter</a></p>
+        <p class="no-account">Vous avez déjà un compte? <a th:href="@{/login}" class="signup-link">Se connecter</a></p>
 
     </div>
 
-    <script src="/javascript/CompteMedecin.js"></script>
+    <script th:src="@{/javascript/CompteMedecin.js}"></script>
 </body>
 
 </html>

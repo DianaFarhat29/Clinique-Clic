@@ -1,16 +1,16 @@
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
-import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
-import com.ProjetFinal.CarolineSDianaF.Models.UserModel;
+import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/register/clinic")
+@RequestMapping("/CompteClinique")
 public class ClinicRegistrationController {
 
     @Autowired
@@ -24,19 +24,26 @@ public class ClinicRegistrationController {
 
     // Display the registration form
     @GetMapping
-    public String showRegistrationForm() {
-        // Return the view for registration
-        return "clinicRegistration";
+    public String showRegistrationForm(Model model) {
+        ClinicModel clinic = new ClinicModel();
+        clinic.setContactDetails(new ContactDetailsModel());
+        model.addAttribute("clinic", clinic);
+        return "CompteClinique";
     }
 
     // Process the registration form
     @PostMapping
     public String registerClinic(@ModelAttribute ClinicModel clinic,
-                                 @RequestParam String username,
                                  @RequestParam String password) {
+
+        // The username is the professional number
+        String email = clinic.getContactDetails().getEmail();
+
         // Create a new user with username and password
         UserModel newUser = new UserModel();
-        newUser.setUsername(username);
+        newUser.setUsername(email);
+        newUser.setRole(Role.CLINIC);
+        newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
 
         // Save the user

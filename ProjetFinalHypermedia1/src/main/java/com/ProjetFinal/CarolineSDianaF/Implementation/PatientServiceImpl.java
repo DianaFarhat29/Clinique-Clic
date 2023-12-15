@@ -146,4 +146,10 @@ public class PatientServiceImpl implements PatientService {
         return appointmentRepository.findById(appointmentId);
     }
 
+    // Implementation for finding doctor by Professional Number
+    @Override
+    public Optional<PatientModel> getPatientByHealthInsuranceNumber(String healthInsuranceNumber) {
+        return patientRepository.findByHealthInsuranceNumber(healthInsuranceNumber);
+    }
+
 }

@@ -67,4 +67,10 @@ public class ClinicServiceImpl implements ClinicService {
     public List<ClinicModel> getAllClinics() {
         return clinicRepository.findAll();
     }
+
+    // Implementation for finding clinic by Email
+    @Override
+    public Optional<ClinicModel> getClinicByEmail(String email) {
+        return clinicRepository.findByContactDetails_Email(email);
+    }
 }

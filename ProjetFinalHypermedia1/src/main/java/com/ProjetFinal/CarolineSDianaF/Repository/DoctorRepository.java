@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -32,8 +33,5 @@ public interface DoctorRepository extends JpaRepository<DoctorModel, Long>{
     List<DoctorModel> findByLastName(String lastName);
 
     // Method to find doctor by professional number
-    List<DoctorModel> findByProfessionalNumber(Long professionalNumber);
-
-    // Method to find doctor by location
-    List<DoctorModel> findByLocation(String location);
+    Optional<DoctorModel> findByProfessionalNumber(Long professionalNumber);
 }

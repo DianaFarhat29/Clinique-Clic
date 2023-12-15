@@ -55,7 +55,7 @@ public class AdministratorServiceImpl implements AdministratorService{
         existingPatient.setFirstName(patient.getFirstName());
         existingPatient.setLastName(patient.getLastName());
         existingPatient.setHealthInsuranceNumber(patient.getHealthInsuranceNumber());
-        existingPatient.setSequentialNumber(patient.getSequentialNumber());
+        existingPatient.setHealthSequentialNumber(patient.getHealthSequentialNumber());
         existingPatient.setContactDetails(patient.getContactDetails());
         existingPatient.setDateBirth(patient.getDateBirth());
         existingPatient.setGender(patient.getGender());
@@ -87,8 +87,6 @@ public class AdministratorServiceImpl implements AdministratorService{
         existingDoctor.setSpeciality(doctor.getSpeciality());
         existingDoctor.setProfessionalNumber(doctor.getProfessionalNumber());
         existingDoctor.setExpectedSalary(doctor.getExpectedSalary());
-        existingDoctor.setCoordinate(doctor.getCoordinate());
-        existingDoctor.setLocation(doctor.getLocation());
         existingDoctor.setContactDetails(doctor.getContactDetails());
         existingDoctor.setClinics(doctor.getClinics());
 
@@ -113,10 +111,11 @@ public class AdministratorServiceImpl implements AdministratorService{
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
         // Update fields and save
         existingClinic.setName(clinic.getName());
-        existingClinic.setCoordinate(clinic.getCoordinate());
-        existingClinic.setServices(clinic.getServices());
-        existingClinic.setContactDetails(clinic.getContactDetails());
+        // Update services
+        // Convertir la liste des services du modèle clinic en chaîne et mettre à jour
+        existingClinic.setServicesFromList(clinic.getServicesAsList());
 
+        existingClinic.setContactDetails(clinic.getContactDetails());
         return clinicRepository.save(existingClinic);
     }
 

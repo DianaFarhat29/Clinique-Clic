@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/MedecinPatient.css">
+    <link rel="stylesheet" th:href="@{/css/MedecinPatient.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -23,12 +23,12 @@
         <p class="navbar-text">Dr Médecin Médecine</p>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="MedecinPatient.html">Liste des patients</a></li>
-            <li><a href="Medecin-Fiche.html">Fiche du médecin</a></li>        
+            <li><a href="MedecinFiche.html">Fiche du médecin</a></li>
         </ul>
     </nav>
 
     <a href="/templates/Index.html">
-        <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+        <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
     <div class="container">
@@ -97,7 +97,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
 
 
-    <script src="/javascript/CliniquePatients.js"></script>
+        <script src="@{/javascript/CliniquePatients}"></script>
 </body>
 
 </html>

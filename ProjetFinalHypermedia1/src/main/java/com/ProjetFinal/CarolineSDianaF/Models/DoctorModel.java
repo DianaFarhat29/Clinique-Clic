@@ -36,12 +36,6 @@ public class DoctorModel {
     
     @Column(nullable = false)
     private Double expectedSalary;
-    
-    @Column(nullable = false)
-    private String coordinate;
-    
-    @Column(nullable = false)
-    private String location;
 
     @Embedded
     @Column(nullable = false)
@@ -71,15 +65,13 @@ public class DoctorModel {
     private UserModel user;
 
     // Constructors
-    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics, Set patients,Set<ScheduleModel> schedules, UserModel user) {
+    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, ContactDetailsModel contactDetails, Set clinics, Set patients,Set<ScheduleModel> schedules, UserModel user) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.speciality = speciality;
         this.professionalNumber = professionalNumber;
         this.expectedSalary = expectedSalary;
-        this.coordinate = coordinate;
-        this.location = location;
         this.contactDetails = contactDetails;
         this.clinics = clinics;
         this.patients = patients;
@@ -140,22 +132,6 @@ public class DoctorModel {
         this.expectedSalary = expectedSalary;
     }
 
-    public String getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public ContactDetailsModel getContactDetails() {
         return contactDetails;
     }
@@ -199,6 +175,6 @@ public class DoctorModel {
     // ToString() Method
     @Override
     public String toString() {
-        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedules=" + schedules + ", user=" + user + '}';
+        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedules=" + schedules + ", user=" + user + '}';
     }
 }

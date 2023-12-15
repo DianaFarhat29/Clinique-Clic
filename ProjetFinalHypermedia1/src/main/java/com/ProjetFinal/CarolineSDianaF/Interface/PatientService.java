@@ -43,4 +43,7 @@ public interface PatientService {
     // Method to get a specific appointment by ID
     Optional<AppointmentModel> getAppointmentById(Long appointmentId);
 
+    // Method to find patient by Health Insurance Number
+    Optional<PatientModel> getPatientByHealthInsuranceNumber(String healthInsuranceNumber);
+
 }

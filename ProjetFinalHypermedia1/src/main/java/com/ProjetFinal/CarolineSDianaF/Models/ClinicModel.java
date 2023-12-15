@@ -6,7 +6,11 @@ package com.ProjetFinal.CarolineSDianaF.Models;
 
 import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,16 +28,16 @@ public class ClinicModel {
     
     @Column(nullable = false)
     private String name;
-    
+
     @Column(nullable = false)
-    private String coordinate;
-    
-    @Column(nullable = false)
-    private String services;
+    private String ministerialNumber;
 
     @Embedded
     @Column(nullable = false)
     private ContactDetailsModel contactDetails;
+
+    @Column(nullable = false)
+    private String services;
 
     @ManyToMany
     @JoinTable(
@@ -56,10 +60,10 @@ public class ClinicModel {
     private UserModel user;
 
     // Constructors
-    public ClinicModel(Long id, String name, String coordinate, String services, ContactDetailsModel contactDetails, Set patients, Set doctors, UserModel user) {
+    public ClinicModel(Long id, String name, String ministerialNumber , String services, ContactDetailsModel contactDetails, Set<ClinicModel> patients, Set<ClinicModel> doctors, UserModel user) {
         this.id = id;
         this.name = name;
-        this.coordinate = coordinate;
+        this.ministerialNumber = ministerialNumber;
         this.services = services;
         this.contactDetails = contactDetails;
         this.patients = patients;
@@ -88,12 +92,12 @@ public class ClinicModel {
         this.name = name;
     }
 
-    public String getCoordinate() {
-        return coordinate;
-    }
 
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
+    public String getMinisterialNumber() {
+        return ministerialNumber;
+    }
+    public void setMinisterialNumber(String ministerialNumber) {
+        this.ministerialNumber = ministerialNumber;
     }
 
     public String getServices() {
@@ -112,7 +116,7 @@ public class ClinicModel {
         this.contactDetails = contactDetails;
     }
 
-    public Set getPatients() {
+    public Set<ClinicModel> getPatients() {
         return patients;
     }
 
@@ -120,7 +124,7 @@ public class ClinicModel {
         this.patients = patients;
     }
 
-    public Set getDoctors() {
+    public Set<ClinicModel> getDoctors() {
         return doctors;
     }
 
@@ -135,11 +139,20 @@ public class ClinicModel {
     public void setUser(UserModel user) {
         this.user = user;
     }
+
+    // Methods to convert services from list to string and vice versa
+    public List<String> getServicesAsList() {
+        return services != null ? Arrays.asList(services.split(",")) : new ArrayList<>();
+    }
+
+    public void setServicesFromList(List<String> servicesList) {
+        this.services = String.join(",", servicesList);
+    }
     
     // ToString() Method
     @Override
     public String toString() {
-        return "ClinicModel{" + "id=" + id + ", name=" + name + ", coordinate=" + coordinate + ", services=" + services + ", contactDetails=" + contactDetails + ", patients=" + patients + ", doctors=" + doctors + ", user=" + user + '}';
+        return "ClinicModel{" + "id=" + id + ", ministerialNumber=" + ministerialNumber + ", mi=" + name + ", services=" + services + ", contactDetails=" + contactDetails + ", patients=" + patients + ", doctors=" + doctors + ", user=" + user + '}';
     }
        
 }

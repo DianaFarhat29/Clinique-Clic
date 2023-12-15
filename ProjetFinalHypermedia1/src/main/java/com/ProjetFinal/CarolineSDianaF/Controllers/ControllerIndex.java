@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class ControllerIndex {
-    @GetMapping("/index")
+
+    @GetMapping("/Index")
     public String index(Model model) {
         model.addAttribute("message", "Welcome to our website!");
-        return "index";
+        return "Index";
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("message", "Welcome to our website!");
-        return "login";
-    }
+
 }

@@ -40,10 +40,10 @@ public interface PatientRepository extends JpaRepository<PatientModel, Long> {
     List<PatientModel> findByGender(String gender);
 
     // Method to find patient by Health Insurance Number
-    Optional<PatientModel> findByHealthInsuranceNumber(Long healthInsuranceNumber);
+    Optional<PatientModel> findByHealthInsuranceNumber(String healthInsuranceNumber);
 
     // Method to find patient by Health Sequential Number
-    Optional<PatientModel> findByHealthSequentialNumber(Long sequentialNumber);
+    Optional<PatientModel> findByHealthSequentialNumber(Long healthSequentialNumber);
 
     // Method to find patient by clinic
     List<PatientModel> findByClinicsId(Long clinicId);

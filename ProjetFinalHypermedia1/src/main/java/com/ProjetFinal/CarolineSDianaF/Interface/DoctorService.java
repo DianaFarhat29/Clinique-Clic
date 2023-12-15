@@ -59,4 +59,8 @@ public interface DoctorService {
 
     // Method to get all doctors
     List<DoctorModel> getAllDoctors();
+
+    // Method to find doctor by Professional Number
+    Optional<DoctorModel> getDoctorByProfessionalNumber(Long professionalNumber);
+
 }

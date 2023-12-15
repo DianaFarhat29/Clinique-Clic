@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/css/CliniqueFiche.css">
+    <link rel="stylesheet" th:href="@{/css/CliniqueFiche.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -25,7 +25,7 @@
     </nav>
 
     <a href="/templates/Index.html">
-        <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+        <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
     <div class="container">
@@ -168,7 +168,7 @@
         </form>
     </div>
 
-    <!--script src="/javascript/"></script-->
+   <!-- <script src="@{/javascript/}"></script> -->
 
 </body>
 

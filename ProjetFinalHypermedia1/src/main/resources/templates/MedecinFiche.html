@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
     <title>Espace medecin - Fiche</title>
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/css/MedecinFiche.css">
+    <link rel="stylesheet" th:href="@{/css/MedecinFiche.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -19,12 +19,12 @@
         <p class="navbar-text">Dr Médecin Médecine</p>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="MedecinPatient.html">Liste des patients</a></li>
-            <li><a href="Medecin-Fiche.html">Fiche du médecin</a></li>
+            <li><a href="MedecinFiche.html">Fiche du médecin</a></li>
         </ul>
     </nav>
 
     <a href="/templates/Index.html">
-        <img src="/Images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+        <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
     <div class="container">
@@ -108,8 +108,6 @@
                 </div>
             </div>
 
-
-
             <!-- Section tarif de consultation -->
             <div class="row">
                 <div class="col-md-2">
@@ -122,6 +120,7 @@
                     </div>
                 </div>
             </div>
+
 
 
             <!-- Bouton de soumission 2 et déconnection -->
@@ -142,7 +141,7 @@
         </form>
     </div>
 
-    <!--script src="/javascript/"></script-->
+ <!-- <script src="@{/javascript/}"></script> -->
 
 </body>
 

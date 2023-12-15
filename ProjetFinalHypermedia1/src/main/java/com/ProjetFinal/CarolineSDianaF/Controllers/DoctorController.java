@@ -18,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -103,6 +106,15 @@ public class DoctorController {
     public String manageAppointment(@PathVariable Long doctorId, @ModelAttribute AppointmentModel appointment) {
         doctorService.manageAppointment(appointment);
         return "redirect:/doctors/" + doctorId + "/appointments";
+    }
+
+    // Display the page 'MedecinFiche', the page of redirection after doctor login
+    @GetMapping("/MedecinFiche")
+    public String medecinFiche(Model model, Authentication authentication) {
+        Long professionalNumber = Long.valueOf(authentication.getName());
+        Optional<DoctorModel> doctor = doctorService.getDoctorByProfessionalNumber(professionalNumber);
+        doctor.ifPresent(d -> model.addAttribute("doctor", d));
+        return "MedecinFiche";
     }
     
 }

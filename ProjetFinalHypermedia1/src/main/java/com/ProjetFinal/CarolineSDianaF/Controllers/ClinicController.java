@@ -11,10 +11,13 @@ import com.ProjetFinal.CarolineSDianaF.Models.UserModel;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  *
@@ -74,6 +77,15 @@ public class ClinicController {
     public String updateClinic(@PathVariable Long id, @ModelAttribute ClinicModel clinic) {
         clinicService.save(clinic); // Using save for both add and update operations
         return "redirect:/clinics";
+    }
+
+    // Display the page 'MedecinFiche', the page of redirection after doctor login
+    @GetMapping("/CliniqueFiche")
+    public String cliniqueFiche(Model model, Authentication authentication) {
+        String email = String.valueOf(authentication.getName());
+        Optional<ClinicModel> clinic = clinicService.getClinicByEmail(email);
+        clinic.ifPresent(d -> model.addAttribute("clinic", d));
+        return "CliniqueFiche";
     }
 
     

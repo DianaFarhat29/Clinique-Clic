@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-// Les informations des utilisateurs pour l'authentification sont chargées à partir de la base de données
 @Service
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 
@@ -25,6 +24,8 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserModel user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Roles: " + user.getRole());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
     }

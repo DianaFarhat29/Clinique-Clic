@@ -9,6 +9,7 @@ import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 /**
  *
@@ -135,6 +137,15 @@ public class PatientController {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         return fileName; // Return the filename to store it in the database or use it later
+    }
+
+    // Display the page 'MedecinFiche', the page of redirection after doctor login
+    @GetMapping("/PatientFiche")
+    public String patientFiche(Model model, Authentication authentication) {
+        String healthInsuranceNumber = String.valueOf(authentication.getName());
+        Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
+        patient.ifPresent(p -> model.addAttribute("patient", p));
+        return "PatientFiche";
     }
 
 
