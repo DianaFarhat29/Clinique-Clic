@@ -23,8 +23,23 @@ $(document).ready(function () {
             $("#userCheck").show();
             return false;
         } else if (!value.match(/^[a-zA-Z\u00C0-\u00FF\s]+$/)) {
-            $("#userCheck").text("Le nom doit contenir uniquement des lettres.");
+            $("#userCheck").text("Le nom doit uniquement contenir des lettres.");
             $("#userCheck").show();
+            return false;
+        }
+        return true;
+    }
+
+    // Validate speciality
+    function validateSpeciality() {
+        let value = $("#specialite").val().trim();
+        if (value.length === 0) {
+            $("#specialiteCheck").text("Veuillez entrer votre spécialité.");
+            $("#specialiteCheck").show();
+            return false;
+        } else if (!value.match(/^[a-zA-Z\u00C0-\u00FF\s]+$/)) {
+            $("#specialiteCheck").text("La spécialité doit uniquement contenir des lettres.");
+            $("#specialiteCheck").show();
             return false;
         }
         return true;
@@ -71,6 +86,18 @@ $(document).ready(function () {
         return true;
     }
 
+    // Validate office number
+    function validateOfficeNumber() {
+        let value = $("#noLocal").val().trim();
+        if (value.length === 0) {
+            $("#noLocalCheck").text("Veuillez entrer le numéro de local de votre bureau de travail. (Entrez '0' si non applicable).");
+            $("#noLocalCheck").show();
+            return false;
+        }
+        return true;
+    }
+
+
     // Validate password (must be at least 6 characters long, contain at least 1 digit and 1 special character)
     function validatePassword() {
         let value = $("#password").val();
@@ -113,15 +140,24 @@ $(document).ready(function () {
         return true;
     }
 
+    // Format postal code to have a space in the middle (e.g., XXX XXX)
+    $("#codePostal").on('input', function() {
+        var postalCode = $(this).val().toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (postalCode.length > 3) {
+            postalCode = postalCode.slice(0, 3) + ' ' + postalCode.slice(3);
+        }
+        $(this).val(postalCode);
+    });
+
     // Validate postal code (must be in the format XXX XXX)
     function validatePostalCode() {
         let value = $("#codePostal").val().trim();
         if (value.length === 0) {
-            $("#codePostalCheck").text("Veuillez entrer le code postal de votre bureau de travail.");
+            $("#codePostalCheck").text("Veuillez entrer le code postal de la clinique.");
             $("#codePostalCheck").show();
             return false;
         } else if (!value.match(/^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/)) {
-            $("#codePostalCheck").text("Le format du code postal doit être XXX XXX.");
+            $("#codePostalCheck").text("Le format du code postal doit être A#A #A#.");
             $("#codePostalCheck").show();
             return false;
         }
@@ -132,12 +168,23 @@ $(document).ready(function () {
     function validateCity() {
         let value = $("#ville").val().trim();
         if (value.length === 0) {
-            $("#ville").text("Veuillez entrer la ville où se trouve votre bureau de travail.");
-            $("#ville").show();
+            $("#villeCheck").text("Veuillez entrer la ville où se trouve votre bureau de travail.");
+            $("#villeCheck").show();
             return false;
         } else if (!value.match(/^[a-zA-Z\u00C0-\u00FF\s]+$/)) {
-            $("#villeCheck").text("Le nom de la ville doit contenir uniquement des lettres.");
+            $("#villeCheck").text("Le nom de la ville doit uniquement contenir des lettres.");
             $("#villeCheck").show();
+            return false;
+        }
+        return true;
+    }
+
+    // Validate email
+    function validateEmail() {
+        let value = $("#email").val().trim();
+        if (value.length === 0) {
+            $("#courrielCheck").text("Veuillez entrer votre adresse courriel.");
+            $("#courrielCheck").show();
             return false;
         }
         return true;
@@ -179,6 +226,7 @@ $(document).ready(function () {
         let isValidNom = validateUsername();
         let isValidPhoneNumber = validatePhoneNumber();
         let isValidTarif = validateTarif();
+        let isValidOfficeNumber = validateOfficeNumber();
         let isValidPassword = validatePassword();
         let isValidPasswordMatch = validatePasswordMatch();
         let isValidLicenseNumber = validateLicenseNumber();
@@ -186,8 +234,10 @@ $(document).ready(function () {
         let isValidCity = validateCity();
         let isValidStreetName = validateStreetName();
         let isValidCivicNumber = validateCivicNumber();
+        let isValidEmail = validateEmail();
+        let isValidSpeciality = validateSpeciality();
 
-        return isValidPrenom && isValidNom && isValidPhoneNumber && isValidPassword && isValidLicenseNumber && isValidPostalCode && isValidCity && isValidStreetName && isValidCivicNumber && isValidTarif && isValidPasswordMatch;
+        return isValidPrenom && isValidNom && isValidPhoneNumber && isValidPassword && isValidLicenseNumber && isValidPostalCode && isValidCity && isValidStreetName && isValidCivicNumber && isValidTarif && isValidPasswordMatch && isValidOfficeNumber && isValidEmail && isValidSpeciality
     }
 
     // Submit form if all fields are valid
@@ -197,7 +247,6 @@ $(document).ready(function () {
 
         if (validateAllFields()) {
             console.log("Form submitted");
-            $("#registrationForm").submit();
         } else {
             console.log("Form has errors");
             event.preventDefault();

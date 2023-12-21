@@ -8,6 +8,7 @@ import com.ProjetFinal.CarolineSDianaF.Models.AppointmentModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DocumentModel;
 import com.ProjetFinal.CarolineSDianaF.Models.ScheduleModel;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,16 +17,17 @@ import java.util.Optional;
  *
  * @author Diana
  */
+@Service
 public interface DoctorService {
 
     // Method to Save or update a doctor's information
     DoctorModel saveDoctor(DoctorModel doctor);
 
+    // Method to update a doctor's information
+    DoctorModel updateDoctor(DoctorModel doctor);
+
     // Method to set a doctor's availability
     ScheduleModel setAvailability(ScheduleModel schedule);
-
-    // Method to update a doctor's availability
-    void updateAvailability(ScheduleModel newSchedule);
 
     // Method to send an appointment invitation
     void sendInvitation(AppointmentModel appointment);

@@ -19,7 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -69,6 +77,59 @@ public class DoctorController {
         return "doctor/editDoctor";
     }
 
+    @PostMapping("/update")
+    public String updateDoctorProfile(@ModelAttribute("doctor") DoctorModel doctor,
+                                      @RequestParam Map<String, String> allParams,
+                                      Authentication authentication) {
+
+        // Update basic doctor information
+        doctorService.updateDoctor(doctor);
+
+        // Update each day's schedule
+        for (DayOfWeek day : DayOfWeek.values()) {
+            String openTimeKey = day.toString().toLowerCase() + "Start";
+            String closeTimeKey = day.toString().toLowerCase() + "End";
+
+            String openTimeString = allParams.get(openTimeKey);
+            String closeTimeString = allParams.get(closeTimeKey);
+
+            LocalTime openTime = null;
+            LocalTime closeTime = null;
+
+            // Parse the times if they are provided
+            if (openTimeString != null && !openTimeString.isEmpty()) {
+                openTime = LocalTime.parse(openTimeString);
+            }
+            if (closeTimeString != null && !closeTimeString.isEmpty()) {
+                closeTime = LocalTime.parse(closeTimeString);
+            }
+
+            // Retrieve or create a new schedule object for the day
+            ScheduleModel schedule = doctor.getSchedules().stream()
+                    .filter(s -> s.getDayOfWeek() == day)
+                    .findFirst()
+                    .orElse(new ScheduleModel());
+
+            // Update the schedule object
+            schedule.setDayOfWeek(day);
+            if (openTime != null) {
+                schedule.setStartTime(LocalDateTime.of(LocalDate.now(), openTime));
+            }
+            if (closeTime != null) {
+                schedule.setEndTime(LocalDateTime.of(LocalDate.now(), closeTime));
+            }
+            schedule.setDoctor(doctor);
+
+            // Update or save the schedule
+            doctorService.editSchedule(schedule);
+        }
+
+        return "redirect:/doctors/MedecinFiche";
+    }
+
+
+
+
     // Process the form to update a doctor
     @PostMapping("/edit/{id}")
     public String updateDoctor(@PathVariable Long id, @ModelAttribute DoctorModel doctor) {
@@ -92,6 +153,28 @@ public class DoctorController {
         return "redirect:/doctors/" + doctorId + "/schedule";
     }
 
+    private ScheduleModel extractScheduleForDay(Map<String, String> params, DayOfWeek day, DoctorModel doctor) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        String openTimeKey = day.toString().toLowerCase() + "Start";
+        String closeTimeKey = day.toString().toLowerCase() + "End";
+
+        String openTimeString = params.getOrDefault(openTimeKey, "");
+        String closeTimeString = params.getOrDefault(closeTimeKey, "");
+
+        LocalDateTime startTime = null;
+        LocalDateTime endTime = null;
+
+        if (!openTimeString.isEmpty()) {
+            startTime = LocalDateTime.parse(openTimeString, timeFormatter);
+        }
+        if (!closeTimeString.isEmpty()) {
+            endTime = LocalDateTime.parse(closeTimeString, timeFormatter);
+        }
+
+        return new ScheduleModel(/* id, doctor, startTime, endTime, day, status, type */);
+    }
+
     // Display form to manage an appointment
     @GetMapping("/{doctorId}/appointments/edit/{appointmentId}")
     public String showEditAppointmentForm(@PathVariable Long doctorId, @PathVariable Long appointmentId, Model model) {
@@ -113,7 +196,15 @@ public class DoctorController {
     public String medecinFiche(Model model, Authentication authentication) {
         Long professionalNumber = Long.valueOf(authentication.getName());
         Optional<DoctorModel> doctor = doctorService.getDoctorByProfessionalNumber(professionalNumber);
-        doctor.ifPresent(d -> model.addAttribute("doctor", d));
+        if (doctor.isPresent()) {
+            DoctorModel doctorModel = doctor.get();
+            for (ScheduleModel schedule : doctorModel.getSchedules()) {
+                String day = schedule.getDayOfWeek().toString().toLowerCase();
+                model.addAttribute(day + "Start", schedule.getStartTime().toLocalTime());
+                model.addAttribute(day + "End", schedule.getEndTime().toLocalTime());
+            }
+            model.addAttribute("doctor", doctorModel);
+        }
         return "MedecinFiche";
     }
     

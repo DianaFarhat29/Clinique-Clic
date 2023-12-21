@@ -28,7 +28,7 @@
     </a>
 
     <div class="container">
-        <form id="medecinForm">
+        <form id="medecinForm" th:action="@{/doctors/update}" th:object="${doctor}" method="post">
 
             <!-- Section Adresse -->
             <div class="row">
@@ -38,16 +38,19 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
-                            name="noCivique">
-                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue">
+                               name="noCivique" th:value="${doctor.contactDetails.noCivique}" />
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue"
+                               th:value="${doctor.contactDetails.rue}" />
                         <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
-                            name="noLocal">
-                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville">
+                               name="noLocal" th:value="${doctor.contactDetails.noLocal}" />
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville"
+                               th:value="${doctor.contactDetails.ville}" />
                         <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
-                            name="codePostal">
+                               name="codePostal" th:value="${doctor.contactDetails.codePostal}" />
                         <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
-                            name="noTel">
+                               name="noTel" th:value="${doctor.contactDetails.phoneNumber}" />
                     </div>
+
                 </div>
             </div>
 
@@ -58,31 +61,36 @@
                 </div>
                 <div class="col-md-10">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Lundi</h5>
-                            <input type="time" class="form-control" name="lundiOuverture">
-                            <input type="time" class="form-control" name="lundiFermeture">
+                            <input type="time" step="900" class="form-control" th:value="${mondayStart}" name="mondayStart" />
+                            <input type="time" step="900" class="form-control" th:value="${mondayEnd}" name="mondayEnd" />
                         </div>
-                        <div class="col-md-2">
+
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Mardi</h5>
-                            <input type="time" class="form-control" name="mardiOuverture">
-                            <input type="time" class="form-control" name="mardiFermeture">
+                            <input type="time" class="form-control" th:value="${tuesdayStart}" name="tuesdayStart" />
+                            <input type="time" class="form-control" th:value="${tuesdayEnd}" name="tuesdayEnd" />
                         </div>
-                        <div class="col-md-2">
+
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Mercredi</h5>
-                            <input type="time" class="form-control" name="mercrediOuverture">
-                            <input type="time" class="form-control" name="mercrediFermeture">
+                            <input type="time" class="form-control" th:value="${wednesdayStart}" name="wednesdayStart" />
+                            <input type="time" class="form-control" th:value="${wednesdayEnd}" name="wednesdayEnd" />
                         </div>
-                        <div class="col-md-2">
+
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Jeudi</h5>
-                            <input type="time" class="form-control" name="jeudiOuverture">
-                            <input type="time" class="form-control" name="jeudiFermeture">
+                            <input type="time" class="form-control" th:value="${thursdayStart}" name="thursdayStart" />
+                            <input type="time" class="form-control" th:value="${thursdayEnd}" name="thursdayEnd" />
                         </div>
-                        <div class="col-md-2">
+
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Vendredi</h5>
-                            <input type="time" class="form-control" name="vendrediOuverture">
-                            <input type="time" class="form-control" name="vendrediFermeture">
+                            <input type="time" class="form-control" th:value="${fridayStart}" name="fridayStart" />
+                            <input type="time" class="form-control" th:value="${fridayEnd}" name="fridayEnd" />
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -94,15 +102,16 @@
                 </div>
                 <div class="col-md-10">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Samedi</h5>
-                            <input type="time" class="form-control" name="samediOuverture">
-                            <input type="time" class="form-control" name="samediFermeture">
+                            <input type="time" class="form-control" th:value="${saturdayStart}" name="saturdayStart" />
+                            <input type="time" class="form-control" th:value="${saturdayEnd}" name="saturdayEnd" />
                         </div>
-                        <div class="col-md-2">
+
+                        <div class="day-schedule">
                             <h5 class="jour-semaine">Dimanche</h5>
-                            <input type="time" class="form-control" name="dimancheOuverture">
-                            <input type="time" class="form-control" name="dimancheFermeture">
+                            <input type="time" class="form-control" th:value="${sundayStart}" name="sundayStart" />
+                            <input type="time" class="form-control" th:value="${sundayEnd}" name="sundayEnd" />
                         </div>
                     </div>
                 </div>
@@ -111,17 +120,15 @@
             <!-- Section tarif de consultation -->
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Tarif de consultation</h5>
+                    <h5>Tarif de consultation($)</h5>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="number" class="form-control" id="tarif" placeholder="Utiliser la flèche pour entrer votre tarif"
+                        <input type="number" class="form-control" id="tarif" th:value="${doctor.expectedSalary}" placeholder="Utiliser la flèche pour entrer votre tarif"
                                name="tarif" min="0" step="5.00">
                     </div>
                 </div>
             </div>
-
-
 
             <!-- Bouton de soumission 2 et déconnection -->
             <div class="row">

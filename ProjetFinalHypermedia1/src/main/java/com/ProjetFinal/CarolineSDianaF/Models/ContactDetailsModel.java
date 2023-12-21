@@ -8,14 +8,14 @@ public class ContactDetailsModel {
     // Attributes
     private String phoneNumber;
     private String email;
-    private int noCivique;
+    private Integer noCivique;
     private String rue;
     private String noLocal;
     private String ville;
     private String codePostal;
 
     // Constructors
-    public ContactDetailsModel(String phoneNumber, String email, int noCivique,String rue,String noLocal, String ville, String codePostal) {
+    public ContactDetailsModel(String phoneNumber, String email, Integer noCivique,String rue,String noLocal, String ville, String codePostal) {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.noCivique = noCivique;
@@ -46,11 +46,11 @@ public class ContactDetailsModel {
         this.email = email;
     }
 
-    public int getNoCivique() {
+    public Integer getNoCivique() {
         return noCivique;
     }
 
-    public void setNoCivique(int noCivique) {
+    public void setNoCivique(Integer noCivique) {
         this.noCivique = noCivique;
     }
 

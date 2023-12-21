@@ -64,23 +64,22 @@ public class DoctorServiceImpl implements DoctorService {
 
     }
 
-    // Implementation for updating availability
     @Override
-    public void updateAvailability(ScheduleModel newSchedule) {
-        // Check if the schedule exists, then update
-        ScheduleModel existingSchedule = scheduleRepository.findById(newSchedule.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
+    public DoctorModel updateDoctor(DoctorModel updatedDoctor) {
+        DoctorModel existingDoctor = doctorRepository.findById(updatedDoctor.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Doctor not found with ID: " + updatedDoctor.getId()));
 
-        // Update the necessary fields
-        existingSchedule.setStartTime(newSchedule.getStartTime());
-        existingSchedule.setEndTime(newSchedule.getEndTime());
-        existingSchedule.setDayOfWeek(newSchedule.getDayOfWeek());
-        existingSchedule.setStatus(newSchedule.getStatus());
-        existingSchedule.setType(newSchedule.getType());
+        // Update fields of the existing doctor
+        existingDoctor.setFirstName(updatedDoctor.getFirstName());
+        existingDoctor.setLastName(updatedDoctor.getLastName());
+        existingDoctor.setSpeciality(updatedDoctor.getSpeciality());
+        existingDoctor.setProfessionalNumber(updatedDoctor.getProfessionalNumber());
+        existingDoctor.setExpectedSalary(updatedDoctor.getExpectedSalary());
+        existingDoctor.setContactDetails(updatedDoctor.getContactDetails());
 
-        // Save the appointment in the database
-        scheduleRepository.save(existingSchedule);
 
+        // Save the updated doctor back to the database
+        return doctorRepository.save(existingDoctor);
     }
 
     // Implementation for sending an appointment invitation
@@ -177,8 +176,6 @@ public class DoctorServiceImpl implements DoctorService {
         existingSchedule.setStartTime(schedule.getStartTime());
         existingSchedule.setEndTime(schedule.getEndTime());
         existingSchedule.setDayOfWeek(schedule.getDayOfWeek());
-        existingSchedule.setStatus(schedule.getStatus());
-        existingSchedule.setType(schedule.getType());
 
         // Save the updated schedule
         return scheduleRepository.save(existingSchedule);

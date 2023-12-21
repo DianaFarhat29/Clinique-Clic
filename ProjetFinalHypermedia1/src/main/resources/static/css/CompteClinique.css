@@ -48,7 +48,7 @@ h2 {
 
 .dropdown-menu {
     font-weight: normal !important;
-    color: #555555 !important;
+    color: #555555;
     width: 35%;
     padding-left: 2%;
     padding-bottom: 2%;
@@ -67,7 +67,7 @@ h2 {
 }
 
 input[type="checkbox"]:checked + label {
-    color: #E89255;
+    color: #E89255 !important;
 }
 
 #servicesDropdown {

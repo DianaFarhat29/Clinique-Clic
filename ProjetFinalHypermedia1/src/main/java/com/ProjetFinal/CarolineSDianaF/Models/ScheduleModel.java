@@ -18,30 +18,19 @@ public class ScheduleModel {
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private DoctorModel doctor;
 
-    @Column(nullable = false)
     private LocalDateTime startTime;
 
-    @Column(nullable = false)
     private LocalDateTime endTime;
 
-    @Column(nullable = false)
     private DayOfWeek dayOfWeek;
 
-    @Column(nullable = false)
-    private String status;
-
-    @Column(nullable = false)
-    private String type;
-
     // Constructors
-    public ScheduleModel(Long id, DoctorModel doctor, LocalDateTime startTime, LocalDateTime endTime, DayOfWeek dayOfWeek, String status, String type) {
+    public ScheduleModel(Long id, DoctorModel doctor, LocalDateTime startTime, LocalDateTime endTime, DayOfWeek dayOfWeek) {
         this.id = id;
         this.doctor = doctor;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
-        this.status = status;
-        this.type = type;
     }
 
     public ScheduleModel() {
@@ -89,21 +78,6 @@ public class ScheduleModel {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     // ToString() Method
     @Override
@@ -114,8 +88,6 @@ public class ScheduleModel {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", dayOfWeek=" + dayOfWeek +
-                ", status='" + status + '\'' +
-                ", type='" + type + '\'' +
                 '}';
     }
 }

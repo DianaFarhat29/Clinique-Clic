@@ -1,35 +1,40 @@
 $(document).ready(function () {
+
     // Validate clinic name
     function validateClinicName() {
         let nameValue = $("#nom").val().trim();
         if (nameValue.length === 0) {
-            $("#usercheck").text("Please enter the clinic's name.");
+            $("#usercheck").text("Veuillez entrer le nom de la clinique.");
             $("#usercheck").show();
             return false;
-        } else {
-            $("#usercheck").hide();
-            return true;
+        } else if (!nameValue.match(/^[a-zA-Z\u00C0-\u00FF\s]+$/)) {
+            $("#usercheck").text("Le nom de la clinique doit contenir uniquement des lettres.");
+            $("#usercheck").show();
+            return false;
         }
+        return true;
     }
 
     // Validate clinic identifier
     function validateClinicId() {
         let clinicIdValue = $("#cliniqueId").val().trim();
-        if (!clinicIdValue.match(/^\d{15}$/)) {
-            $("#cliniqueIdCheck").text("Please enter a valid 15-digit clinic identifier.");
+        if (clinicIdValue.length === 0) {
+            $("#cliniqueIdCheck").text("Veuillez entrer le numéro d'identifiant ministériel.");
             $("#cliniqueIdCheck").show();
             return false;
-        } else {
-            $("#cliniqueIdCheck").hide();
-            return true;
+        } else if (!clinicIdValue.match(/^\d{15}$/)) {
+            $("#cliniqueIdCheck").text("Le numéro d'identifiant ministériel doit être composé de 15 chiffres.");
+            $("#cliniqueIdCheck").show();
+            return false;
         }
+        return true;
     }
 
     // Validate phone number
     function validatePhoneNumber() {
         let value = $("#phoneNumber").val().trim();
         if (value.length === 0) {
-            $("#phoneNumberCheck").text("Veuillez entrer votre numéro de téléphone.");
+            $("#phoneNumberCheck").text("Veuillez entrer le numéro de téléphone de la clinique.");
             $("#phoneNumberCheck").show();
             return false;
         } else if (value.length < 12) {
@@ -51,30 +56,24 @@ $(document).ready(function () {
         $(this).val(number);
     });
 
-    // Validate license number (must be 10 digits long)
-    function validateLicenseNumber() {
-        let value = $("#noLicence").val().trim();
-        if (value.length === 0) {
-            $("#noLicenceCheck").text("Veuillez entrer un numéro de licence");
-            $("#noLicenceCheck").show();
-            return false;
-        } else if (!value.match(/^\d{10}$/)) {
-            $("#noLicenceCheck").text("Le numéro de licence doit être composé de 10 chiffres.");
-            $("#noLicenceCheck").show();
-            return false;
+    // Format postal code to have a space in the middle (e.g., XXX XXX)
+    $("#codePostal").on('input', function() {
+        var postalCode = $(this).val().toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (postalCode.length > 3) {
+            postalCode = postalCode.slice(0, 3) + ' ' + postalCode.slice(3);
         }
-        return true;
-    }
+        $(this).val(postalCode);
+    });
 
     // Validate postal code (must be in the format XXX XXX)
     function validatePostalCode() {
         let value = $("#codePostal").val().trim();
         if (value.length === 0) {
-            $("#codePostalCheck").text("Veuillez entrer le code postal de votre bureau de travail.");
+            $("#codePostalCheck").text("Veuillez entrer le code postal de la clinique.");
             $("#codePostalCheck").show();
             return false;
         } else if (!value.match(/^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/)) {
-            $("#codePostalCheck").text("Le format du code postal doit être XXX XXX.");
+            $("#codePostalCheck").text("Le format du code postal doit être A#A #A#.");
             $("#codePostalCheck").show();
             return false;
         }
@@ -85,8 +84,8 @@ $(document).ready(function () {
     function validateCity() {
         let value = $("#ville").val().trim();
         if (value.length === 0) {
-            $("#ville").text("Veuillez entrer la ville où se trouve votre bureau de travail.");
-            $("#ville").show();
+            $("#villeCheck").text("Veuillez entrer la ville où se trouve la clinique.");
+            $("#villeCheck").show();
             return false;
         } else if (!value.match(/^[a-zA-Z\u00C0-\u00FF\s]+$/)) {
             $("#villeCheck").text("Le nom de la ville doit contenir uniquement des lettres.");
@@ -100,7 +99,7 @@ $(document).ready(function () {
     function validateStreetName() {
         let value = $("#rue").val().trim();
         if (value.length === 0) {
-            $("#rueCheck").text("Veuillez entrer le nom de la rue où se trouve votre bureau de travail.");
+            $("#rueCheck").text("Veuillez entrer le nom de la rue où se trouve la clinique.");
             $("#rueCheck").show();
             return false;
         } else if (!value.match(/^[a-zA-Z\u00C0-\u00FF\s]+$/)) {
@@ -115,7 +114,7 @@ $(document).ready(function () {
     function validateCivicNumber() {
         let value = $("#noCivique").val().trim();
         if (value.length === 0) {
-            $("#noCiviqueCheck").text("Veuillez entrer le numéro civique de votre bureau de travail.");
+            $("#noCiviqueCheck").text("Veuillez entrer le numéro civique de votre adresse.");
             $("#noCiviqueCheck").show();
             return false;
         } else if (!value.match(/^\d+$/)) {
@@ -126,31 +125,66 @@ $(document).ready(function () {
         return true;
     }
 
-    // Validate password
-    function validatePassword() {
-        let passwordValue = $("#password").val().trim();
-        if (passwordValue.length < 6 || !passwordValue.match(/\d/) || !passwordValue.match(/[^\w\s]/)) {
-            $("#passCheck").text("Password must be at least 6 characters long, contain at least 1 digit and 1 special character (/, %, ., or ;)");
-            $("#passCheck").show();
+    // Validate email
+    function validateEmail() {
+        let value = $("#email").val().trim();
+        if (value.length === 0) {
+            $("#courrielCheck").text("Veuillez entrer l'adresse courriel de la clinique.");
+            $("#courrielCheck").show();
+            return false;
+        }
+        return true;
+    }
+
+    // Validate office number
+    function validateOfficeNumber() {
+        let value = $("#noLocal").val().trim();
+        if (value.length === 0) {
+            $("#noLocalCheck").text("Veuillez entrer le numéro de local de la clinique (Entrez '0' si non applicable).");
+            $("#noLocalCheck").show();
+            return false;
+        }
+        return true;
+    }
+
+    // Validate services (at least one must be selected)
+    function validateServices() {
+        let isChecked = $("input[name='services']:checked").length > 0;
+        if (!isChecked) {
+            $("#servicesCheck").text("Veuillez sélectionner au moins un service.");
+            $("#servicesCheck").show();
             return false;
         } else {
-            $("#passCheck").hide();
+            $("#servicesCheck").hide();
             return true;
         }
     }
 
-    // Validate password confirmation
+    // Validate password (must be at least 6 characters long, contain at least 1 digit and 1 special character)
+    function validatePassword() {
+        let value = $("#password").val();
+        if (value.length === 0) {
+            $("#passcheck").text("Veuillez entrer un mot de passe.");
+            $("#passcheck").show();
+            return false;
+        } else if (!value.match(/^(?=.*\d)(?=.*[^\w\s]).{6,}$/)) {
+            $("#passcheck").text("Le mot de passe doit être composé d'un minimum de 6 caractères, de 1 chiffre et de 1 caractère spécial.");
+            $("#passcheck").show();
+            return false;
+        }
+        return true;
+    }
+
+    // Validate password match
     function validatePasswordMatch() {
-        let confirmPasswordValue = $("#passwordConfirm").val().trim();
-        let passwordValue = $("#password").val().trim();
-        if (passwordValue !== confirmPasswordValue) {
-            $("#passwordConfirmCheck").text("Passwords do not match.");
+        let password = $("#password").val();
+        let confirmPassword = $("#passwordConfirm").val();
+        if (password !== confirmPassword) {
+            $("#passwordConfirmCheck").text("Les mots de passe ne concordent pas.");
             $("#passwordConfirmCheck").show();
             return false;
-        } else {
-            $("#passwordConfirmCheck").hide();
-            return true;
         }
+        return true;
     }
 
     // Validate all fields
@@ -158,25 +192,28 @@ $(document).ready(function () {
         let isClinicNameValid = validateClinicName();
         let isClinicIdValid = validateClinicId();
         let isValidPhoneNumber = validatePhoneNumber();
-        let isValidLicenseNumber = validateLicenseNumber();
         let isValidPostalCode = validatePostalCode();
         let isValidCity = validateCity();
         let isValidStreetName = validateStreetName();
         let isValidCivicNumber = validateCivicNumber();
         let isPasswordValid = validatePassword();
         let isConfirmPasswordValid = validatePasswordMatch();
+        let isValidEmail = validateEmail();
+        let isValidOfficeNumber = validateOfficeNumber();
+        let isValidServices = validateServices();
 
-        return isClinicNameValid && isClinicIdValid && isPasswordValid && isConfirmPasswordValid;
+        return isClinicNameValid && isClinicIdValid && isValidPhoneNumber && isValidPostalCode && isValidCity && isValidStreetName && isValidCivicNumber && isPasswordValid && isConfirmPasswordValid && isValidEmail && isValidOfficeNumber && isValidServices;
     }
 
     // Submit form if all fields are valid
     $("#submitbtn").click(function (event) {
-        if (!validateAllFields()) {
+        $(".errorForm").hide();
+
+        if (validateAllFields()) {
+            console.log("Form submitted");
+        } else {
             console.log("Form has errors");
             event.preventDefault();
-        } else {
-            console.log("Form submitted");
-            $("#registrationForm").submit();
         }
     });
 });
