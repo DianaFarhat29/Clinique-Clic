@@ -29,8 +29,6 @@ public class DoctorServiceImpl implements DoctorService {
     // Inject repositories for Doctor, Schedule, Appointment, Email, Document and Patient
     private DoctorRepository doctorRepository;
 
-    private ScheduleRepository scheduleRepository;
-
     private AppointmentRepository appointmentRepository;
 
     @Autowired
@@ -45,9 +43,8 @@ public class DoctorServiceImpl implements DoctorService {
     private PatientRepository patientRepository;
 
     @Autowired
-    public DoctorServiceImpl(DoctorRepository doctorRepository,ScheduleRepository scheduleRepository, AppointmentRepository appointmentRepository ) {
+    public DoctorServiceImpl(DoctorRepository doctorRepository,AppointmentRepository appointmentRepository ) {
         this.doctorRepository = doctorRepository;
-        this.scheduleRepository = scheduleRepository;
         this.appointmentRepository = appointmentRepository;
     }
 
@@ -55,13 +52,6 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorModel saveDoctor(DoctorModel doctor) {
         return doctorRepository.save(doctor);
-    }
-
-    // Implementation for setting availability
-    @Override
-    public ScheduleModel setAvailability(ScheduleModel schedule) {
-        return scheduleRepository.save(schedule);
-
     }
 
     @Override
@@ -124,21 +114,6 @@ public class DoctorServiceImpl implements DoctorService {
         document.setPatient(patient);
     }
 
-    // Implementation for getting a doctor's schedule
-    @Override
-    public List<ScheduleModel> getDoctorSchedule(Long doctorId) {
-        return scheduleRepository.findByDoctorId(doctorId);
-    }
-
-
-    // Implementation of editing doctor's schedule
-    @GetMapping("/{doctorId}/schedule")
-    public String viewDoctorSchedule(@PathVariable Long doctorId, Model model) {
-        List<ScheduleModel> schedules = doctorService.getDoctorSchedule(doctorId);  // Fetch schedules from service
-        model.addAttribute("schedules", schedules);
-        return "doctorSchedule"; // Replace with the name of your view template
-    }
-
     // Implementation for getting a doctor's appointments
     @GetMapping("/{doctorId}/appointments")
     public String viewDoctorAppointments(@PathVariable Long doctorId, Model model) {
@@ -154,31 +129,9 @@ public class DoctorServiceImpl implements DoctorService {
         return appointmentRepository.save(appointment);
     }
 
-    // Implementation for getting schedule by id
-    @Override
-    public Optional<ScheduleModel> getScheduleById(Long scheduleId) {
-        return scheduleRepository.findById(scheduleId);
-    }
-
     // Implementation for getting appointment by id
     public Optional<AppointmentModel> getAppointmentById(Long appointmentId) {
         return appointmentRepository.findById(appointmentId);
-    }
-
-    // Implementation for editing a doctor's schedule
-    @Override
-    public ScheduleModel editSchedule(ScheduleModel schedule) {
-        // Check if the schedule exists
-        ScheduleModel existingSchedule = scheduleRepository.findById(schedule.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Schedule not found with ID: " + schedule.getId()));
-
-        // Update fields of the existing schedule
-        existingSchedule.setStartTime(schedule.getStartTime());
-        existingSchedule.setEndTime(schedule.getEndTime());
-        existingSchedule.setDayOfWeek(schedule.getDayOfWeek());
-
-        // Save the updated schedule
-        return scheduleRepository.save(existingSchedule);
     }
 
     // Implementation for getting a doctor's appointments

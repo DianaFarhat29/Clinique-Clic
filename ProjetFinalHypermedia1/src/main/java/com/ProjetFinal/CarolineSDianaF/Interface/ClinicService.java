@@ -34,4 +34,7 @@ public interface ClinicService {
 
     // Method to find clinic by Email
     Optional<ClinicModel> getClinicByEmail(String email);
+
+    // Method to find clinic by id
+    Optional<ClinicModel> getClinicById(Long id);
 }

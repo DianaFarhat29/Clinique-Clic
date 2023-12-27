@@ -39,6 +39,7 @@ h2 {
 label {
     display: block;
     margin-bottom: 5px;
+    font-weight: normal !important;
 }
 
 .form-control {
@@ -109,6 +110,50 @@ input[type="submit"]:active {
     margin-left: 50px;
     font-weight: bold;
     color: #E89255;
+}
+
+input[type="radio"]:checked + label {
+    color: #E89255 !important;
+}
+
+.dropdown-menu {
+    font-weight: normal !important;
+    color: #555555;
+    width: 60%;
+    padding-left: 2%;
+    padding-bottom: 2%;
+    padding-top: 1.5%;
+
+}
+
+.clinicsTexte {
+    font-weight: normal !important;
+    margin-top: 1.5%;
+}
+
+.dropdown {
+    margin-left: 15%;
+}
+
+.dropdown-menu li {
+    display: flex;
+    align-items: center;
+    margin:0;
+    gap:5px;
+}
+
+.dropdown-menu input {
+    margin-top:0;
+}
+
+.dropdown-menu label{
+  margin:0;
+}
+
+#clinicsDropdown {
+    color: #598BC5;
+    margin-top: 2%;
+    margin-bottom: 1.5%;
 }
 
 

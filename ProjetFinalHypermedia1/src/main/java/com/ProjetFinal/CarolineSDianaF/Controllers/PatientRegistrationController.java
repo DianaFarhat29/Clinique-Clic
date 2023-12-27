@@ -47,6 +47,22 @@ public class PatientRegistrationController {
         newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
 
+        // Appliquer la mise en majuscule aux champs appropriés
+        patient.setFirstName(capitalizeFirstLetter(patient.getFirstName()));
+        patient.setLastName(capitalizeFirstLetter(patient.getLastName()));
+        patient.setHealthInsuranceNumber(patient.getHealthInsuranceNumber().toUpperCase());
+
+        // Appliquer la mise en majuscule aux champs de ContactDetailsModel
+        ContactDetailsModel contactDetails = patient.getContactDetails();
+        if (contactDetails != null) {
+            contactDetails.setPhoneNumber(capitalizeFirstLetter(contactDetails.getPhoneNumber()));
+            contactDetails.setEmail(capitalizeFirstLetter(contactDetails.getEmail()));
+            contactDetails.setVille(capitalizeFirstLetter(contactDetails.getVille()));
+            contactDetails.setRue(capitalizeFirstLetter(contactDetails.getRue()));
+            // Convertir le code postal en majuscules
+            contactDetails.setCodePostal(contactDetails.getCodePostal().toUpperCase());
+        }
+
         // Save the user
         UserModel savedUser = userRepository.save(newUser);
 
@@ -58,5 +74,12 @@ public class PatientRegistrationController {
 
         // Redirect to a confirmation page or login page
         return "redirect:/login";
+    }
+
+    private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty() || !Character.isLetter(input.charAt(0))) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 }

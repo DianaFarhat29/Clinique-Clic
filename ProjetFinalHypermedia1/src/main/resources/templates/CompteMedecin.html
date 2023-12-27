@@ -58,17 +58,13 @@
             <!-- Section tarif de consultation -->
             <div class="form-group">
                 <input type="number" class="form-control" id="tarif" th:field="*{expectedSalary}" placeholder="Tarif de consultation" name="tarif" min="0" step="5.00">
-                <div id="tarifCheck" class="errorForm">
-                </div>
+                <div id="tarifCheck" class="errorForm"></div>
             </div>
-
-
 
             <!-- Section coordonnées -->
             <div class="row">
                     <h5>Coordonnées</h5>
             </div>
-
                     <div class="form-group col">
                         <label for="phoneNumber"></label>
                         <input type="text" class="form-control" id="phoneNumber" th:field="*{contactDetails.phoneNumber}" placeholder="Numéro de téléphone" name="phoneNumber">
@@ -86,10 +82,27 @@
                     </div>
 
             <div class="row">
-                    <h5>Adresse</h5>
+                <label class="clinicsTexte" for="clinicsDropdown">Clinique associée</label>
             </div>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="clinicsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sélectionnez la clinique
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="clinicsDropdown">
+                    <th:block th:each="clinic : ${clinics}">
+                        <li>
+                            <input type="radio" name="clinicIds" th:value="${clinic.id}" th:id="${'clinic' + clinic.id}"/>
+                            <label th:for="${'clinic' + clinic.id}" th:text="${clinic.name + ' (' + clinic.ministerialNumber + ')'}"></label>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            <div id="clinicsCheck" class="errorForm"></div>
 
-
+            <div class="row">
+                    <h5>Adresse de la clinique principale</h5>
+            </div>
                             <div class="form-group">
                                 <label for="noCivique"></label>
                                 <input type="text" class="form-control" id="noCivique" th:field="*{contactDetails.noCivique}" placeholder="Numéro civique"

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -57,15 +58,15 @@ public class DoctorModel {
     )
     private Set<ClinicModel> patients = new HashSet<>();
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ScheduleModel> schedules = new HashSet<>();
+    @Embedded
+    private ScheduleModel schedule;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserModel user;
 
     // Constructors
-    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, ContactDetailsModel contactDetails, Set clinics, Set patients,Set<ScheduleModel> schedules, UserModel user) {
+    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, ContactDetailsModel contactDetails, Set clinics, Set patients,ScheduleModel schedule, UserModel user) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -75,7 +76,7 @@ public class DoctorModel {
         this.contactDetails = contactDetails;
         this.clinics = clinics;
         this.patients = patients;
-        this.schedules = schedules;
+        this.schedule = schedule;
         this.user = user;
     }
 
@@ -140,7 +141,7 @@ public class DoctorModel {
         this.contactDetails = contactDetails;
     }
 
-    public Set getClinics() {
+    public Set<ClinicModel> getClinics() {
         return clinics;
     }
 
@@ -156,12 +157,12 @@ public class DoctorModel {
         this.patients = patients;
     }
 
-    public Set<ScheduleModel> getSchedules() {
-        return schedules;
+    public ScheduleModel getSchedule() {
+        return schedule;
     }
 
-    public void setSchedules(Set<ScheduleModel> schedules) {
-        this.schedules = schedules;
+    public void setSchedule(ScheduleModel schedule) {
+        this.schedule = schedule;
     }
 
     public UserModel getUser() {
@@ -175,6 +176,6 @@ public class DoctorModel {
     // ToString() Method
     @Override
     public String toString() {
-        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedules=" + schedules + ", user=" + user + '}';
+        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedule=" + schedule + ", user=" + user + '}';
     }
 }

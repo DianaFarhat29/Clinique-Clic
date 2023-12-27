@@ -4,33 +4,57 @@ import jakarta.persistence.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-@Entity
-@Table(name = "schedules")
+@Embeddable
 public class ScheduleModel {
 
     // Attributes
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private LocalTime mondayStart;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    private DoctorModel doctor;
+    private LocalTime mondayEnd;
 
-    private LocalDateTime startTime;
+    private LocalTime tuesdayStart;
 
-    private LocalDateTime endTime;
+    private LocalTime tuesdayEnd;
 
-    private DayOfWeek dayOfWeek;
+    private LocalTime wednesdayStart;
+
+    private LocalTime wednesdayEnd;
+
+    private LocalTime thursdayStart;
+
+    private LocalTime thursdayEnd;
+
+    private LocalTime fridayStart;
+
+    private LocalTime fridayEnd;
+
+    private LocalTime saturdayStart;
+
+    private LocalTime saturdayEnd;
+
+    private LocalTime sundayStart;
+
+    private LocalTime sundayEnd;
+
 
     // Constructors
-    public ScheduleModel(Long id, DoctorModel doctor, LocalDateTime startTime, LocalDateTime endTime, DayOfWeek dayOfWeek) {
-        this.id = id;
-        this.doctor = doctor;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.dayOfWeek = dayOfWeek;
+    public ScheduleModel(LocalTime mondayStart, LocalTime mondayEnd, LocalTime tuesdayStart, LocalTime tuesdayEnd, LocalTime wednesdayStart, LocalTime wednesdayEnd, LocalTime thursdayStart, LocalTime thursdayEnd, LocalTime fridayStart, LocalTime fridayEnd, LocalTime saturdayStart, LocalTime saturdayEnd, LocalTime sundayStart, LocalTime sundayEnd) {
+        this.mondayStart = mondayStart;
+        this.mondayEnd = mondayEnd;
+        this.tuesdayStart = tuesdayStart;
+        this.tuesdayEnd = tuesdayEnd;
+        this.wednesdayStart = wednesdayStart;
+        this.wednesdayEnd = wednesdayEnd;
+        this.thursdayStart = thursdayStart;
+        this.thursdayEnd = thursdayEnd;
+        this.fridayStart = fridayStart;
+        this.fridayEnd = fridayEnd;
+        this.saturdayStart = saturdayStart;
+        this.saturdayEnd = saturdayEnd;
+        this.sundayStart = sundayStart;
+        this.sundayEnd = sundayEnd;
     }
 
     public ScheduleModel() {
@@ -38,56 +62,137 @@ public class ScheduleModel {
     }
 
     // Getters and setters
-    public Long getId() {
-        return id;
+    public LocalTime getMondayStart() {
+        return mondayStart;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMondayStart(LocalTime mondayStart) {
+        this.mondayStart = mondayStart;
     }
 
-    public DoctorModel getDoctor() {
-        return doctor;
+    public LocalTime getMondayEnd() {
+        return mondayEnd;
     }
 
-    public void setDoctor(DoctorModel doctor) {
-        this.doctor = doctor;
+    public void setMondayEnd(LocalTime mondayEnd) {
+        this.mondayEnd = mondayEnd;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public LocalTime getTuesdayStart() {
+        return tuesdayStart;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setTuesdayStart(LocalTime tuesdayStart) {
+        this.tuesdayStart = tuesdayStart;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public LocalTime getTuesdayEnd() {
+        return tuesdayEnd;
     }
 
 
-    // ToString() Method
+    public void setTuesdayEnd(LocalTime tuesdayEnd) {
+        this.tuesdayEnd = tuesdayEnd;
+    }
+
+    public LocalTime getWednesdayStart() {
+        return wednesdayStart;
+    }
+
+    public void setWednesdayStart(LocalTime wednesdayStart) {
+        this.wednesdayStart = wednesdayStart;
+    }
+
+    public LocalTime getWednesdayEnd() {
+        return wednesdayEnd;
+    }
+
+    public void setWednesdayEnd(LocalTime wednesdayEnd) {
+        this.wednesdayEnd = wednesdayEnd;
+    }
+
+    public LocalTime getThursdayStart() {
+        return thursdayStart;
+    }
+
+    public void setThursdayStart(LocalTime thursdayStart) {
+        this.thursdayStart = thursdayStart;
+    }
+
+    public LocalTime getThursdayEnd() {
+        return thursdayEnd;
+    }
+
+    public void setThursdayEnd(LocalTime thursdayEnd) {
+        this.thursdayEnd = thursdayEnd;
+    }
+
+    public LocalTime getFridayStart() {
+        return fridayStart;
+    }
+
+    public void setFridayStart(LocalTime fridayStart) {
+        this.fridayStart = fridayStart;
+    }
+
+    public LocalTime getFridayEnd() {
+        return fridayEnd;
+    }
+
+    public void setFridayEnd(LocalTime fridayEnd) {
+        this.fridayEnd = fridayEnd;
+    }
+
+    public LocalTime getSaturdayStart() {
+        return saturdayStart;
+    }
+
+    public void setSaturdayStart(LocalTime saturdayStart) {
+        this.saturdayStart = saturdayStart;
+    }
+
+    public LocalTime getSaturdayEnd() {
+        return saturdayEnd;
+    }
+
+    public void setSaturdayEnd(LocalTime saturdayEnd) {
+        this.saturdayEnd = saturdayEnd;
+    }
+
+    public LocalTime getSundayStart() {
+        return sundayStart;
+    }
+
+    public void setSundayStart(LocalTime sundayStart) {
+        this.sundayStart = sundayStart;
+    }
+
+    public LocalTime getSundayEnd() {
+        return sundayEnd;
+    }
+
+    public void setSundayEnd(LocalTime sundayEnd) {
+        this.sundayEnd = sundayEnd;
+    }
+
+    // ToString() Methode
     @Override
     public String toString() {
         return "ScheduleModel{" +
-                "id=" + id +
-                ", doctor=" + doctor +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", dayOfWeek=" + dayOfWeek +
+                "mondayStart=" + mondayStart +
+                ", mondayEnd=" + mondayEnd +
+                ", tuesdayStart=" + tuesdayStart +
+                ", tuesdayEnd=" + tuesdayEnd +
+                ", wednesdayStart=" + wednesdayStart +
+                ", wednesdayEnd=" + wednesdayEnd +
+                ", thursdayStart=" + thursdayStart +
+                ", thursdayEnd=" + thursdayEnd +
+                ", fridayStart=" + fridayStart +
+                ", fridayEnd=" + fridayEnd +
+                ", saturdayStart=" + saturdayStart +
+                ", saturdayEnd=" + saturdayEnd +
+                ", sundayStart=" + sundayStart +
+                ", sundayEnd=" + sundayEnd +
                 '}';
     }
 }

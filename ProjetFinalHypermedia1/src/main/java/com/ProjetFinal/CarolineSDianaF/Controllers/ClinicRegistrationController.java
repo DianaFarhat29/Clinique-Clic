@@ -44,6 +44,21 @@ public class ClinicRegistrationController {
         newUser.setUsername(email);
         newUser.setRole(Role.CLINIC);
         newUser.setEmail(email);
+
+        // Appliquer la mise en majuscule aux champs du modèle ClinicModel
+        clinic.setName(capitalizeFirstLetter(clinic.getName()));
+
+        // Appliquer la mise en majuscule aux champs de ContactDetailsModel
+        ContactDetailsModel contactDetails = clinic.getContactDetails();
+        if (contactDetails != null) {
+            contactDetails.setPhoneNumber(capitalizeFirstLetter(contactDetails.getPhoneNumber()));
+            contactDetails.setEmail(capitalizeFirstLetter(contactDetails.getEmail()));
+            contactDetails.setRue(capitalizeFirstLetter(contactDetails.getRue()));
+            contactDetails.setNoLocal(capitalizeFirstLetter(contactDetails.getNoLocal()));
+            contactDetails.setVille(capitalizeFirstLetter(contactDetails.getVille()));
+            contactDetails.setCodePostal(contactDetails.getCodePostal().toUpperCase());
+        }
+
         newUser.setPassword(passwordEncoder.encode(password));
 
         // Save the user
@@ -58,4 +73,12 @@ public class ClinicRegistrationController {
         // Redirect to a confirmation page or login page
         return "redirect:/login";
     }
+
+    private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty() || !Character.isLetter(input.charAt(0))) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
 }

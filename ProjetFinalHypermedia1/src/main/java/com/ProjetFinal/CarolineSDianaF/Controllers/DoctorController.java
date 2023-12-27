@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.time.DayOfWeek;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -80,99 +82,92 @@ public class DoctorController {
     @PostMapping("/update")
     public String updateDoctorProfile(@ModelAttribute("doctor") DoctorModel doctor,
                                       @RequestParam Map<String, String> allParams,
-                                      Authentication authentication) {
+                                      Authentication authentication, RedirectAttributes redirectAttributes) {
 
-        // Update basic doctor information
-        doctorService.updateDoctor(doctor);
-
-        // Update each day's schedule
-        for (DayOfWeek day : DayOfWeek.values()) {
-            String openTimeKey = day.toString().toLowerCase() + "Start";
-            String closeTimeKey = day.toString().toLowerCase() + "End";
-
-            String openTimeString = allParams.get(openTimeKey);
-            String closeTimeString = allParams.get(closeTimeKey);
-
-            LocalTime openTime = null;
-            LocalTime closeTime = null;
-
-            // Parse the times if they are provided
-            if (openTimeString != null && !openTimeString.isEmpty()) {
-                openTime = LocalTime.parse(openTimeString);
-            }
-            if (closeTimeString != null && !closeTimeString.isEmpty()) {
-                closeTime = LocalTime.parse(closeTimeString);
-            }
-
-            // Retrieve or create a new schedule object for the day
-            ScheduleModel schedule = doctor.getSchedules().stream()
-                    .filter(s -> s.getDayOfWeek() == day)
-                    .findFirst()
-                    .orElse(new ScheduleModel());
-
-            // Update the schedule object
-            schedule.setDayOfWeek(day);
-            if (openTime != null) {
-                schedule.setStartTime(LocalDateTime.of(LocalDate.now(), openTime));
-            }
-            if (closeTime != null) {
-                schedule.setEndTime(LocalDateTime.of(LocalDate.now(), closeTime));
-            }
-            schedule.setDoctor(doctor);
-
-            // Update or save the schedule
-            doctorService.editSchedule(schedule);
+        // Vérification de l'existence du médecin
+        Optional<DoctorModel> existingDoctorOpt = doctorService.getDoctorById(doctor.getId());
+        if (!existingDoctorOpt.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Médecin avec l'ID " + doctor.getId() + " non trouvé.");
+            return "redirect:/doctors/MedecinFiche";
         }
 
+        DoctorModel existingDoctor = existingDoctorOpt.get();
+
+        // Mise à jour des informations de base du médecin
+        doctorService.updateDoctor(doctor);
+
+        // Mise à jour de l'horaire
+        ScheduleModel schedule = existingDoctor.getSchedule();
+        if (schedule == null) {
+            schedule = new ScheduleModel();
+            existingDoctor.setSchedule(schedule);
+        }
+
+        // Mise à jour des horaires pour chaque jour
+        for (DayOfWeek day : DayOfWeek.values()) {
+            String dayLower = day.toString().toLowerCase();
+            LocalTime startTime = parseTime(allParams.get(dayLower + "Start"));
+            LocalTime endTime = parseTime(allParams.get(dayLower + "End"));
+
+            if (startTime != null && endTime != null && !startTime.isBefore(endTime)) {
+                redirectAttributes.addFlashAttribute("error", "L'heure de fin doit être après l'heure de début pour " + day);
+                return "redirect:/doctors/MedecinFiche";
+            }
+
+            // Mise à jour des heures de début et de fin pour chaque jour
+            switch (dayLower) {
+                case "monday":
+                    schedule.setMondayStart(startTime);
+                    schedule.setMondayEnd(endTime);
+                    break;
+                case "tuesday":
+                    schedule.setTuesdayStart(startTime);
+                    schedule.setTuesdayEnd(endTime);
+                    break;
+                case "wednesday":
+                    schedule.setWednesdayStart(startTime);
+                    schedule.setWednesdayEnd(endTime);
+                    break;
+                case "thursday":
+                    schedule.setThursdayStart(startTime);
+                    schedule.setThursdayEnd(endTime);
+                    break;
+                case "friday":
+                    schedule.setFridayStart(startTime);
+                    schedule.setFridayEnd(endTime);
+                    break;
+                case "saturday":
+                    schedule.setSaturdayStart(startTime);
+                    schedule.setSaturdayEnd(endTime);
+                    break;
+                case "sunday":
+                    schedule.setSundayStart(startTime);
+                    schedule.setSundayEnd(endTime);
+                    break;
+            }
+        }
+
+        // Sauvegarder les modifications
+        existingDoctor.setSchedule(schedule);
+        doctorService.updateDoctor(existingDoctor);
+
+        redirectAttributes.addFlashAttribute("success", "Profil du médecin mis à jour avec succès.");
         return "redirect:/doctors/MedecinFiche";
     }
 
-
-
+    private LocalTime parseTime(String timeString) {
+        if (timeString != null && !timeString.isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            return LocalTime.parse(timeString, formatter);
+        }
+        return null;
+    }
 
     // Process the form to update a doctor
     @PostMapping("/edit/{id}")
     public String updateDoctor(@PathVariable Long id, @ModelAttribute DoctorModel doctor) {
         doctorService.saveDoctor(doctor); // Using save for both add and update operations
         return "redirect:/doctors";
-    }
-
-    // Display form to edit a doctor's schedule
-    @GetMapping("/{doctorId}/schedule/edit/{scheduleId}")
-    public String showEditScheduleForm(@PathVariable Long doctorId, @PathVariable Long scheduleId, Model model) {
-        ScheduleModel schedule = doctorService.getScheduleById(scheduleId)
-                .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
-        model.addAttribute("schedule", schedule);
-        return "doctor/editSchedule";
-    }
-
-    // Process the form to edit a schedule
-    @PostMapping("/{doctorId}/schedule/edit/{scheduleId}")
-    public String updateSchedule(@PathVariable Long doctorId, @ModelAttribute ScheduleModel schedule) {
-        doctorService.editSchedule(schedule);
-        return "redirect:/doctors/" + doctorId + "/schedule";
-    }
-
-    private ScheduleModel extractScheduleForDay(Map<String, String> params, DayOfWeek day, DoctorModel doctor) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        String openTimeKey = day.toString().toLowerCase() + "Start";
-        String closeTimeKey = day.toString().toLowerCase() + "End";
-
-        String openTimeString = params.getOrDefault(openTimeKey, "");
-        String closeTimeString = params.getOrDefault(closeTimeKey, "");
-
-        LocalDateTime startTime = null;
-        LocalDateTime endTime = null;
-
-        if (!openTimeString.isEmpty()) {
-            startTime = LocalDateTime.parse(openTimeString, timeFormatter);
-        }
-        if (!closeTimeString.isEmpty()) {
-            endTime = LocalDateTime.parse(closeTimeString, timeFormatter);
-        }
-
-        return new ScheduleModel(/* id, doctor, startTime, endTime, day, status, type */);
     }
 
     // Display form to manage an appointment
@@ -198,14 +193,36 @@ public class DoctorController {
         Optional<DoctorModel> doctor = doctorService.getDoctorByProfessionalNumber(professionalNumber);
         if (doctor.isPresent()) {
             DoctorModel doctorModel = doctor.get();
-            for (ScheduleModel schedule : doctorModel.getSchedules()) {
-                String day = schedule.getDayOfWeek().toString().toLowerCase();
-                model.addAttribute(day + "Start", schedule.getStartTime().toLocalTime());
-                model.addAttribute(day + "End", schedule.getEndTime().toLocalTime());
-            }
+            initializeScheduleAttributes(doctorModel, model);
             model.addAttribute("doctor", doctorModel);
         }
         return "MedecinFiche";
     }
-    
+
+    private void initializeScheduleAttributes(DoctorModel doctorModel, Model model) {
+        ScheduleModel schedule = doctorModel.getSchedule();
+        if (schedule != null) {
+            model.addAttribute("mondayStart", schedule.getMondayStart());
+            model.addAttribute("mondayEnd", schedule.getMondayEnd());
+
+            model.addAttribute("tuesdayStart", schedule.getTuesdayStart());
+            model.addAttribute("tuesdayEnd", schedule.getTuesdayEnd());
+
+            model.addAttribute("wednesdayStart", schedule.getWednesdayStart());
+            model.addAttribute("wednesdayEnd", schedule.getWednesdayEnd());
+
+            model.addAttribute("thursdayStart", schedule.getThursdayStart());
+            model.addAttribute("thursdayEnd", schedule.getThursdayEnd());
+
+            model.addAttribute("fridayStart", schedule.getFridayStart());
+            model.addAttribute("fridayEnd", schedule.getFridayEnd());
+
+            model.addAttribute("saturdayStart", schedule.getSaturdayStart());
+            model.addAttribute("saturdayEnd", schedule.getSaturdayEnd());
+
+            model.addAttribute("sundayStart", schedule.getSundayStart());
+            model.addAttribute("sundayEnd", schedule.getSundayEnd());
+        }
+    }
+
 }

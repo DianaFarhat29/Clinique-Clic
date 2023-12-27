@@ -220,6 +220,20 @@ $(document).ready(function () {
         return true;
     }
 
+    // Validate clinics (one must be selected)
+    function validateClinics() {
+        let isChecked = $("input[name='clinicId']:checked").length > 0;
+        if (!isChecked) {
+            $("#clinicsCheck").text("Veuillez sélectionner une clinique.");
+            $("#clinicsCheck").show();
+            return false;
+        } else {
+            $("#clinicsCheck").hide();
+            return true;
+        }
+    }
+
+
     // Validate all fields
     function validateAllFields() {
         let isValidPrenom = validateUserPrenom();
@@ -236,8 +250,9 @@ $(document).ready(function () {
         let isValidCivicNumber = validateCivicNumber();
         let isValidEmail = validateEmail();
         let isValidSpeciality = validateSpeciality();
+        let isValidClinics = validateClinics();
 
-        return isValidPrenom && isValidNom && isValidPhoneNumber && isValidPassword && isValidLicenseNumber && isValidPostalCode && isValidCity && isValidStreetName && isValidCivicNumber && isValidTarif && isValidPasswordMatch && isValidOfficeNumber && isValidEmail && isValidSpeciality
+        return isValidPrenom && isValidNom && isValidPhoneNumber && isValidPassword && isValidLicenseNumber && isValidPostalCode && isValidCity && isValidStreetName && isValidCivicNumber && isValidTarif && isValidPasswordMatch && isValidOfficeNumber && isValidEmail && isValidSpeciality && isValidClinics;
     }
 
     // Submit form if all fields are valid

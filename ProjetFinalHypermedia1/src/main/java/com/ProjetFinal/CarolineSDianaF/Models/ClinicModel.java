@@ -47,20 +47,15 @@ public class ClinicModel {
     )
     private Set<ClinicModel> patients = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "clinic_patient",
-            joinColumns = @JoinColumn(name = "clinic_id"),
-            inverseJoinColumns = @JoinColumn(name = "doctor_id")
-    )
-    private Set<ClinicModel> doctors = new HashSet<>();
+    @ManyToMany(mappedBy = "clinics")
+    private Set<DoctorModel> doctors = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserModel user;
 
     // Constructors
-    public ClinicModel(Long id, String name, String ministerialNumber , String services, ContactDetailsModel contactDetails, Set<ClinicModel> patients, Set<ClinicModel> doctors, UserModel user) {
+    public ClinicModel(Long id, String name, String ministerialNumber , String services, ContactDetailsModel contactDetails, Set<ClinicModel> patients, Set<DoctorModel> doctors, UserModel user) {
         this.id = id;
         this.name = name;
         this.ministerialNumber = ministerialNumber;
@@ -91,7 +86,6 @@ public class ClinicModel {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getMinisterialNumber() {
         return ministerialNumber;
@@ -124,11 +118,11 @@ public class ClinicModel {
         this.patients = patients;
     }
 
-    public Set<ClinicModel> getDoctors() {
+    public Set<DoctorModel> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(Set<ClinicModel> doctors) {
+    public void setDoctors(Set<DoctorModel> doctors) {
         this.doctors = doctors;
     }
 

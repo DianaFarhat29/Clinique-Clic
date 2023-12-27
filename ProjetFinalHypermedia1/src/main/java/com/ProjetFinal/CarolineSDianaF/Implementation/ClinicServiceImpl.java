@@ -73,4 +73,10 @@ public class ClinicServiceImpl implements ClinicService {
     public Optional<ClinicModel> getClinicByEmail(String email) {
         return clinicRepository.findByContactDetails_Email(email);
     }
+
+    // Implementation for finding clinic by id
+    @Override
+    public Optional<ClinicModel> getClinicById(Long id) {
+        return clinicRepository.findById(id);
+    }
 }
