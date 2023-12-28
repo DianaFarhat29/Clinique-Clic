@@ -43,12 +43,7 @@ public class PatientController {
     @Autowired
     private ClinicService clinicService;
 
-    @GetMapping
-    public String viewCliniques(Model model) {
-        List<ClinicModel> clinics = clinicService.getAllClinics();
-        model.addAttribute("clinics", clinics);
-        return "PatientClinique";
-    }
+
 
     // Display a form to book a new appointment
     @GetMapping("/bookAppointment")
@@ -211,7 +206,8 @@ public class PatientController {
     public String patientClinique(Model model, Authentication authentication) {
         String healthInsuranceNumber = String.valueOf(authentication.getName());
         Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
-
+        List<ClinicModel> clinics = clinicService.getAllClinics();
+        model.addAttribute("clinics", clinics);
         if (patient.isPresent()) {
             PatientModel patientModel = patient.get();
             model.addAttribute("patient", patientModel);
