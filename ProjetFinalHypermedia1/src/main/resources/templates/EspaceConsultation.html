@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
     <title>Espace patient - Messages</title>
@@ -7,56 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/EspaceConsultation.css}">
 
-    <link rel="stylesheet" href="/static/css/EspaceConsultation.css">
+    <!-- Timepicker CSS  -->
+    <link rel="stylesheet" th:href="@{/jquery-timepicker-1.3.5/jquery.timepicker.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Timepicker JS -->
+    <script th:src="@{/jquery-timepicker-1.3.5/jquery.timepicker.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-default">
-        <p class="navbar-text">Patient Très-Patient</p>
-        <ul class="nav navbar-nav navbar-right">
-
-            <li><a href="PatientFiche.html">Compte et documents</a></li>
-            <li><a href="PatientMessage.html">Rendez-vous </a></li>
-            <li><a href="PatientClinique.html">Liste des cliniques</a></li>
-        </ul>
-    </nav>
+<nav class="navbar navbar-default">
+    <p class="navbar-text">Bienvenue <span th:text="${patient.firstName}">Prénom</span> <span th:text="${patient.lastName}">Nom</span></p>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{PatientFiche}">Compte et documents</a></li>
+        <li><a th:href="@{EspaceConsultation}">Rendez-vous</a></li>
+        <li><a th:href="@{PatientClinique}">Liste des cliniques</a></li>
+    </ul>
+</nav>
 
     <a href="/templates/Index.html">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
     <div class="container">
-
-
-        <!-- Section infos -->
-        <div class="row">
-            <div class="col-md-3">
-                <h5>Informations personnelles</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="info-list">
-                    <div th:each="info : ${info}" class="info-item">
-                        <div class="info-details">
-                            <span th:text="${info.nam}">Numréro d'assurance maladie</span><br>
-                            <span th:text="${info.nom}">Nom</span><br>
-                            <span th:text="${info.prénom}">Prénom</span><br>
-                            <span th:text="${info.birthday}">date de naissance</span><br>
-                            <span th:text="${info.noTel}">Numéro de téléphone</span><br>
-                            <span th:text="${info.email}">Courriel</span><br>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
 
         <!-- Section rendez-vous -->
         <div class="row">
@@ -71,7 +51,6 @@
                             <span th:text="${appointment.heure}">Heure du Rendez-Vous</span><br>
                             <span th:text="${appointment.clinique}">Clinique</span><br>
                             <span th:text="${appointment.docteur}">Médecin</span>
-
                         </div>
 
                     </div>

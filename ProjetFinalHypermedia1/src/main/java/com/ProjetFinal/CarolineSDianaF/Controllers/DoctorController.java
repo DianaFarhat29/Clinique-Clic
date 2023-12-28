@@ -163,13 +163,6 @@ public class DoctorController {
         return null;
     }
 
-    // Process the form to update a doctor
-    @PostMapping("/edit/{id}")
-    public String updateDoctor(@PathVariable Long id, @ModelAttribute DoctorModel doctor) {
-        doctorService.saveDoctor(doctor); // Using save for both add and update operations
-        return "redirect:/doctors";
-    }
-
     // Display form to manage an appointment
     @GetMapping("/{doctorId}/appointments/edit/{appointmentId}")
     public String showEditAppointmentForm(@PathVariable Long doctorId, @PathVariable Long appointmentId, Model model) {

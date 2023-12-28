@@ -65,9 +65,9 @@ img {
     font-weight: bold;
 }
 
-
 .row {
     margin-bottom: 20px;
+    margin-left: 5%;
 }
 
 h5 {
@@ -77,7 +77,7 @@ h5 {
 
 /* Style pour l'échange de documents dans PatientMessage */
 .document-list {
-    color: #598BC5;
+    color: #e89255;
     margin-left: 3em;
     margin-bottom: 5em;
     padding: 2em;
@@ -93,7 +93,7 @@ h5 {
 }
 
 .appointment-details {
-    color: #598BC5;
+    color: #e89255;
     font-weight: bold;
 }
 
@@ -151,12 +151,37 @@ input[type='file'] {
     margin-left: 3em;
 }
 
+/* Style pour les champs de formulaire en lecture seule */
+input[type='text'][readonly],
+input[type='email'][readonly],
+input[type='time'][readonly],
+input[type='number'][readonly] {
+    width: 70%;
+    padding: 5px;
+    padding-left: 0;
+    border: none;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+    opacity: 1;
+    background-color: transparent;
+}
+
+/* Supprimer la bordure lors de la sélection des champs en lecture seule */
+input[type='text'][readonly]:focus,
+input[type='email'][readonly]:focus,
+input[type='date'][readonly]:focus,
+input[type='number'][readonly]:focus {
+    outline: none;
+}
+
 /* Style pour les placeholders des champs de formulaire */
 input[type='text']::placeholder,
 input[type='email']::placeholder,
 input[type='date']::-webkit-input-placeholder,
 input[type='file']::placeholder {
-    color: #598BC5 !important;
+    color: #999999 !important;
 }
 
 /* style pour formulaire*/
@@ -172,7 +197,7 @@ select#docteurSelection {
     box-sizing: border-box;
     box-shadow: none;
     margin-left: 3em;
-    color: #598BC5;
+    color: #e89255;
     /* Default text color, change as needed */
     background-color: #fff;
     /* Default background, change as needed */
@@ -188,23 +213,27 @@ textarea#detailConsultation {
     box-sizing: border-box;
     box-shadow: none;
     margin-left: 3em;
-    color: #598BC5;
+    color: #e89255;
     /* Default text color, change as needed */
     background-color: #fff;
     /* Default background, change as needed */
 }
 
-
-
-/* Style pour le label des cases à cocher */
-.checkbox label {
-    margin-left: 3em;
-    color: #598BC5;
-
+.errorForm{
+    color:#e89255;
+    margin-left: 17%;
+    display: none;
 }
 
 .jour-semaine {
     margin-left: 3em;
+}
+
+.section_modification
+{
+    display: flex;
+    flex-direction: column;
+    gap:25px;
 }
 
 #submitbtn,
@@ -235,13 +264,39 @@ textarea#detailConsultation {
 
 
 
-/* Style pour le label des cases à cocher */
-.checkbox label {
+.raison-consultation {
     margin-left: 3em;
-    color: #598BC5;
+}
+
+.titre_donnee_modifiables_ou_non
+{
+    color: #e89255 !important;
+    font-weight: bold;
+    font-size: large;
+    padding-bottom: 1%;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #e89255;
+    width: fit-content;
+}
+
+.donnee_non_modifiables{
+    background-color:rgb(232, 146, 85, 0.2);
+    padding:2%;
+    border-radius:10px;
+    margin-bottom:3%;
+    margin-top:3%;
 
 }
 
-.raison-consultation {
-    margin-left: 3em;
+.non_modifiable {
+    margin-bottom:0 !important;
+    margin-top:0 !important;
+    padding: 0 !important;
+
+}
+
+.row_disabled {
+    display:flex;
+    flex-direction:row;
 }

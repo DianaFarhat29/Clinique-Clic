@@ -4,6 +4,7 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
+import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
 import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
@@ -15,12 +16,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -34,6 +40,15 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private ClinicService clinicService;
+
+    @GetMapping
+    public String viewCliniques(Model model) {
+        List<ClinicModel> clinics = clinicService.getAllClinics();
+        model.addAttribute("clinics", clinics);
+        return "PatientClinique";
+    }
 
     // Display a form to book a new appointment
     @GetMapping("/bookAppointment")
@@ -117,6 +132,30 @@ public class PatientController {
         return "redirect:/patients";
     }
 
+    @PostMapping("/update")
+    public String updatePatientProfile(@ModelAttribute("patient") PatientModel patient,
+                                      @RequestParam Map<String, String> allParams,
+                                      Authentication authentication, RedirectAttributes redirectAttributes) {
+
+        // Vérification de l'existence du médecin
+        Optional<PatientModel> existingPatientOpt = patientService.getPatientById(patient.getId());
+        if (!existingPatientOpt.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Patient avec l'ID " + patient.getId() + " non trouvé.");
+            return "redirect:/patients/PatientFiche";
+        }
+
+        PatientModel existingPatient = existingPatientOpt.get();
+
+        // Mise à jour des informations de base du patient
+        patientService.updatePatient(patient);
+
+        // Sauvegarder les modifications
+        patientService.updatePatient(existingPatient);
+
+        redirectAttributes.addFlashAttribute("success", "Profil du patient mis à jour avec succès.");
+        return "redirect:/patients/PatientFiche";
+    }
+
     // Display form for uploading a file
     private String saveUploadedFile(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
@@ -139,13 +178,46 @@ public class PatientController {
         return fileName; // Return the filename to store it in the database or use it later
     }
 
-    // Display the page 'MedecinFiche', the page of redirection after doctor login
+    // Display the page 'MedecinFiche', the page of redirection after patient login
     @GetMapping("/PatientFiche")
     public String patientFiche(Model model, Authentication authentication) {
         String healthInsuranceNumber = String.valueOf(authentication.getName());
         Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
-        patient.ifPresent(p -> model.addAttribute("patient", p));
+
+        if (patient.isPresent()) {
+            PatientModel patientModel = patient.get();
+            model.addAttribute("patient", patientModel);
+        }
+
         return "PatientFiche";
+    }
+
+    // Display the page 'EspaceConsultation'
+    @GetMapping("/EspaceConsultation")
+    public String espaceConsultation(Model model, Authentication authentication) {
+        String healthInsuranceNumber = String.valueOf(authentication.getName());
+        Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
+
+        if (patient.isPresent()) {
+            PatientModel patientModel = patient.get();
+            model.addAttribute("patient", patientModel);
+        }
+
+        return "EspaceConsultation";
+    }
+
+    // Display the page 'PatientClinique'
+    @GetMapping("/PatientClinique")
+    public String patientClinique(Model model, Authentication authentication) {
+        String healthInsuranceNumber = String.valueOf(authentication.getName());
+        Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
+
+        if (patient.isPresent()) {
+            PatientModel patientModel = patient.get();
+            model.addAttribute("patient", patientModel);
+        }
+
+        return "PatientClinique";
     }
 
 

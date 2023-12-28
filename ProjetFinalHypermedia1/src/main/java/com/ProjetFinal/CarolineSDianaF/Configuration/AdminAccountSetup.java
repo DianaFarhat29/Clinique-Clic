@@ -19,7 +19,7 @@ public class AdminAccountSetup implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Value("${admin.username:admin}")
+    @Value("${admin.username:}")
     private String adminUsername;
 
     @Value("${admin.password:}")
@@ -29,15 +29,16 @@ public class AdminAccountSetup implements CommandLineRunner {
     public void run(String... args) {
         // Generate a random password if not set
         if (adminPassword == null || adminPassword.isEmpty()) {
-            adminPassword = UUID.randomUUID().toString();
+            /*adminPassword = UUID.randomUUID().toString();*/
+            adminPassword = "admin";
             System.out.println("Generated Admin Password: " + adminPassword);
         }
 
         // Check if the admin account already exists
-        if (userRepository.findByUsername(adminUsername).isEmpty()) {
+        if (userRepository.findByUsername("admin@example.com").isEmpty()) {
             // Admin account does not exist, create one
             UserModel adminUser = new UserModel();
-            adminUser.setUsername(adminUsername);
+            adminUser.setUsername("admin@example.com");
             adminUser.setPassword(passwordEncoder.encode(adminPassword));
             adminUser.setEmail("admin@example.com");
             adminUser.setRole(Role.ADMIN);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
     <title>Espace patient - Fiche</title>
@@ -10,62 +10,105 @@
     
     <link rel="stylesheet" th:href="@{/css/PatientFiche.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/javascript/PatientFiche.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
     <nav class="navbar navbar-default">
-        <p class="navbar-text">Patient Très-Patient</p>
+        <p class="navbar-text">Bienvenue <span th:text="${patient.firstName}">Prénom</span> <span th:text="${patient.lastName}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="PatientFiche.html">Compte et documents</a></li>
-            <li><a href="PatientMessage.html">Rendez-vous</a></li>
-            <li><a href="PatientClinique.html">Liste des cliniques</a></li>
+            <li><a th:href="@{PatientFiche}">Compte et documents</a></li>
+            <li><a th:href="@{EspaceConsultation}">Rendez-vous</a></li>
+            <li><a th:href="@{PatientClinique}">Liste des cliniques</a></li>
         </ul>
     </nav>
     <main>
 
-    <a href="/templates/Index.html" class="image_container">
+    <a th:href="@{/Index}" class="image_container">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
     <div class="container">
-        <form id="patientForm">
+        <form id="patientForm" th:action="@{/patients/update}" th:object="${patient}" method="post">
 
+            <h5 class="titre_donnee_modifiables_ou_non">Informations personnelles</h5>
+            <div class="donnee_non_modifiables">
+                <!-- Section Informations Personnelles -->
+                <div class="row non_modifiable">
+                    <div class="col-md-2 non_modifiable">
+                            <h5 style="padding:2px;">Prénom</h5>
+                            <h5 style="padding:2px;">Nom</h5>
+                            <h5 style="padding:2px;">#Ass. Maladie</h5>
+                            <h5 style="padding:2px;">#Séquentiel</h5>
+                            <h5 style="padding:2px;">Date Naissance</h5>
+                        </div>
+
+                    <div class="col-md-10 ">
+                        <input readonly  type="text" name="firstName" th:field="*{firstName}" />
+                        <input readonly  type="text" name="lastName" th:field="*{lastName}" />
+                        <input readonly  type="text" name="healthInsuranceNumber" th:field="*{healthInsuranceNumber}" />
+                        <input readonly  type="text" name="healthSequentialNumber" th:field="*{healthSequentialNumber}" />
+                        <input readonly  type="text" name="dateBirth" th:field="*{dateBirth}" />
+                        <input type="hidden" name="id" th:field="*{id}" />
+                    </div>
+
+                </div>
+            </div>
+
+            <h5 class="titre_donnee_modifiables_ou_non">Données modifiables</h5>
             <!-- Section Adresse -->
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <h5>Adresse</h5>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="form-group">
                         <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
-                            name="noCivique">
-                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue">
-                        <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
-                            name="noLocal">
-                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville">
-                        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
-                            name="codePostal">
-                        <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
-                            name="noTel">
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Courriel">
+                               name="noCivique" th:field="*{contactDetails.noCivique}" />
+                        <div id="noCiviqueCheck" class="errorForm"></div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Section date de naissance -->
-            <div class="row">
-                <div class="col-md-3">
-                    <h5>Date de naissance</h5>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
-                        <input type="date" id="birthday" name="birthday">
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue"
+                               th:field="*{contactDetails.rue}" />
+                        <div id="rueCheck" class="errorForm"></div>
                     </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
+                               name="noLocal" th:field="*{contactDetails.noLocal}" />
+                        <div id="noLocalCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville"
+                               th:field="*{contactDetails.ville}" />
+                        <div id="villeCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
+                               name="codePostal" th:field="*{contactDetails.codePostal}" />
+                        <div id="codePostalCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone"
+                               name="noTel" th:field="*{contactDetails.phoneNumber}" />
+                        <div id="phoneNumberCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" th:field="*{contactDetails.email}" placeholder="Adresse courriel" name="email">
+                        <div id="courrielCheck" class="errorForm">
+                            Entrez une adresse courriel valide.
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
 
             <!-- Bouton de soumission -->
             <div class="row">
@@ -106,20 +149,18 @@
         <!-- Bouton de soumission 2 et déconnection -->
         <div class="row">
             <div class="col-md-3">
-
             </div>
 
-            <div class="col-md-8">
-                <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
-            </div>
-
+            <form class="col-md-8" th:action="@{/logout}" method="post">
+                <input type="submit" value="Se déconnecter" id="disconnectbtn" class="btn btn-default"/>
+            </form>
 
         </div>
 
 
     </div>
 
- <!-- <script src="@{/javascript/}"></script> -->
+
 
 </main>
 </body>

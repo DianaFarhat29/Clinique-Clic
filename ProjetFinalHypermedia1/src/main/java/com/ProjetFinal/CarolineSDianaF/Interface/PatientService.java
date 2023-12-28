@@ -19,6 +19,9 @@ public interface PatientService {
     // Method to save or update a patient's information
     PatientModel save(PatientModel patient);
 
+    // Method to update a patient's information
+    PatientModel updatePatient(PatientModel patient);
+
     // Method to book a new appointment
     void bookAppointment(AppointmentModel appointment);
 
@@ -46,4 +49,6 @@ public interface PatientService {
     // Method to find patient by Health Insurance Number
     Optional<PatientModel> getPatientByHealthInsuranceNumber(String healthInsuranceNumber);
 
+    // Method to find patient by id
+    Optional<PatientModel> getPatientById(Long id);
 }

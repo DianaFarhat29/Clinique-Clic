@@ -25,10 +25,10 @@
 <body>
 
     <nav class="navbar navbar-default">
-        <p class="navbar-text">Dr Médecin Médecine</p>
+        <p class="navbar-text">Dr <span th:text="${doctor.firstName}">Prénom</span> <span th:text="${doctor.lastName}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="MedecinPatient.html">Liste des patients</a></li>
-            <li><a href="MedecinFiche.html">Fiche du médecin</a></li>
+            <li><a th:href="@{MedecinPatient}">Liste des patients</a></li>
+            <li><a th:href="@{MedecinFiche}">Fiche du médecin</a></li>
         </ul>
     </nav>
     <main>
@@ -43,17 +43,14 @@
             <div class="donnee_non_modifiables">
                 <!-- Section Informations Personnelles -->
                 <div class="row non_modifiable">
-                    <div class="col-md-2 ">
-                        <div class="col-md-6 non_modifiable">
-                            <h5 style="padding:2px;">Prénom</h5>
-                            <h5 style="padding:2px;">Nom</h5>
-                            <h5 style="padding:2px;">Spécialité</h5>
-                            <h5 style="padding:2px;">#License</h5>
-                            <h5 style="padding:2px;">Clinique</h5>
+                        <div class="col-md-2 non_modifiable">
+                            <h5 style="padding:2px;width:40%">Prénom</h5>
+                            <h5 style="padding:2px;width:40%">Nom</h5>
+                            <h5 style="padding:2px;width:40%">Spécialité</h5>
+                            <h5 style="padding:2px;width:40%">#License</h5>
+                            <h5 style="padding:2px;width:40%">Clinique</h5>
                         </div>
-                    </div>
-                    <div class="col-md-6 non_modifiable">
-
+                    <div class="col-md-10 ">
                                 <input readonly  type="text" name="firstName" th:field="*{firstName}" />
                                 <input readonly  type="text" name="lastName" th:field="*{lastName}" />
                                 <input readonly  type="text" name="speciality" th:field="*{speciality}" />
@@ -63,7 +60,6 @@
                                 </th:block>
                                 <input type="hidden" name="id" th:field="*{id}" />
                             </div>
-
                 </div>
             </div>
 
@@ -192,20 +188,19 @@
                 </div>
             </div>
 
-            <!-- Bouton de soumission 2 et déconnection -->
+            <!-- Bouton de déconnection -->
             <div class="row">
                 <div class="col-md-3">
-
+                    <!-- Espace vide pour l'alignement -->
                 </div>
                 <div class="col-md-3">
                     <button type="submit" id="submitbtn2" class="btn btn-default">Soumettre</button>
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
+                    <a th:href="@{/logout}" value="Se déconnecter" id="disconnectbtn" class="btn btn-default">Se déconnecter</a>
                 </div>
-
-
             </div>
+
 
         </form>
     </div>

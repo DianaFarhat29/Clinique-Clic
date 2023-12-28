@@ -63,6 +63,21 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.save(patient);
     }
 
+    // Implementation of method to update a patient's information
+    @Override
+    public PatientModel updatePatient(PatientModel updatedPatient) {
+        PatientModel existingPatient = patientRepository.findById(updatedPatient.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found with ID: " + updatedPatient.getId()));
+
+        // Update fields of the existing patient
+        existingPatient.setFirstName(updatedPatient.getFirstName());
+        existingPatient.setLastName(updatedPatient.getLastName());
+        existingPatient.setContactDetails(updatedPatient.getContactDetails());
+
+        // Save the updated doctor back to the database
+        return patientRepository.save(existingPatient);
+    }
+
     // Implementation of method to book an appointment
     @Override
     public void bookAppointment(AppointmentModel appointment) {
@@ -151,5 +166,12 @@ public class PatientServiceImpl implements PatientService {
     public Optional<PatientModel> getPatientByHealthInsuranceNumber(String healthInsuranceNumber) {
         return patientRepository.findByHealthInsuranceNumber(healthInsuranceNumber);
     }
+
+    // Implementation for getting a patient by id
+    @Override
+    public Optional<PatientModel> getPatientById(Long id) {
+        return patientRepository.findById(id);
+    }
+
 
 }
