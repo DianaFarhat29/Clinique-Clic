@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin_ModifierPatients</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="AdminViews.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <p class="navbar-text"><a href="Index.html">Accueil</a></p>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="AdminViewsPatient.html">Patients</a></li>
+        <li><a href="AdminViewsMedicin.html">Médecins</a></li>
+        <li><a href="AdminViewsClinique.html">Clinique</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>Modifier un compte patient</h2><br>
+    <form th:action="@{/ComptePatient}" th:object="${patient}" method="post" id="patientRegistrationForm">
+        <!-- Informations Personnelles -->
+        <div class="row">
+            <div class="col-md-2"><h5>Informations Personnelles</h5></div>
+            <div class="col-md-10">
+                <!-- Champs des Informations Personnelles -->
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" class="form-control" id="prenom" th:field="*{firstName}" placeholder="Prénom" name="prenom">
+                    <div id="userFnamecheck" class="errorForm">Entrer votre prénom.</div>
+                </div>
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" th:field="*{lastName}" placeholder="Nom" name="nom">
+                    <div id="userLnameCheck" class="errorForm">Entrer votre nom.</div>
+                </div>
+                <div class="form-group">
+                    <label for="noMaladie">No. d'assurance maladie</label>
+                    <input type="text" class="form-control" id="noMaladie" th:field="*{healthInsuranceNumber}" placeholder="Numéro d'assurance maladie" name="noMaladie">
+                    <div id="NAMCheck" class="errorForm">Entrer votre numéro d'assurance maladie.</div>
+                </div>
+                <div class="form-group">
+                    <label for="noSequentiel">No. séquentiel</label>
+                    <input type="text" class="form-control" id="noSequentiel" th:field="*{healthSequentialNumber}" placeholder="Numéro séquentiel" name="noSequentiel">
+                    <div id="NoSeqCheck" class="errorForm">Entrer votre numéro séquentiel indiquée sur votre carte d'assurance maladie.</div>
+                </div>
+                <div class="form-group">
+                    <label for="dateNaissance">Date de naissance</label>
+                    <input type="date" class="form-control" id="dateNaissance" th:field="*{dateBirth}" placeholder="Date de naissance" name="dateNaissance">
+                    <div id="dateNaissanceCheck" class="errorForm">Entrer votre date de naissance.</div>
+                </div>
+                <div class="form-group">
+                    <label for="sexe" id="sexeLabel">Genre</label>
+                    <select class="form-control" id="sexe" th:field="*{gender}" name="sexe">
+                        <option value="femme">Femme</option>
+                        <option value="homme">Homme</option>
+                        <option value="non-specifie">Préfère ne pas spécifier</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section coordonnées -->
+        <div class="row">
+            <div class="col-md-2"><h5>Coordonnées</h5></div>
+            <div class="col-md-10">
+                <!-- Champs des Coordonnées -->
+                <div class="form-group">
+                    <label for="phoneNumber">Numéro de téléphone</label>
+                    <input type="text" class="form-control" id="phoneNumber" th:field="*{contactDetails.phoneNumber}" placeholder="Numéro de téléphone" name="phoneNumber">
+                    <div id="phoneNumberCheck" class="errorForm">Entrez un numéro de téléphone valide.</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse courriel</label>
+                    <input type="email" class="form-control" id="email" th:field="*{contactDetails.email}" placeholder="Adresse courriel" name="email">
+                    <div id="courrielCheck" class="errorForm">Entrez une adresse courriel valide.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="noCivique">No. civique</label>
+                    <input type="text" class="form-control" id="noCivique" th:field="*{contactDetails.noCivique}" placeholder="Numéro civique"
+                           name="noCivique">
+                    <div id="noCiviqueCheck" class="errorForm">
+                        Entrez un numéro civique valide.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rue">Rue</label>
+                    <input type="text" class="form-control" id="rue" th:field="*{contactDetails.rue}" placeholder="Nom de la rue" name="rue">
+                    <div id="rueCheck" class="errorForm">
+                        Entrez un nom de rue valide.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="noLocal">Appartement</label>
+                    <input type="text" class="form-control" id="noLocal" th:field="*{contactDetails.noLocal}" placeholder="Numéro d'appartement"
+                           name="noLocal">
+                    <div id="noLocalCheck" class="errorForm">
+                        Entrez un numéro de local valide.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ville">Ville</label>
+                    <input type="text" class="form-control" id="ville" th:field="*{contactDetails.ville}" placeholder="Ville" name="ville">
+                    <div id="villeCheck" class="errorForm">
+                        Entrez un nom de ville valide.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="codePostal">Code Postal</label>
+                    <input type="text" class="form-control" id="codePostal" th:field="*{contactDetails.codePostal}" placeholder="Code postal"
+                           name="codePostal">
+                    <div id="codePostalCheck" class="errorForm">
+                        Entrez un code postal valide.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Informations de connexion -->
+        <div class="row">
+            <div class="col-md-2"><h5>Informations de connexion</h5></div>
+            <div class="col-md-10">
+                <!-- Champs des Informations de connexion -->
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password">
+                    <div id="passcheck" class="errorForm">Le mot de passe doit être composé d'un minimum de 6 caractères, de 1 chiffre et de 1 caractère spécial.</div>
+                </div>
+                <div class="form-group">
+                    <label for="passwordConfirm">Confirmation du mot de passe</label>
+                    <input type="password" class="form-control" id="passwordConfirm" placeholder="Confirmation du mot de passe" name="passwordConfirm">
+                    <div id="passwordConfirmCheck" class="errorForm">Les mots de passe ne concordent pas.</div>
+                </div>
+                <button type="submit" id="submitbtn" class="btn btn-default">Soumettre</button>
+            </div>
+        </div>
+
+
+        <script th:src="@{/javascript/ComptePatient.js}"></script>
+</body>
+</html>

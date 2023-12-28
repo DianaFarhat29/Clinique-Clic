@@ -5,6 +5,7 @@
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.AdministratorService;
+import com.ProjetFinal.CarolineSDianaF.Models.AdministratorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
@@ -28,7 +29,12 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
-    /////////////////// PATIENT MANAGEMENT ///////////////////
+    /////////////////// ADMIN MANAGEMENT ///////////////////
+
+    @GetMapping("/AdminViewsPatient")
+    public String adminPatientFiche(Model model, Authentication authentication) {
+        return "AdminViewsPatient";
+    }
 
     // Display a form to add a new patient
     @GetMapping("/addPatient")

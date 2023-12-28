@@ -26,7 +26,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         } else if (roles.contains("ROLE_PATIENT")) {
             setDefaultTargetUrl("/patients/PatientFiche");
         } else if (roles.contains("ROLE_ADMIN")) {
-            setDefaultTargetUrl("/AdminFiche");
+            setDefaultTargetUrl("/AdminViewsPatient");
         } else {
             setDefaultTargetUrl("/Index?error");
         }
