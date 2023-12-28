@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="fr">
 
 <head>
     <title>Clinique Clics</title>
@@ -68,13 +70,14 @@
                     </p>
                     <hr>
                     <p class="services-list">
-                        <a href="#">Prendre rendez-vous</a><br>
-                        <a href="#">Consulter un rendez-vous</a><br>
-                        <a href="#">Annuler un rendez-vous</a><br>
-                        <a href="#">Recevoir une confirmation</a><br>
-                        <a href="#">Envoyer un document à votre médecin</a><br>
-                        <a href="PatientClinique.html">Consulter la liste des cliniques</a>
+                        <a  th:href="@{/login}">Prendre rendez-vous</a><br>
+                        <a  th:href="@{/login}">Consulter un rendez-vous</a><br>
+                        <a  th:href="@{/login}">Annuler un rendez-vous</a><br>
+                        <a  th:href="@{/login}">Recevoir une confirmation</a><br>
+                        <a  th:href="@{/login}">Envoyer un document à votre médecin</a><br>
+                        <a  th:href="@{/login}">Consulter la liste des cliniques</a>
                     </p>
+
                 </div>
             </div>
             <div class="col-sm-1"></div>
@@ -140,13 +143,13 @@
                     <p class="content-title">Patient</p>
                     <hr>
                     <p class="content-list">
-                        <a href="#">Prendre rendez-vous</a><br>
-                        <a href="#">Consulter un rendez-vous</a><br>
-                        <a href="#">Modifier un rendez-vous</a><br>
-                        <a href="#">Annuler un rendez-vous</a><br>
-                        <a href="#">Recevoir une confirmation</a><br>
-                        <a href="#">Envoyer un document</a><br>
-                        <a href="#">Joindre un professionnel de la santé</a><br><br>
+                        <a  th:href="@{/login}">Prendre rendez-vous</a><br>
+                        <a  th:href="@{/login}">Consulter un rendez-vous</a><br>
+                        <a  th:href="@{/login}">Modifier un rendez-vous</a><br>
+                        <a  th:href="@{/login}">Annuler un rendez-vous</a><br>
+                        <a  th:href="@{/login}">Recevoir une confirmation</a><br>
+                        <a  th:href="@{/login}">Envoyer un document</a><br>
+                        <a  th:href="@{/login}">Joindre un professionnel de la santé</a><br><br>
                     </p>
                 </div>
             </div>
@@ -156,8 +159,8 @@
                     <p class="content-title">Clinique</p>
                     <hr>
                     <p class="content-list">
-                        <a href="#">Consulter la liste des rendez-vous</a><br>
-                        <a href="#">Mettre à jour les informations de la clinique</a><br><br>
+                        <a  th:href="@{/login}">Consulter la liste des rendez-vous</a><br>
+                        <a  th:href="@{/login}">Mettre à jour les informations de la clinique</a><br><br>
                     </p>
                 </div>
             </div>
@@ -167,12 +170,12 @@
                     <p class="content-title">Médecin</p>
                     <hr>
                     <p class="content-list">
-                        <a href="#">Gestion des rendez-vous</a><br>
-                        <a href="#">Espace consultation</a><br>
-                        <a href="#">Échange de documents</a><br>
-                        <a href="#">Coordonnées</a><br>
-                        <a href="#">Horaire de visite</a><br>
-                        <a href="#">Tarif de consultation</a><br><br>
+                        <a  th:href="@{/login}">Gestion des rendez-vous</a><br>
+                        <a  th:href="@{/login}">Espace consultation</a><br>
+                        <a  th:href="@{/login}">Échange de documents</a><br>
+                        <a  th:href="@{/login}">Coordonnées</a><br>
+                        <a  th:href="@{/login}">Horaire de visite</a><br>
+                        <a  th:href="@{/login}">Tarif de consultation</a><br><br>
                     </p>
                 </div>
             </div>

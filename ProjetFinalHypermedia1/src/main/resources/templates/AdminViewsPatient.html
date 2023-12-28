@@ -7,26 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="AdminViews.css">
+    <link rel="stylesheet" th:href="@{/css/AdminViews.css}">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8"
             src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+
 </head>
 
-<body>
+
 
 
 <nav class="navbar navbar-default">
-    <p class="navbar-text"><a href="Index.html">Accueil</a></p>
+    <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="AdminViewsPatient.html">Patients</a></li>
-        <li><a href="AdminViewsMedicin.html">Médecins</a></li>
-        <li><a href="AdminViewsClinique.html">Clinique</a></li>
+        <li><a th:href="@{/admin/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/admin/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/admin/AdminViewsClinique}">Clinique</a></li>
     </ul>
 </nav>
+
 
 
 
@@ -43,6 +47,7 @@
                 <th>Prénom</th>
                 <th>No.assurance maladie</th>
                 <th>Date de naissance</th>
+                <th>Actions</th>
 
             </tr>
             </thead>
@@ -55,14 +60,9 @@
                 <td th:text="${p.dateBirth}"></td>
 
                 <td>
-                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{delete(id=${p.id} )}">
-                        Supprimer
-                    </a>
-                </td>
-                <td>
-                    <a class="btn btn-success" th:href="@{/AdminEditPatients(id=${p.id})}">
-                        Modifier
-                    </a>
+                    <a th:href="@{/delete(id=${p.id})}" class="btn btn-danger"
+                       onclick="return confirm('Confirmer la suppression?')">Supprimer</a>
+                    <a th:href="@{/AdminEditPatients(id=${p.id})}" class="btn btn-success">Modifier</a>
                 </td>
             </tr>
             </tbody>

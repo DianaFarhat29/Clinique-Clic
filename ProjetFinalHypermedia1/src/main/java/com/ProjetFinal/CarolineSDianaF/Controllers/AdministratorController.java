@@ -5,6 +5,9 @@
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.AdministratorService;
+import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
+import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
+import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
 import com.ProjetFinal.CarolineSDianaF.Models.AdministratorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,12 +33,49 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private ClinicService clinicService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+
+
+
     /////////////////// ADMIN MANAGEMENT ///////////////////
 
     @GetMapping("/AdminViewsPatient")
     public String adminPatientFiche(Model model, Authentication authentication) {
+        List<ClinicModel> clinics = clinicService.getAllClinics();
+        model.addAttribute("clinics",clinics);
+
+        List<DoctorModel> doctors = doctorService.getAllDoctors();
+        model.addAttribute("doctors",doctors);
+
+
         return "AdminViewsPatient";
     }
+    @GetMapping("/AdminViewsMedicin")
+    public String adminMedecinFiche(Model model, Authentication authentication) {
+
+        List<DoctorModel> doctors = doctorService.getAllDoctors();
+        model.addAttribute("doctors",doctors);
+
+        return "AdminViewsMedicin";
+    }
+
+    @GetMapping("/AdminViewsClinique")
+    public String adminCliniqueFiche(Model model, Authentication authentication) {
+        List<ClinicModel> clinics = clinicService.getAllClinics();
+        model.addAttribute("clinics",clinics);
+
+        return "AdminViewsClinique";
+    }
+
+
 
     // Display a form to add a new patient
     @GetMapping("/addPatient")

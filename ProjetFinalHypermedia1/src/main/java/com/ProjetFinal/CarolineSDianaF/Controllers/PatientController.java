@@ -5,6 +5,7 @@
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
+import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
 import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
@@ -42,6 +43,24 @@ public class PatientController {
 
     @Autowired
     private ClinicService clinicService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @GetMapping("/listPatients")
+    public String listAllPatients(Model model) {
+        List<PatientModel> listPatients = patientService.getAllPatients();
+        model.addAttribute("listPatients", listPatients);
+        return "AdminViewsPatient";
+    }
+
+    @GetMapping("/admin/AdminViewsPatient")
+    public String showPatientsPage(Model model) {
+        List<PatientModel> patients = patientService.getAllPatients();
+        model.addAttribute("listPatients", patients);
+        return "AdminViewsPatient";
+    }
+
 
     @GetMapping
     public String viewCliniques(Model model) {
@@ -211,6 +230,7 @@ public class PatientController {
     public String patientClinique(Model model, Authentication authentication) {
         String healthInsuranceNumber = String.valueOf(authentication.getName());
         Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
+
 
         if (patient.isPresent()) {
             PatientModel patientModel = patient.get();

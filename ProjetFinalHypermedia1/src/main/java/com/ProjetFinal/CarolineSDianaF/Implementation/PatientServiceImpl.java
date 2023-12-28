@@ -57,6 +57,12 @@ public class PatientServiceImpl implements PatientService {
         this.patientRepository = patientRepository;
     }
 
+
+    @Override
+    public List<PatientModel> getAllPatients() {
+        return patientRepository.findAll();
+    }
+
     // Implementation of method to add or upgrade
     @Override
     public PatientModel save(PatientModel patient) {

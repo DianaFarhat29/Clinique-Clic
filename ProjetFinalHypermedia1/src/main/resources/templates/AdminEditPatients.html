@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="AdminViews.css">
+    <link rel="stylesheet" th:href="@{/css/AdminViews.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -19,11 +19,11 @@
 <body>
 
 <nav class="navbar navbar-default">
-    <p class="navbar-text"><a href="Index.html">Accueil</a></p>
+    <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="AdminViewsPatient.html">Patients</a></li>
-        <li><a href="AdminViewsMedicin.html">Médecins</a></li>
-        <li><a href="AdminViewsClinique.html">Clinique</a></li>
+        <li><a th:href="@{/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/AdminViewsClinique}">Clinique</a></li>
     </ul>
 </nav>
 

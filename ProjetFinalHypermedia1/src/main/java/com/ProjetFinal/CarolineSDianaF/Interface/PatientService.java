@@ -16,6 +16,8 @@ import java.util.Optional;
  */
 public interface PatientService {
 
+    List<PatientModel> getAllPatients();
+
     // Method to save or update a patient's information
     PatientModel save(PatientModel patient);
 

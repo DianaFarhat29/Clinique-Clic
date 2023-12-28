@@ -2,7 +2,7 @@
 
 body {
     display: flex;
-    background-image: url('Images/AdminLogin.png');
+    background-image: url('http://localhost:8080/images/AdminLogin.png');
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     height: 100vh;
@@ -46,7 +46,24 @@ img {
 }
 
 
+table th {
+    color: #E89255;
+    font-weight: bold;
+    text-align: left;
+    border: none !important;
+}
 
+/* Style pour les cellules de données de tableau */
+table td {
+
+    color: #598BC5 !important;
+    border: none !important;
+
+}
+
+.table-bordered {
+    border: none;
+}
 
 
 .row {
