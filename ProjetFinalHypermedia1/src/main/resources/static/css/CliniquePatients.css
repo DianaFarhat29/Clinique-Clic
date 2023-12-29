@@ -13,11 +13,29 @@ body {
     padding: 0;
 }
 
-img {
+main {
+    display: flex;
 
-    margin-top: 7em;
-    width: auto;
+    width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.image_container {
+    width: 25%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    position:relative;
+
+}
+
+
+img {
+    margin-top: 7em;
+    width: 70%;
+    position: absolute;
 }
 
 .navbar {
@@ -56,10 +74,18 @@ font-weight:600;
     padding: 40px;
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px;
-    max-width: 1200px;
+    width:75%;
     margin-right: 0;
     margin-top: 7em;
     height:max-content;
+}
+
+.add-doctor-btn {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    margin-top:2%;
+
 }
 
 #submitbtn {

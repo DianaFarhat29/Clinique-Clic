@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/CliniquePatients.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
+    <script th:src="@{/javascript/PatientClinique.js}"></script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
 </head>
@@ -19,16 +25,18 @@
 <body>
 
 
-    <nav class="navbar navbar-default">
-        <p class="navbar-text">Patient Très-Patient</p>
+    <nav class="navbar navbar-default" th:data-patient-id="${patient.id}">
+        <p class="navbar-text"><span th:text="${patient.firstName}">Prénom</span> <span th:text="${patient.lastName}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="PatientFiche.html">Compte et documents</a></li>
-            <li><a href="PatientMessage.html">Rendez-vous</a></li>
-            <li><a href="PatientClinique.html">Liste des cliniques</a></li>
+            <li><a th:href="@{PatientFiche}">Compte et documents</a></li>
+            <li><a th:href="@{EspaceConsultation}">Rendez-vous</a></li>
+            <li><a th:href="@{PatientClinique}">Liste des cliniques</a></li>
         </ul>
     </nav>
 
-    <a href="/templates/Index.html">
+    <main>
+
+    <a href="/templates/Index.html" class="image_container">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
@@ -40,16 +48,31 @@
                 <th data-field="service" data-sortable="true">Services</th>
                 <th data-field="noTel" data-sortable="true">Numéro de téléphone</th>
                 <th data-field="adresse" data-sortable="true">Adresse</th>
+                <th data-field="Docteurs" data-sortable="true">Docteurs</th>
             </tr>
             </thead>
             <tbody>
 
             <tr th:each="clinic : ${clinics}">
+
                 <td th:text="${clinic.name}"></td>
                 <td th:text="${clinic.services}"></td>
                 <td th:text="${clinic.contactDetails.phoneNumber}"></td>
                 <td>
                     <span th:text="${clinic.contactDetails.noCivique} + ', ' + ${clinic.contactDetails.rue} + ', ' + ${clinic.contactDetails.noLocal} + ', ' + ${clinic.contactDetails.ville} + ', ' + ${clinic.contactDetails.codePostal}"></span>
+                </td>
+                <td>
+                <div>
+                    <select class="form-control" th:id="'doctorsSelect' + ${clinic.id}" name="doctorIds" >
+                        <option disabled selected hidden value="">Choisir un médecin</option>
+                        <option th:each="doctor : ${clinic.doctors}"
+                                th:value="${doctor.id}"
+                                th:text="${doctor.firstName + ' ' + doctor.lastName}"></option>
+                    </select>
+                </div>
+                    <div>
+                        <button type="button" class="btn btn-success add-doctor-btn">Ajouter ce medecin</button>
+                    </div>
                 </td>
             </tr>
 
@@ -60,12 +83,8 @@
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
 
+    </main>
 </body>
 
 </html>

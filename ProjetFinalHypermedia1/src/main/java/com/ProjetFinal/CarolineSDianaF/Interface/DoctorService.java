@@ -7,8 +7,12 @@ package com.ProjetFinal.CarolineSDianaF.Interface;
 import com.ProjetFinal.CarolineSDianaF.Models.AppointmentModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
 import com.ProjetFinal.CarolineSDianaF.Models.DocumentModel;
+import com.ProjetFinal.CarolineSDianaF.Models.ScheduleModel;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +55,14 @@ public interface DoctorService {
 
     // Method to find doctor by id
     Optional<DoctorModel> getDoctorById(Long id);
+
+    // Method to calculate Available Slots
+    List<String> calculateAvailableSlots(Long doctorId, LocalDate date);
+
+    // Method to get Start Time
+    LocalTime getStartTime(ScheduleModel schedule, DayOfWeek day);
+
+    // Method to get End Time
+    LocalTime getEndTime(ScheduleModel schedule, DayOfWeek day);
 
 }

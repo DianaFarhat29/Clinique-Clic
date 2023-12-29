@@ -47,6 +47,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // Désactiver CSRF
+                .csrf(csrf -> csrf.disable())
+
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
@@ -55,6 +58,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 .requestMatchers("/doctors/**").hasRole("DOCTOR")
                                 .requestMatchers("/patients/**").hasRole("PATIENT")
                                 .requestMatchers("/clinics/**").hasRole("CLINIC")
+                                .requestMatchers("/patients/getAvailableSlots/**").hasRole("PATIENT")
+                                .requestMatchers(HttpMethod.POST, "/patients/bookAppointment").permitAll()
                                 .requestMatchers("/login").anonymous()
                                 .requestMatchers("/Index", "/", "/login","/MedecinFiche", "/CompteMedecin", "/CompteClinique", "/ComptePatient", "/Index", "/css/**", "/js/**", "/images/**").permitAll()
                 )

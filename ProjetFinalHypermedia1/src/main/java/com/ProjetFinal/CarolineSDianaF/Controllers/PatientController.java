@@ -5,11 +5,16 @@
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
+import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
 import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
+import com.ProjetFinal.CarolineSDianaF.Interface.AppointmentService;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -24,7 +29,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,43 +51,58 @@ public class PatientController {
     @Autowired
     private ClinicService clinicService;
 
+    @Autowired
+    private DoctorService doctorService;
 
+    @GetMapping("/getAvailableSlots/{doctorId}/{date}")
+    public ResponseEntity<List<String>> getAvailableSlots(@PathVariable Long doctorId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        System.out.println("Received date: " + date);
+        System.out.println("Received doctorId: " + doctorId);
+        try {
+            // Utilisation de la méthode depuis DoctorServiceImpl
+            List<String> availableSlots = doctorService.calculateAvailableSlots(doctorId, date);
 
-    // Display a form to book a new appointment
-    @GetMapping("/bookAppointment")
-    public String showBookAppointmentForm(Model model) {
-        model.addAttribute("appointment", new AppointmentModel());
-        return "patient/bookAppointment"; // Thymeleaf template for booking appointment
+            return ResponseEntity.ok(availableSlots);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
-    // Process the form to book a new appointment
     @PostMapping("/bookAppointment")
-    public String bookAppointment(@ModelAttribute AppointmentModel appointment) {
-        patientService.bookAppointment(appointment);
-        return "redirect:/patients/appointments";
-    }
+    public String bookAppointment(@RequestBody AppointmentDTO appointmentDTO, Authentication authentication, RedirectAttributes redirectAttributes) {
 
-    // List all appointments for a patient
-    @GetMapping("/appointments")
-    public String listAppointments(Model model, @RequestParam Long patientId) {
-        model.addAttribute("appointments", patientService.viewAppointments(patientId));
-        return "patient/appointments"; // Thymeleaf template for listing appointments
-    }
+        try {
+            // Convertir la date et l'heure en LocalDateTime
+            LocalDateTime dateTime = LocalDateTime.parse(appointmentDTO.getAppointmentDate() + "T" + appointmentDTO.getAppointmentTime());
 
-    // Display a form to update an appointment
-    @GetMapping("/appointments/edit/{id}")
-    public String showEditAppointmentForm(@PathVariable Long id, Model model) {
-        AppointmentModel appointment = patientService.getAppointmentById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
-        model.addAttribute("appointment", appointment);
-        return "patient/editAppointment";
-    }
+            // Récupérer le patient authentifié
+            String healthInsuranceNumber = authentication.getName();
+            PatientModel patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber)
+                    .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
 
-    // Process the form to update an appointment
-    @PostMapping("/appointments/edit/{id}")
-    public String updateAppointment(@PathVariable Long id, @ModelAttribute AppointmentModel appointment) {
-        patientService.updateAppointment(appointment);
-        return "redirect:/patients/appointments";
+            // Récupérer le médecin sélectionné
+            DoctorModel doctor = doctorService.getDoctorById(appointmentDTO.getDoctorId())
+                    .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+
+            // Créer le nouvel AppointmentModel
+            AppointmentModel appointment = new AppointmentModel();
+            appointment.setDateTime(dateTime);
+            appointment.setDoctor(doctor);
+            appointment.setPatient(patient);
+            appointment.setReason(appointmentDTO.getAppointmentReason());
+
+            // Enregistrer le rendez-vous
+            patientService.bookAppointment(appointment);
+
+            // Ajouter un message de succès
+            redirectAttributes.addFlashAttribute("successMessage", "Rendez-vous pris avec succès.");
+
+            return "redirect:/patients/EspaceConsultation";
+        } catch (Exception e) {
+            // Gérer les erreurs
+            redirectAttributes.addFlashAttribute("errorMessage", "Erreur lors de la prise de rendez-vous : " + e.getMessage());
+            return "redirect:/patients/EspaceConsultation";
+        }
     }
 
     // Cancel an appointment
@@ -88,30 +111,6 @@ public class PatientController {
         patientService.cancelAppointment(id);
         return "redirect:/patients/appointments";
     }
-
-    // Display form for uploading a document
-    @GetMapping("/uploadDocument")
-    public String showUploadDocumentForm(Model model) {
-        model.addAttribute("document", new DocumentModel());
-        return "patient/uploadDocument";
-    }
-
-    // Process the form for uploading a document
-    @PostMapping("/uploadDocument")
-    public String uploadDocument(@RequestParam("file") MultipartFile file,
-                                 @ModelAttribute DocumentModel document,
-                                 Model model) {
-        try {
-            String fileName = saveUploadedFile(file);
-            document.setUrl("/path/to/saved/files/" + fileName);
-            patientService.uploadDocuments(document);
-        } catch (IOException e) {
-            model.addAttribute("errorMessage", "Failed to upload file.");
-            return "patient/uploadDocument"; // The view name for uploading documents
-        }
-        return "redirect:/patients/documents";
-    }
-
 
     // Contact a healthcare provider (Doctor)
     @GetMapping("/contactDoctor")
@@ -192,18 +191,27 @@ public class PatientController {
     public String espaceConsultation(Model model, Authentication authentication) {
         String healthInsuranceNumber = String.valueOf(authentication.getName());
         Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
-
         if (patient.isPresent()) {
             PatientModel patientModel = patient.get();
             model.addAttribute("patient", patientModel);
-        }
+            model.addAttribute("patientId", patientModel.getId());
 
+            // Récupérer la liste des rendez-vous à venir du patient
+            List<AppointmentModel> upcomingAppointments = patientService.getUpcomingAppointments(patientModel.getId());
+            model.addAttribute("upcomingAppointments", upcomingAppointments);
+        }
         return "EspaceConsultation";
     }
 
     // Display the page 'PatientClinique'
     @GetMapping("/PatientClinique")
     public String patientClinique(Model model, Authentication authentication) {
+        List<ClinicModel> clinicsWithDoctors = clinicService.getAllClinicsWithDoctors();
+        model.addAttribute("clinics", clinicsWithDoctors);
+
+        List<PatientModel> patientsWithDoctors = patientService.getAllPatientsWithDoctors();
+        model.addAttribute("patients", patientsWithDoctors);
+
         String healthInsuranceNumber = String.valueOf(authentication.getName());
         Optional<PatientModel> patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber);
         List<ClinicModel> clinics = clinicService.getAllClinics();
@@ -214,6 +222,19 @@ public class PatientController {
         }
 
         return "PatientClinique";
+    }
+
+    @PostMapping("/addDoctor")
+    public String addDoctorToPatient(@RequestParam("doctorId") Long doctorId,
+                                     @RequestParam("patientId") Long patientId,
+                                     RedirectAttributes redirectAttributes) {
+        try {
+            patientService.addDoctorToPatient(doctorId, patientId);
+            redirectAttributes.addFlashAttribute("successMessage", "Médecin ajouté avec succès.");
+        } catch (EntityNotFoundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Patient ou médecin introuvable.");
+        }
+        return "redirect:/patients/PatientClinique";
     }
 
 

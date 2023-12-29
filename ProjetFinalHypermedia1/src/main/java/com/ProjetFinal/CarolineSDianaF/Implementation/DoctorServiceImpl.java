@@ -5,6 +5,7 @@
 package com.ProjetFinal.CarolineSDianaF.Implementation;
 
 
+import com.ProjetFinal.CarolineSDianaF.Interface.AppointmentService;
 import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
 import com.ProjetFinal.CarolineSDianaF.Interface.EmailService;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
@@ -16,6 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +39,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private AppointmentService appointmentService;
 
     private DoctorService doctorService;
 
@@ -157,6 +166,80 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Optional<DoctorModel> getDoctorByProfessionalNumber(Long professionalNumber) {
         return doctorRepository.findByProfessionalNumber(professionalNumber);
+    }
+
+    // Implementation for calculating available slots
+    public List<String> calculateAvailableSlots(Long doctorId, LocalDate date) {
+        DoctorModel doctor = this.getDoctorById(doctorId)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+
+        ScheduleModel schedule = doctor.getSchedule();
+        LocalTime startTime = getStartTime(schedule, date.getDayOfWeek());
+        LocalTime endTime = getEndTime(schedule, date.getDayOfWeek());
+
+        // Appel de la méthode pour obtenir les rendez-vous existants
+        List<AppointmentModel> existingAppointments = appointmentService.getAppointmentsByDoctorAndDate(doctorId, date);
+
+        List<String> availableSlots = new ArrayList<>();
+        LocalTime currentTime = startTime;
+
+        while (currentTime != null && endTime != null && !currentTime.isAfter(endTime)) {
+            final LocalDateTime appointmentTime = LocalDateTime.of(date, currentTime);
+            boolean isBooked = existingAppointments.stream()
+                    .anyMatch(appointment -> appointment.getDateTime().equals(appointmentTime));
+
+            if (!isBooked) {
+                availableSlots.add(currentTime.toString());
+            }
+
+            currentTime = currentTime.plusMinutes(15); // Incrémente de 15 minutes
+        }
+
+        return availableSlots;
+    }
+
+    // Implementation for getting start time
+    public LocalTime getStartTime(ScheduleModel schedule, DayOfWeek day) {
+        switch (day) {
+            case MONDAY:
+                return schedule.getMondayStart();
+            case TUESDAY:
+                return schedule.getTuesdayStart();
+            case WEDNESDAY:
+                return schedule.getWednesdayStart();
+            case THURSDAY:
+                return schedule.getThursdayStart();
+            case FRIDAY:
+                return schedule.getFridayStart();
+            case SATURDAY:
+                return schedule.getSaturdayStart();
+            case SUNDAY:
+                return schedule.getSundayStart();
+            default:
+                return null;
+        }
+    }
+
+    // Implementation for getting end time
+    public LocalTime getEndTime(ScheduleModel schedule, DayOfWeek day) {
+        switch (day) {
+            case MONDAY:
+                return schedule.getMondayEnd();
+            case TUESDAY:
+                return schedule.getTuesdayEnd();
+            case WEDNESDAY:
+                return schedule.getWednesdayEnd();
+            case THURSDAY:
+                return schedule.getThursdayEnd();
+            case FRIDAY:
+                return schedule.getFridayEnd();
+            case SATURDAY:
+                return schedule.getSaturdayEnd();
+            case SUNDAY:
+                return schedule.getSundayEnd();
+            default:
+                return null;
+        }
     }
 
 }

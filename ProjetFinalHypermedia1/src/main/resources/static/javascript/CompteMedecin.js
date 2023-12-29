@@ -222,7 +222,7 @@ $(document).ready(function () {
 
     // Validate clinics (one must be selected)
     function validateClinics() {
-        let isChecked = $("input[name='clinicId']:checked").length > 0;
+        let isChecked = $("input[name='clinicIds']:checked").length > 0;
         if (!isChecked) {
             $("#clinicsCheck").text("Veuillez sélectionner une clinique.");
             $("#clinicsCheck").show();

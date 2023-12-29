@@ -60,8 +60,6 @@ h5 {
 /* Style pour l'échange de documents dans PatientMessage */
 .document-list {
     color: #598BC5;
-    margin-left: 3em;
-    margin-bottom: 5em;
     padding: 2em;
     border-radius: 5px;
 
@@ -127,14 +125,14 @@ input[type='text'],
 input[type='email'],
 input[type='date'],
 input[type='file'] {
-    width: 70%;
+    width: 100%;
     padding: 5px;
     border: none;
     border-bottom: 1px solid #ccc;
     border-radius: 0px;
     box-sizing: border-box;
     box-shadow: none;
-    margin-left: 3em;
+
 }
 
 /* Style pour les placeholders des champs de formulaire */
@@ -166,21 +164,19 @@ select#docteurSelection {
 
 /* Style for the textarea for consultation details */
 textarea#detailConsultation {
-    width: 70%;
+    width: 100%;
     padding: 5px;
     border: 1px solid #ccc;
 
     border-radius: 0px;
     box-sizing: border-box;
     box-shadow: none;
-    margin-left: 3em;
+
     color: #598BC5;
     /* Default text color, change as needed */
     background-color: #fff;
     /* Default background, change as needed */
 }
-
-
 
 /* Style pour le label des cases à cocher */
 .checkbox label {
@@ -199,8 +195,6 @@ textarea#detailConsultation {
     background-color: #CED9F6;
     color: #25455E;
     font-weight: bold;
-    margin-bottom: 5%;
-    margin-left: 3em;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -244,10 +238,6 @@ table td {
     margin-left: 3em;
     color: #598BC5;
 
-}
-
-.raison-consultation {
-    margin-left: 3em;
 }
 
 

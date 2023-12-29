@@ -79,4 +79,9 @@ public class ClinicServiceImpl implements ClinicService {
     public Optional<ClinicModel> getClinicById(Long id) {
         return clinicRepository.findById(id);
     }
+
+
+    public List<ClinicModel> getAllClinicsWithDoctors() {
+        return clinicRepository.findAllWithDoctors();
+    }
 }

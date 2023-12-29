@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -98,11 +99,13 @@ public class PatientServiceImpl implements PatientService {
         return doctorRepository.findBySpeciality(criteria.getSpeciality());
     }
 
-    // Implementation of method to view appointments for a specific patient
     @Override
-    public List<AppointmentModel> viewAppointments(Long patientId) {
-        // Assuming AppointmentRepository has a method to find appointments by patientId
-        return appointmentRepository.findByPatientId(patientId);
+    public List<AppointmentModel> getUpcomingAppointments(Long patientId) {
+        // Récupérer la date et l'heure actuelles
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Récupérer les rendez-vous à venir du patient (après la date actuelle)
+        return appointmentRepository.findUpcomingAppointmentsByPatientId(patientId, currentDateTime);
     }
 
     // Implementation of method to update an existing appointment
@@ -116,7 +119,6 @@ public class PatientServiceImpl implements PatientService {
         existingAppointment.setDoctor(appointment.getDoctor());
         existingAppointment.setDateTime(appointment.getDateTime());
         existingAppointment.setReason(appointment.getReason());
-        existingAppointment.setReason(appointment.getStatus());
         existingAppointment.setNotes(appointment.getNotes());
 
         // Save the updated appointment
@@ -178,6 +180,24 @@ public class PatientServiceImpl implements PatientService {
     public Optional<PatientModel> getPatientById(Long id) {
         return patientRepository.findById(id);
     }
+
+
+    public List<PatientModel> getAllPatientsWithDoctors() {
+        return patientRepository.findAllWithDoctors();
+    }
+
+    @Override
+    public void addDoctorToPatient(Long doctorId, Long patientId) {
+        DoctorModel doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+        PatientModel patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
+
+        // Ajoutez le médecin à la liste des médecins du patient
+        patient.getDoctors().add(doctor);
+        patientRepository.save(patient);
+    }
+
 
 
 }

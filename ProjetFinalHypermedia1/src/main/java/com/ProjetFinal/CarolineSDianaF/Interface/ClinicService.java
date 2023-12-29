@@ -37,4 +37,7 @@ public interface ClinicService {
 
     // Method to find clinic by id
     Optional<ClinicModel> getClinicById(Long id);
+
+    // Method to get clinics with doctor
+    List<ClinicModel> getAllClinicsWithDoctors();
 }

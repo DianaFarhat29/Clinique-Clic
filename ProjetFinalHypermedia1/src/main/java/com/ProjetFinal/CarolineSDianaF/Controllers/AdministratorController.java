@@ -55,6 +55,8 @@ public class AdministratorController {
         List<DoctorModel> doctors = doctorService.getAllDoctors();
         model.addAttribute("doctors",doctors);
 
+        List<PatientModel> patients = patientService.getAllPatients();
+        model.addAttribute("patients",patients);
 
         return "AdminViewsPatient";
     }

@@ -32,6 +32,10 @@ public interface ClinicRepository extends JpaRepository<ClinicModel, Long> {
     @Query("SELECT p FROM PatientModel p JOIN p.clinics c WHERE c.id = :clinicId")
     List<PatientModel> findPatientsByClinicId(Long clinicId);
 
+    // Method to find all clinics with doctors
+    @Query("SELECT c FROM ClinicModel c JOIN FETCH c.doctors")
+    List<ClinicModel> findAllWithDoctors();
+
     // Method to find clinic by name
     List<ClinicModel> findByName(String name);
 
