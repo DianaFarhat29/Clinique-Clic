@@ -242,4 +242,23 @@ public class DoctorServiceImpl implements DoctorService {
         }
     }
 
+    // Implementation for canceling an appointment
+    @Override
+    public void cancelAppointment(Long appointmentId) {
+        try {
+            // Implement the logic to cancel the appointment here
+            // You can use appointmentRepository or any other necessary components
+            // Example:
+            appointmentRepository.deleteById(appointmentId);
+        } catch (EntityNotFoundException e) {
+            // Handle the case where the appointment is not found
+            throw new EntityNotFoundException("Appointment not found.");
+        }
+    }
+    @Override
+    public List<AppointmentModel> getUpcomingAppointments(Long doctorId) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return appointmentRepository.findUpcomingAppointmentsByDoctorId(doctorId, currentDateTime);
+    }
+
 }

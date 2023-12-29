@@ -9,6 +9,7 @@ import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.AppointmentRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.DoctorRepository;
+import com.ProjetFinal.CarolineSDianaF.Repository.ClinicRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.DocumentRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,6 +50,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ClinicRepository clinicRepository;
 
     // Logger for logging error messages
     private static final Logger LOGGER = Logger.getLogger(PatientServiceImpl.class.getName());
@@ -187,11 +191,13 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void addDoctorToPatient(Long doctorId, Long patientId) {
+    public void addDoctorToPatient(Long doctorId, Long patientId, Long clinicId) {
         DoctorModel doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
         PatientModel patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
+        ClinicModel clinic = clinicRepository.findById(clinicId)
+                .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
 
         // Ajoutez le médecin à la liste des médecins du patient
         patient.getDoctors().add(doctor);

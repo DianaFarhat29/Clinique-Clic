@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
     <title>Espace clinique</title>
@@ -20,15 +20,15 @@
 
 
     <nav class="navbar navbar-default">
-        <p class="navbar-text">Clinique médicale ABC</p>
+        <p class="navbar-text"><span th:text="${clinic.name}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="CliniquePatients.html">Liste des patients</a></li>
-            <li><a href="CliniqueMedecin.html">Liste des médecins</a></li>
-            <li><a href="CliniqueFiche.html">Fiche de la clinique</a></li>         
+            <li><a th:href="@{/clinics/CliniquePatients/{clinicId}(clinicId=${clinic.id})}">Liste des patients</a></li>
+            <li><a th:href="@{/clinics/CliniqueMedecin/{clinicId}(clinicId=${clinic.id})}">Liste des médecins</a></li>
+            <li><a th:href="@{/clinics/CliniqueFiche}">Fiche de la clinique</a></li>
         </ul>
     </nav>
-
-    <a href="/templates/Index.html">
+<main>
+    <a th:href="@{/Index}" class="image_container">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
@@ -44,73 +44,35 @@
                     <th data-field="prenom" data-sortable="true">Prénom</th>
                     <th data-field="medecin" data-sortable="true">Médecin</th>
                     <th data-field="rdv" data-sortable="true">Prochain rdv</th>
-                    <th data-field="service" data-sortable="true">Service</th>
-                    <th data-field="professionel" data-sortable="true">Professionel</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 1</td>
-                    <td>Dr Médecin 1</td>
-                    <td>2023-01-01</td>
-                    <td>Prise de sang</td>
-                    <td>Inf Infirmière 1</td>
+            <tr th:if="${patients.isEmpty()}">
+                <td colspan="5">Aucun patient lié...</td>
+            </tr>
+            <tr th:each="patient : ${patients}" th:unless="${patients.isEmpty()}">
+                <td th:text="${patient.lastName}"></td>
+                <td th:text="${patient.firstName}"></td>
 
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 2</td>
-                    <td>Dr Médecin 2</td>
-                    <td>2023-01-02</td>
-                    <td>Medecine familiale</td>
-                    <td>Dr Médecin 1</td>
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 3</td>
-                    <td>Dr Médecin 3</td>
-                    <td>2023-01-03</td>
-                    <td>Urgence mineure</td>
-                    <td>Dr Médecin 1</td>
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 3</td>
-                    <td>Dr Médecin 3</td>
-                    <td>2023-01-03</td>
-                    <td>Urgence mineure</td>
-                    <td>Dr Médecin 1</td>
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 3</td>
-                    <td>Dr Médecin 3</td>
-                    <td>2023-01-03</td>
-                    <td>Urgence mineure</td>
-                    <td>Dr Médecin 1</td>
-                </tr>
+            </tr>
             </tbody>
+
         </table>
 
 
-        <button type="submit" id="submitbtn" class="btn btn-default">Se déconnecter</button>
+        <a th:href="@{/logout}"  id="disconnectbtn" class="btn btn-default">Se déconnecter</a>
+
     </div>
+
+
+</main>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
-
-
-   <script th:src="@{/javascript/CliniquePatients}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
+    <script th:src="@{/javascript/CliniquePatients.js}"></script>
 </body>
 
 </html>

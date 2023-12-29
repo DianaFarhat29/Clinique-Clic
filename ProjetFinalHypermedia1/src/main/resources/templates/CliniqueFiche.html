@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
     <title>Espace clinique - Fiche</title>
@@ -9,166 +9,149 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" th:href="@{/css/CliniqueFiche.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Timepicker CSS  -->
+    <link rel="stylesheet" th:href="@{/jquery-timepicker-1.3.5/jquery.timepicker.css}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Timepicker JS -->
+    <script th:src="@{/jquery-timepicker-1.3.5/jquery.timepicker.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/javascript/CliniqueFiche.js}"></script>
 </head>
 
 <body>
 
     <nav class="navbar navbar-default">
-        <p class="navbar-text">Clinique médicale ABC</p>
+        <p class="navbar-text"><span th:text="${clinic.name}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="CliniquePatients.html">Liste des patients</a></li>
-            <li><a href="CliniqueMedecin.html">Liste des médecins</a></li>
-            <li><a href="CliniqueFiche.html">Fiche de la clinique</a></li>
+            <li><a th:href="@{/clinics/CliniquePatients/{clinicId}(clinicId=${clinic.id})}">Liste des patients</a></li>
+            <li><a th:href="@{/clinics/CliniqueMedecin/{clinicId}(clinicId=${clinic.id})}">Liste des médecins</a></li>
+            <li><a th:href="@{CliniqueFiche}">Fiche de la clinique</a></li>
         </ul>
     </nav>
     <main>
-    <a href="/templates/Index.html" class="image_container">
+
+    <a th:href="@{/Index}" class="image_container">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
     <div class="container">
-        <form id="cliniqueForm">
-            <!-- Section Nom de la clinique -->
-            <div class="row">
-                <div class="col-md-2">
-                    <h5>Nom de la clinique</h5>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="nom" placeholder="Entrez le nom de la clinique"
-                            name="nom">
+        <form id="cliniqueForm" th:action="@{/clinics/update}" th:object="${clinic}" method="post">
+            <h5 class="titre_donnee_modifiables_ou_non">Informations personnelles</h5>
+            <div class="donnee_non_modifiables">
+                <!-- Section Informations Personnelles -->
+                <div class="row non_modifiable">
+                    <div class="col-md-2 non_modifiable">
+                        <h5 style="padding:2px;">Nom</h5>
+                        <h5 style="padding:2px;">Numéro ministériel</h5>
                     </div>
+
+                    <div class="col-md-10 ">
+                        <input readonly  type="text" name="name" th:field="*{name}" />
+                        <input readonly  type="text" name="ministerialNumber" th:field="*{ministerialNumber}" />
+                        <input type="hidden" name="id" th:field="*{id}" />
+                    </div>
+
                 </div>
             </div>
 
+            <h5 class="titre_donnee_modifiables_ou_non">Données modifiables</h5>
             <!-- Section Adresse -->
             <div class="row">
                 <div class="col-md-2">
                     <h5>Adresse</h5>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="form-group">
                         <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
-                            name="noCivique">
-                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue">
+                               name="noCivique" th:field="*{contactDetails.noCivique}" />
+                        <div id="noCiviqueCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue"
+                               th:field="*{contactDetails.rue}" />
+                        <div id="rueCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
                         <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
-                            name="noLocal">
-                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville">
+                               name="noLocal" th:field="*{contactDetails.noLocal}" />
+                        <div id="noLocalCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville"
+                               th:field="*{contactDetails.ville}" />
+                        <div id="villeCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
                         <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
-                            name="codePostal">
-                        <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
-                            name="noTel">
+                               name="codePostal" th:field="*{contactDetails.codePostal}" />
+                        <div id="codePostalCheck" class="errorForm"></div>
                     </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone"
+                               name="noTel" th:field="*{contactDetails.phoneNumber}" />
+                        <div id="phoneNumberCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" th:field="*{contactDetails.email}" placeholder="Adresse courriel" name="email">
+                        <div id="courrielCheck" class="errorForm">
+                            Entrez une adresse courriel valide.
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Section Heures d'ouverture  semaine-->
-            <div class="row">
-                <div class="col-md-2">
-                    <h5>Heures d'ouverture</h5>
-                </div>
-                <div class="col-md-10">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Lundi</h5>
-                            <input type="time" class="form-control" name="lundiOuverture">
-                            <input type="time" class="form-control" name="lundiFermeture">
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Mardi</h5>
-                            <input type="time" class="form-control" name="mardiOuverture">
-                            <input type="time" class="form-control" name="mardiFermeture">
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Mercredi</h5>
-                            <input type="time" class="form-control" name="mercrediOuverture">
-                            <input type="time" class="form-control" name="mercrediFermeture">
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Jeudi</h5>
-                            <input type="time" class="form-control" name="jeudiOuverture">
-                            <input type="time" class="form-control" name="jeudiFermeture">
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Vendredi</h5>
-                            <input type="time" class="form-control" name="vendrediOuverture">
-                            <input type="time" class="form-control" name="vendrediFermeture">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Section Heures d'ouverture  weekend-->
-            <div class="row">
-                <div class="col-md-2">
-                    <!-- Espace vide pour alignement -->
-                </div>
-                <div class="col-md-10">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Samedi</h5>
-                            <input type="time" class="form-control" name="samediOuverture">
-                            <input type="time" class="form-control" name="samediFermeture">
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="jour-semaine">Dimanche</h5>
-                            <input type="time" class="form-control" name="dimancheOuverture">
-                            <input type="time" class="form-control" name="dimancheFermeture">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<br>
             <!-- Section services offerts -->
             <div class="row">
-
-                <div class="col-md-2">
-                    <h5>Services offerts</h5>
+                <div class="col-md-3">
+                    <label class="servicesTexte" for="servicesDropdown">Service(s) offert(s) par la clinique</label>
                 </div>
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="urgenceMineure" value="urgenceMineure"> Urgence
-                            mineure</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="medFamille" value="medFamille"> Médecine familiale</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="obyn" value="obyn"> Gynécologie</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="pediatrie" value="pediatrie"> Pédiatrie</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="analyse" value="analyse"> Analyses et vaccination</label>
-                    </div>
 
-                </div>
+            <div class="dropdown col-md-6">
+                <button class="btn btn-default dropdown-toggle" type="button" id="servicesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Services
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                    <th:block th:each="service : ${allServices}">
+                        <li>
+                            <input type="checkbox" th:field="*{services}" th:value="${service}" th:id="${'service-' + service}" th:checked="${#lists.contains(clinicServices, service)}">
+                            <label th:for="${'service-' + service}" th:text="${service}"></label>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            <div id="servicesCheck" class="errorForm"></div>
             </div>
 
-
-
-            <!-- Bouton de soumission 2 et déconnection -->
+            <!-- Bouton de déconnection et soumettre -->
             <div class="row">
                 <div class="col-md-3">
-
+                    <!-- Espace vide pour l'alignement -->
                 </div>
                 <div class="col-md-3">
                     <button type="submit" id="submitbtn2" class="btn btn-default">Soumettre</button>
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" id="disconnectbtn" class="btn btn-default">Se déconnecter</button>
+                    <a th:href="@{/logout}" id="disconnectbtn" class="btn btn-default">Se déconnecter</a>
                 </div>
-
-
             </div>
 
         </form>
     </div>
 
-   <!-- <script src="@{/javascript/}"></script> -->
+
     </main>
 
 </body>

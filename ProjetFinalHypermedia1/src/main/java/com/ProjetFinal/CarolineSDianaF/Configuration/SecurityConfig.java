@@ -44,10 +44,11 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // Filter Chain for Spring Security
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // Désactiver CSRF
+               // .csrf().disable()
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeRequests(authorizeRequests ->

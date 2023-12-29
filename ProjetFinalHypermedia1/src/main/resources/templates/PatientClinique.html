@@ -36,7 +36,7 @@
 
     <main>
 
-    <a href="/templates/Index.html" class="image_container">
+    <a th:href="@{/Index}" class="image_container">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
@@ -49,15 +49,18 @@
                 <th data-field="noTel" data-sortable="true">Numéro de téléphone</th>
                 <th data-field="adresse" data-sortable="true">Adresse</th>
                 <th data-field="Docteurs" data-sortable="true">Docteurs</th>
+                <th data-field="patient_id" data-visible="false">Patient ID</th>
+                <th data-field="clinic_id" data-visible="false">Clinic ID</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr th:each="clinic : ${clinics}">
+            <tr th:each="clinic : ${clinics}" th:data-clinic-id="${clinic.id}">
 
                 <td th:text="${clinic.name}"></td>
                 <td th:text="${clinic.services}"></td>
                 <td th:text="${clinic.contactDetails.phoneNumber}"></td>
+
                 <td>
                     <span th:text="${clinic.contactDetails.noCivique} + ', ' + ${clinic.contactDetails.rue} + ', ' + ${clinic.contactDetails.noLocal} + ', ' + ${clinic.contactDetails.ville} + ', ' + ${clinic.contactDetails.codePostal}"></span>
                 </td>
@@ -79,7 +82,8 @@
 
             </tbody>
         </table>
-        <button type="submit" id="submitbtn" class="btn btn-default">Se déconnecter</button>
+
+        <a th:href="@{/logout}" value="Se déconnecter" id="disconnectbtn" class="btn ">Se déconnecter</a>
     </div>
 
 

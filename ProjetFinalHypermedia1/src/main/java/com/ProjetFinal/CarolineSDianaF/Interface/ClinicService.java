@@ -20,6 +20,9 @@ public interface ClinicService {
     // JPARepository method that add and update
     ClinicModel save(ClinicModel clinic);
 
+    // Method to update a clinic's information
+    ClinicModel updateClinic(ClinicModel clinic);
+
     // Method to list clinic details
     Optional<ClinicModel> viewClinicDetails(Long clinicId);
 

@@ -7,7 +7,6 @@ $(document).ready(function() {
         console.log("Received doctorId: " + selectedDoctorId);
     });
 
-
     // Lorsqu'une date est sélectionnée
     $('#dateRendezvous').change(function() {
         if (selectedDoctorId) {
@@ -18,13 +17,8 @@ $(document).ready(function() {
     });
 
     function fetchAvailableSlots(doctorId, date) {
-        // Construire l'URL pour la requête AJAX
         var url = '/patients/getAvailableSlots/' + doctorId + '/' + date;
-
-        // Afficher l'URL dans la console
         console.log("URL envoyée par AJAX: ", url);
-
-        // Requête AJAX pour obtenir les créneaux disponibles
         $.ajax({
             url: url,
             type: 'GET',
@@ -39,7 +33,7 @@ $(document).ready(function() {
 
     function updateHourSelect(slots) {
         var $hourSelect = $('#hourSelect');
-        $hourSelect.empty(); // Effacer les anciens créneaux
+        $hourSelect.empty();
         $hourSelect.append($('<option>', {
             value: '',
             text: 'Choisir une heure',
@@ -56,42 +50,38 @@ $(document).ready(function() {
         });
     }
 
-
+    // Form validation and submission
     $('#appointmentForm').submit(function(event) {
-        var doctorId = $('#doctorsSelect').val();
-        var patientId = $('.navbar').data('patient-id');
-        var appointmentDate = $('#dateRendezvous').val();
-        var appointmentTime = $('#hourSelect').val();
-        var appointmentReason = $('#detailConsultation').val().trim();
+        event.preventDefault();
 
-        var data = {
-            doctorId: doctorId,
-            patientId: patientId,
-            appointmentDate: appointmentDate,
-            appointmentTime: appointmentTime,
-            appointmentReason: appointmentReason
-        };
+        let isValid = true;
+        let errorMessage = "";
 
-        $.ajax({
-            url: '/patients/bookAppointment',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(response) {
-                // Gérer la réponse réussie
-                alert("Rendez-vous réservé avec succès");
-                location.reload();
-            },
-            error: function(error) {
-                // Gérer l'erreur
-                event.preventDefault(); // Empêcher la soumission par défaut
-                console.error("Erreur lors de la réservation du rendez-vous", error);
-                alert("Erreur lors de la réservation du rendez-vous");
-                location.reload();
-            }
-        });
-        event.preventDefault(); // Empêcher la soumission par défaut
+        if ($('#doctorsSelect').val() === "") {
+            isValid = false;
+            errorMessage += "Veuillez choisir un médecin.\n";
+        }
+
+        if ($('#dateRendezvous').val() === "") {
+            isValid = false;
+            errorMessage += "Veuillez choisir une date de rendez-vous.\n";
+        }
+
+        if ($('#hourSelect').val() === "" || $('#hourSelect').val() === null) {
+            isValid = false;
+            errorMessage += "Veuillez choisir une heure de rendez-vous.\n";
+        }
+
+        if ($('#detailConsultation').val().trim() === "") {
+            isValid = false;
+            errorMessage += "Veuillez indiquer la raison du rendez-vous.\n";
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+        } else {
+            alert("Votre rendez-vous a été pris avec succès.")
+            this.submit();
+        }
     });
-
-
 });

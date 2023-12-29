@@ -47,12 +47,10 @@ public class PatientRegistrationController {
         newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
 
-        // Appliquer la mise en majuscule aux champs appropriés
         patient.setFirstName(capitalizeFirstLetter(patient.getFirstName()));
         patient.setLastName(capitalizeFirstLetter(patient.getLastName()));
         patient.setHealthInsuranceNumber(patient.getHealthInsuranceNumber().toUpperCase());
 
-        // Appliquer la mise en majuscule aux champs de ContactDetailsModel
         ContactDetailsModel contactDetails = patient.getContactDetails();
         if (contactDetails != null) {
             contactDetails.setPhoneNumber(capitalizeFirstLetter(contactDetails.getPhoneNumber()));

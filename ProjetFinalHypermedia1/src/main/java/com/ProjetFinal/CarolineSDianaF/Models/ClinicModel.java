@@ -18,14 +18,14 @@ import java.util.Set;
  * @author Diana
  */
 @Entity
-@Table(name = "clinics") 
+@Table(name = "clinics")
 public class ClinicModel {
 
     // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private String name;
 
@@ -45,7 +45,7 @@ public class ClinicModel {
             joinColumns = @JoinColumn(name = "clinic_id"),
             inverseJoinColumns = @JoinColumn(name = "patient_id")
     )
-    private Set<ClinicModel> patients = new HashSet<>();
+    private Set<PatientModel> patients = new HashSet<>();
 
     @ManyToMany(mappedBy = "clinics")
     private Set<DoctorModel> doctors = new HashSet<>();
@@ -55,7 +55,7 @@ public class ClinicModel {
     private UserModel user;
 
     // Constructors
-    public ClinicModel(Long id, String name, String ministerialNumber , String services, ContactDetailsModel contactDetails, Set<ClinicModel> patients, Set<DoctorModel> doctors, UserModel user) {
+    public ClinicModel(Long id, String name, String ministerialNumber , String services,  ContactDetailsModel contactDetails, Set patients, Set doctors, UserModel user) {
         this.id = id;
         this.name = name;
         this.ministerialNumber = ministerialNumber;
@@ -110,14 +110,13 @@ public class ClinicModel {
         this.contactDetails = contactDetails;
     }
 
-    public Set<ClinicModel> getPatients() {
+    public Set<PatientModel> getPatients() {
         return patients;
     }
 
-    public void setPatients(Set<ClinicModel> patients) {
+    public void setPatients(Set<PatientModel> patients) {
         this.patients = patients;
     }
-
     public Set<DoctorModel> getDoctors() {
         return doctors;
     }

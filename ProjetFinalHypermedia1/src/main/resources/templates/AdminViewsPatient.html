@@ -52,22 +52,28 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="p:${patients}">
-                <td th:text="${p.id}"></td>
-                <td th:text="${p.lastName}"></td>
-                <td th:text="${p.firstName}"></td>
-                <td th:text="${p.healthInsuranceNumber}"></td>
-                <td th:text="${p.dateBirth}"></td>
+            <tr th:each="patient:${patients}">
+                <td th:text="${patient.id}"></td>
+                <td th:text="${patient.lastName}"></td>
+                <td th:text="${patient.firstName}"></td>
+                <td th:text="${patient.healthInsuranceNumber}"></td>
+                <td th:text="${patient.dateBirth}"></td>
 
                 <td>
-                    <a th:href="@{/delete(id=${p.id})}" class="btn btn-danger"
-                       onclick="return confirm('Confirmer la suppression?')">Supprimer</a>
-                    <a th:href="@{/AdminEditPatients(id=${p.id})}" class="btn btn-success">Modifier</a>
+                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{/admin/deletePatient/{id}(id=${id})}">
+                        Supprimer
+                    </a>
+                    <a th:href="@{/admin/AdminEditPatients/{id}(id=${patient.id})}" class="btn btn-success">Modifier</a>
                 </td>
             </tr>
             </tbody>
         </table>
-
+    <div th:if="${param.success}" class="alert alert-success">
+        <p th:text="${param.success}"></p>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger">
+        <p th:text="${param.error}"></p>
+    </div>
 </div>
 
 

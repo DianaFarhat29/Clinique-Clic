@@ -11,10 +11,10 @@ public class CustomFailureHandler  implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        // Ajouter le message d'erreur dans une session ou une requête
+        // Add an error message in the session
         request.getSession().setAttribute("errorMsg", "*Vos identifiants de connexion sont incorrects Veuillez réessayer.");
 
-        // Rediriger vers la même page de login
+        // Redirect to login page
         response.sendRedirect("/login");
     }
 }

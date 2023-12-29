@@ -23,10 +23,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel registerUser(UserModel user) {
-        // Hasher le mot de passe avant de l'enregistrer
+        // Hash the password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Enregistrement de l'utilisateur dans la base de données
+        // Save the user to the database
         return userRepository.save(user);
     }
 

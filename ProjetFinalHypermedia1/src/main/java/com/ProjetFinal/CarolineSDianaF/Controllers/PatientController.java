@@ -4,10 +4,7 @@
  */
 package com.ProjetFinal.CarolineSDianaF.Controllers;
 
-import com.ProjetFinal.CarolineSDianaF.Interface.ClinicService;
-import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
-import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
-import com.ProjetFinal.CarolineSDianaF.Interface.AppointmentService;
+import com.ProjetFinal.CarolineSDianaF.Interface.*;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
 /**
  *
  * @author Diana
@@ -54,6 +52,9 @@ public class PatientController {
     @Autowired
     private DoctorService doctorService;
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping("/getAvailableSlots/{doctorId}/{date}")
     public ResponseEntity<List<String>> getAvailableSlots(@PathVariable Long doctorId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         System.out.println("Received date: " + date);
@@ -69,47 +70,76 @@ public class PatientController {
     }
 
     @PostMapping("/bookAppointment")
-    public String bookAppointment(@RequestBody AppointmentDTO appointmentDTO, Authentication authentication, RedirectAttributes redirectAttributes) {
+    public String bookAppointment(
+            @RequestParam("doctorId") Long doctorId,
+            @RequestParam("appointmentDate") String appointmentDate,
+            @RequestParam("appointmentTime") String appointmentTime,
+            @RequestParam("appointmentReason") String appointmentReason,
+            Authentication authentication,
+            RedirectAttributes redirectAttributes) {
 
         try {
-            // Convertir la date et l'heure en LocalDateTime
-            LocalDateTime dateTime = LocalDateTime.parse(appointmentDTO.getAppointmentDate() + "T" + appointmentDTO.getAppointmentTime());
+            // Convert date and time to LocalDateTime
+            LocalDateTime dateTime = LocalDateTime.parse(appointmentDate + "T" + appointmentTime);
 
-            // Récupérer le patient authentifié
+            // Get the patient
             String healthInsuranceNumber = authentication.getName();
             PatientModel patient = patientService.getPatientByHealthInsuranceNumber(healthInsuranceNumber)
                     .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
 
-            // Récupérer le médecin sélectionné
-            DoctorModel doctor = doctorService.getDoctorById(appointmentDTO.getDoctorId())
+            // Get the doctor
+            DoctorModel doctor = doctorService.getDoctorById(doctorId)
                     .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
 
-            // Créer le nouvel AppointmentModel
+            // Create the new AppointmentModel
             AppointmentModel appointment = new AppointmentModel();
             appointment.setDateTime(dateTime);
             appointment.setDoctor(doctor);
             appointment.setPatient(patient);
-            appointment.setReason(appointmentDTO.getAppointmentReason());
+            appointment.setReason(appointmentReason);
 
-            // Enregistrer le rendez-vous
+            // Save appointment
             patientService.bookAppointment(appointment);
 
-            // Ajouter un message de succès
+            // Add success message
             redirectAttributes.addFlashAttribute("successMessage", "Rendez-vous pris avec succès.");
+
+            // Send confirmation by email
+            String emailTo = patient.getContactDetails().getEmail();
+            String emailSubject = "Confirmation du rendez-vous";
+
+            String emailText = "Bonjour " + patient.getFirstName() + " "  + patient.getLastName() + ",\n\nVotre rendez-vous avec docteur "
+                    + doctor.getFirstName() + " "  + doctor.getLastName()  + ", prévu pour  le "
+                    + dateTime.toString()
+                    + ",  a été confirmé.\n\nCeci est un message automatisé, veuillez ne pas y répondre. \nClinique Clic";
+            emailService.sendSimpleMessage(emailTo, emailSubject, emailText);
 
             return "redirect:/patients/EspaceConsultation";
         } catch (Exception e) {
-            // Gérer les erreurs
+            // Manage errors
             redirectAttributes.addFlashAttribute("errorMessage", "Erreur lors de la prise de rendez-vous : " + e.getMessage());
             return "redirect:/patients/EspaceConsultation";
         }
     }
 
+
+
     // Cancel an appointment
     @GetMapping("/appointments/cancel/{id}")
     public String cancelAppointment(@PathVariable Long id) {
         patientService.cancelAppointment(id);
-        return "redirect:/patients/appointments";
+        /*
+        // Send confirmation by email
+        String emailTo = patient.getContactDetails().getEmail();
+        String emailSubject = "Confirmation du rendez-vous";
+
+        String emailText = "Bonjour " + patient.getFirstName() + " "  + patient.getLastName() + ",\n\nVotre rendez-vous avec docteur "
+                + doctor.getFirstName() + " "  + doctor.getLastName()  + ", prévu pour  le "
+                + dateTime.toString()
+                + ",  a été ANNULE.\n\nCeci est un message automatisé, veuillez ne pas y répondre. \nClinique Clic";
+        emailService.sendSimpleMessage(emailTo, emailSubject, emailText);
+        */
+        return "redirect:/patients/EspaceConsultation";
     }
 
     // Contact a healthcare provider (Doctor)
@@ -125,6 +155,7 @@ public class PatientController {
         patientService.contactHealthcareProvider(doctorId, contactDetails);
         return "redirect:/patients";
     }
+
 
     @PostMapping("/update")
     public String updatePatientProfile(@ModelAttribute("patient") PatientModel patient,
@@ -227,9 +258,10 @@ public class PatientController {
     @PostMapping("/addDoctor")
     public String addDoctorToPatient(@RequestParam("doctorId") Long doctorId,
                                      @RequestParam("patientId") Long patientId,
+                                     @RequestParam("clinicId") Long clinicId,
                                      RedirectAttributes redirectAttributes) {
         try {
-            patientService.addDoctorToPatient(doctorId, patientId);
+            patientService.addDoctorToPatient(doctorId, patientId, clinicId);
             redirectAttributes.addFlashAttribute("successMessage", "Médecin ajouté avec succès.");
         } catch (EntityNotFoundException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Patient ou médecin introuvable.");

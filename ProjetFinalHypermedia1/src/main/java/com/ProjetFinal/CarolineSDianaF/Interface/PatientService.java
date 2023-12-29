@@ -55,7 +55,7 @@ public interface PatientService {
     List<PatientModel> getAllPatientsWithDoctors();
 
     // Method to add doctor to patient
-    void addDoctorToPatient(Long doctorId, Long patientId);
+    void addDoctorToPatient(Long doctorId, Long patientId, Long clinicId);
 
     // Method to get coming appointments
     List<AppointmentModel> getUpcomingAppointments(Long patientId);

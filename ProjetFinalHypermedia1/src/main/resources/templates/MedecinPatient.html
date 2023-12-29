@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 
 <head>
     <title>Espace clinique</title>
@@ -20,14 +20,14 @@
 
 
     <nav class="navbar navbar-default">
-        <p class="navbar-text">Dr Médecin Médecine</p>
+        <p class="navbar-text">Dr <span th:text="${doctor.firstName}">Prénom</span> <span th:text="${doctor.lastName}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="MedecinPatient.html">Liste des patients</a></li>
-            <li><a href="MedecinFiche.html">Fiche du médecin</a></li>
+            <li><a th:href="@{MedecinPatient}">Liste des rendez-vous</a></li>
+            <li><a th:href="@{MedecinFiche}">Fiche du médecin</a></li>
         </ul>
     </nav>
 
-    <a href="/templates/Index.html">
+    <a th:href="@{/Index}" class="image_container">
         <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
     </a>
 
@@ -38,55 +38,35 @@
             data-sortable="true" data-locale="fr-FR" data-loading-message="">
             <thead>
                 <tr>
-                    <th data-field="nam" data-sortable="true">No. assurance maladie</th>
-                    <th data-field="nom" data-sortable="true">Nom</th>
-                    <th data-field="prenom" data-sortable="true">Prénom</th>
-                    <th data-field="rdv" data-sortable="true">Prochain rdv</th>
-                    <th data-field="service" data-sortable="true">Service</th>
+                    <th data-field="nam" data-sortable="true">Prochain Rendez-Vous</th>
+                    <th data-field="nom" data-sortable="true">Nom complet</th>
+                    <th data-field="reason" data-sortable="true">Raison</th>
+                    <th data-field="action" data-sortable="true">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 1</td>
-                    <td>2023-01-01</td>
-                    <td>Pédiatrie</td>
+            <tr th:if="${upcomingAppointments.isEmpty()}">
+                <td colspan="5">Aucun rendez-vous à venir.</td>
+            </tr>
+            <tr th:each="appointment : ${upcomingAppointments}">
+                <td th:text="${#temporals.format(appointment.dateTime, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${appointment.patient.firstName + ' ' + appointment.patient.lastName}"></td>
+                <td th:text="${appointment.reason}"></td>
 
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 2</td>
-                    <td>2023-01-02</td>
-                    <td>Medecine familiale</td>
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 3</td>
-                    <td>2023-01-03</td>
-                    <td>Urgence mineure</td>
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 3</td>
-                    <td>2023-01-03</td>
-                    <td>Urgence mineure</td>
-                </tr>
-                <tr>
-                    <td>EEEE 5555 5555</td>
-                    <td>Patient</td>
-                    <td>Patient 3</td>
-                    <td>2023-01-03</td>
-                    <td>Urgence mineure</td>
-                </tr>
+
+                <td>
+                    <form th:action="@{/doctors/cancelAppointment/{id}(id=${appointment.id})}" method="POST">
+                        <input type="hidden" name="appointmentId" th:value="${appointment.id}">
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Confirmer la suppression?')">Annuler</button>
+                    </form>
+                </td>
+            </tr>
             </tbody>
+
         </table>
 
-
-        <button type="submit" id="submitbtn" class="btn btn-default">Se déconnecter</button>
+        <a th:href="@{/logout}" id="submitbtn" class="btn btn-default">Se déconnecter</a>
     </div>
 
 
@@ -96,8 +76,6 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
 
-
-        <script src="@{/javascript/CliniquePatients}"></script>
 </body>
 
 </html>

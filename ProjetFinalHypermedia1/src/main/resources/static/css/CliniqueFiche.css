@@ -1,5 +1,7 @@
-
-
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 body {
     display: flex;
     background-color: #E89255;
@@ -34,7 +36,6 @@ img {
     position: absolute;
 }
 
-
 .navbar {
     position: fixed;
     top: 0;
@@ -64,22 +65,82 @@ img {
     font-weight: bold;
 }
 
-
-
-
-
 .row {
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
+    margin-left: 5%;
 }
 
-h5{
+h5 {
     color: #25455E;
     font-weight: bold;
 }
 
+/* Style pour l'échange de documents dans PatientMessage */
+.document-list {
+    color: #e89255;
+    margin-left: 3em;
+    margin-bottom: 5em;
+    padding: 2em;
+    border-radius: 5px;
+
+}
+
+/* Style pour la liste des rendez-vous */
+.appointment-list {
+    margin-left: 3em;
+    margin-bottom: 3em;
+    margin-top: 0;
+}
+
+.appointment-details {
+    color: #e89255;
+    font-weight: bold;
+}
+
+/* Style pour chaque élément de rendez-vous */
+.appointment-item {
+    padding: 2em;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour les détails de chaque rendez-vous */
+.appointment-details span {
+    display: block;
+    /* Afficher chaque détail sur sa propre ligne */
+}
+
+/* Style pour les petits boutons dans PatientMessage */
+.appointment-actions button {
+    background-color: #25455E;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Style pour les petits boutons dans PatientMessage */
+.download-button {
+    background-color: #25455E;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 3em;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 /* Style pour les champs de formulaire */
 input[type='text'],
-input[type='time'] {
+input[type='email'],
+input[type='date'],
+input[type='file'] {
     width: 70%;
     padding: 5px;
     border: none;
@@ -90,23 +151,89 @@ input[type='time'] {
     margin-left: 3em;
 }
 
-/* Style pour les placeholders des champs de formulaire */
-input[type='text']::placeholder,
-input[type='time']::placeholder {
-    color: #598BC5;
+/* Style pour les champs de formulaire en lecture seule */
+input[type='text'][readonly],
+input[type='email'][readonly],
+input[type='time'][readonly],
+input[type='number'][readonly] {
+    width: 70%;
+    padding: 5px;
+    padding-left: 0;
+    border: none;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+    opacity: 1;
+    background-color: transparent;
 }
 
+/* Supprimer la bordure lors de la sélection des champs en lecture seule */
+input[type='text'][readonly]:focus,
+input[type='email'][readonly]:focus,
+input[type='date'][readonly]:focus,
+input[type='number'][readonly]:focus {
+    outline: none;
+}
 
+/* Style pour les placeholders des champs de formulaire */
+input[type='text']::placeholder,
+input[type='email']::placeholder,
+input[type='date']::-webkit-input-placeholder,
+input[type='file']::placeholder {
+    color: #999999 !important;
+}
 
-/* Style pour le label des cases à cocher */
-.checkbox label {
-    margin-left: 3em; 
-    color: #598BC5;
+/* style pour formulaire*/
+select#cliniqueSelection,
+select#dateSelection,
+select#heureSelection,
+select#docteurSelection {
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+    color: #e89255;
+    /* Default text color, change as needed */
+    background-color: #fff;
+    /* Default background, change as needed */
+}
 
+/* Style for the textarea for consultation details */
+textarea#detailConsultation {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-left: 3em;
+    color: #e89255;
+    /* Default text color, change as needed */
+    background-color: #fff;
+    /* Default background, change as needed */
+}
+
+.errorForm{
+    color:#e89255;
+    margin-left: 17%;
+    display: none;
 }
 
 .jour-semaine {
     margin-left: 3em;
+}
+
+.section_modification
+{
+    display: flex;
+    flex-direction: column;
+    gap:25px;
 }
 
 #submitbtn,
@@ -124,7 +251,6 @@ input[type='time']::placeholder {
     cursor: pointer;
 }
 
-
 .container {
     background-color: #fff;
     padding: 40px;
@@ -134,4 +260,45 @@ input[type='time']::placeholder {
     margin-right: 0;
     margin-top: 7em;
     height: fit-content;
+}
+
+.dropdown-toggle {
+    width: 100%;
+}
+
+.raison-consultation {
+    margin-left: 3em;
+}
+
+.titre_donnee_modifiables_ou_non
+{
+    color: #e89255 !important;
+    font-weight: bold;
+    font-size: large;
+    padding-bottom: 1%;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #e89255;
+    width: fit-content;
+}
+
+.donnee_non_modifiables{
+    background-color:rgb(232, 146, 85, 0.2);
+    padding:2%;
+    border-radius:10px;
+    margin-bottom:3%;
+    margin-top:3%;
+
+}
+
+.non_modifiable {
+    margin-bottom:0 !important;
+    margin-top:0 !important;
+    padding: 0 !important;
+
+}
+
+.row_disabled {
+    display:flex;
+    flex-direction:row;
 }

@@ -22,9 +22,9 @@
 <nav class="navbar navbar-default">
     <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
     <ul class="nav navbar-nav navbar-right">
-        <li><a th:href="@{/AdminViewsPatient}">Patients</a></li>
-        <li><a th:href="@{/AdminViewsMedicin}">Médecins</a></li>
-        <li><a th:href="@{/AdminViewsClinique}">Clinique</a></li>
+        <li><a th:href="@{/admin/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/admin/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/admin/AdminViewsClinique}">Clinique</a></li>
     </ul>
 </nav>
 
@@ -45,26 +45,33 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="c:${listClinics}">
-                <td th:text="${c.id}"></td>
-                <td th:text="${c.name}"></td>
-                <td th:text="${c.ministerialNumber}"></td>
-                <td th:text="${c.contactDetails.getPhone}"></td>
+            <tr th:each="clinic : ${clinics}">
+                <td th:text="${clinic.id}"></td>
+                <td th:text="${clinic.name}"></td>
+                <td th:text="${clinic.ministerialNumber}"></td>
+                <td th:text="${clinic.contactDetails.phoneNumber}"></td>
 
                 <td>
-                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{delete(id=${p.id}, keyword=${keyword},page=${currentPage} )}">
+                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{/admin/deleteClinic/{id}(id=${clinic.id})}">
                         Supprimer
                     </a>
                 </td>
                 <td>
-                    <a class="btn btn-success" th:href="@{/AdminEditPatients(id=${p.id}, keyword=${keyword},page=${currentPage} )}">
+                    <a class="btn btn-success" th:href="@{/admin/AdminEditClinique/{id}(id=${clinic.id})}">
                         Modifier
                     </a>
                 </td>
             </tr>
             </tbody>
         </table>
+    <div th:if="${param.success}" class="alert alert-success">
+        <p th:text="${param.success}"></p>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger">
+        <p th:text="${param.error}"></p>
+    </div>
 </div>
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

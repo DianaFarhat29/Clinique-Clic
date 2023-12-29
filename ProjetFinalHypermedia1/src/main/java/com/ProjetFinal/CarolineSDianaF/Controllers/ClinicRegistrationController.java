@@ -45,10 +45,10 @@ public class ClinicRegistrationController {
         newUser.setRole(Role.CLINIC);
         newUser.setEmail(email);
 
-        // Appliquer la mise en majuscule aux champs du modèle ClinicModel
+        // Apply capitalization to the clinic name
         clinic.setName(capitalizeFirstLetter(clinic.getName()));
 
-        // Appliquer la mise en majuscule aux champs de ContactDetailsModel
+        // Apply capitalization to the contact details
         ContactDetailsModel contactDetails = clinic.getContactDetails();
         if (contactDetails != null) {
             contactDetails.setPhoneNumber(capitalizeFirstLetter(contactDetails.getPhoneNumber()));
@@ -74,6 +74,7 @@ public class ClinicRegistrationController {
         return "redirect:/login";
     }
 
+    // Capitalize the first letter of a string
     private String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty() || !Character.isLetter(input.charAt(0))) {
             return input;

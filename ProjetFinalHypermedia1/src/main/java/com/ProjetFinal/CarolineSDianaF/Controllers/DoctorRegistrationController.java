@@ -68,12 +68,10 @@ public class DoctorRegistrationController {
 
         doctor.setClinics(selectedClinics);
 
-        // Appliquer la mise en majuscule aux champs du modèle DoctorModel
         doctor.setFirstName(capitalizeFirstLetter(doctor.getFirstName()));
         doctor.setLastName(capitalizeFirstLetter(doctor.getLastName()));
         doctor.setSpeciality(capitalizeFirstLetter(doctor.getSpeciality()));
 
-        // Appliquer la mise en majuscule aux champs de ContactDetailsModel
         ContactDetailsModel contactDetails = doctor.getContactDetails();
         if (contactDetails != null) {
             contactDetails.setPhoneNumber(capitalizeFirstLetter(contactDetails.getPhoneNumber()));

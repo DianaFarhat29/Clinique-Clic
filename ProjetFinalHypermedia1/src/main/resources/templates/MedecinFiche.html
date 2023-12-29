@@ -27,7 +27,7 @@
     <nav class="navbar navbar-default">
         <p class="navbar-text">Dr <span th:text="${doctor.firstName}">Prénom</span> <span th:text="${doctor.lastName}">Nom</span></p>
         <ul class="nav navbar-nav navbar-right">
-            <li><a th:href="@{MedecinPatient}">Liste des patients</a></li>
+            <li><a th:href="@{MedecinPatient}">Liste des rendez-vous</a></li>
             <li><a th:href="@{MedecinFiche}">Fiche du médecin</a></li>
         </ul>
     </nav>
@@ -188,7 +188,7 @@
                 </div>
             </div>
 
-            <!-- Bouton de déconnection -->
+            <!-- Bouton de déconnection et soumettre -->
             <div class="row">
                 <div class="col-md-3">
                     <!-- Espace vide pour l'alignement -->

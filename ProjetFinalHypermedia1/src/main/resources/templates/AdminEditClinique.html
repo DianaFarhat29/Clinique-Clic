@@ -21,16 +21,16 @@
 <nav class="navbar navbar-default">
     <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
     <ul class="nav navbar-nav navbar-right">
-        <li><a th:href="@{/AdminViewsPatient}">Patients</a></li>
-        <li><a th:href="@{/AdminViewsMedicin}">Médecins</a></li>
-        <li><a th:href="@{/AdminViewsClinique}">Clinique</a></li>
+        <li><a th:href="@{/admin/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/admin/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/admin/AdminViewsClinique}">Clinique</a></li>
     </ul>
 </nav>
 <div class="container">
 
     <h2>Modifier le compte de la clinique</h2> <br>
 
-    <form th:action="@{/CompteClinique}" th:object="${clinic}" method="post" id="registrationForm">
+    <form th:action="@{/admin/editPatient/{id}(id=${clinic.id})}" th:object="${clinic}" method="post" id="patientRegistrationForm">
 
         <!-- Informations -->
         <div class="row">

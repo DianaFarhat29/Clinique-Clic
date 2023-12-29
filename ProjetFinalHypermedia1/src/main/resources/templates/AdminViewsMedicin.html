@@ -23,9 +23,9 @@
 <nav class="navbar navbar-default">
     <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
     <ul class="nav navbar-nav navbar-right">
-        <li><a th:href="@{/AdminViewsPatient}">Patients</a></li>
-        <li><a th:href="@{/AdminViewsMedicin}">Médecins</a></li>
-        <li><a th:href="@{/AdminViewsClinique}">Clinique</a></li>
+        <li><a th:href="@{/admin/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/admin/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/admin/AdminViewsClinique}">Clinique</a></li>
     </ul>
 </nav>
 
@@ -50,27 +50,34 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="m:${doctors}">
-                <td th:text="${m.id}"></td>
-                <td th:text="${m.lastName}"></td>
-                <td th:text="${m.firstName}"></td>
-                <td th:text="${m.speciality}"></td>
-                <td th:text="${m.professionalNumber}"></td>
+            <tr th:each="doctor : ${doctors}">
+                <td th:text="${doctor.id}"></td>
+                <td th:text="${doctor.lastName}"></td>
+                <td th:text="${doctor.firstName}"></td>
+                <td th:text="${doctor.speciality}"></td>
+                <td th:text="${doctor.professionalNumber}"></td>
 
                 <td>
-                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{delete(id=${p.id}, keyword=${keyword},page=${currentPage} )}">
+                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{/admin/deleteDoctor/{id}(id=${doctor.id})}">
                         Supprimer
                     </a>
                 </td>
                 <td>
-                    <a class="btn btn-success" th:href="@{/AdminEditMedicin(id=${m.id}, keyword=${keyword},page=${currentPage} )}">
+                    <a class="btn btn-success" th:href="@{/admin/AdminEditMedecin/{id}(id=${doctor.id})}">
                         Modifier
                     </a>
                 </td>
             </tr>
             </tbody>
         </table>
+    <div th:if="${param.success}" class="alert alert-success">
+        <p th:text="${param.success}"></p>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger">
+        <p th:text="${param.error}"></p>
+    </div>
 </div>
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -80,7 +87,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
 
 
-<script src="CliniquePatients.js"></script>
+
 </body>
 
 </html>

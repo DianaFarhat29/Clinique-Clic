@@ -65,4 +65,8 @@ public interface DoctorService {
     // Method to get End Time
     LocalTime getEndTime(ScheduleModel schedule, DayOfWeek day);
 
+    // Method to get coming appointments
+    List<AppointmentModel> getUpcomingAppointments(Long doctorId);
+    void cancelAppointment(Long appointmentId);
+
 }

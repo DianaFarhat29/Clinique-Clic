@@ -6,14 +6,12 @@ package com.ProjetFinal.CarolineSDianaF.Controllers;
 
 import com.ProjetFinal.CarolineSDianaF.Interface.CustomUserDetailsService;
 import com.ProjetFinal.CarolineSDianaF.Interface.DoctorService;
-import com.ProjetFinal.CarolineSDianaF.Models.AppointmentModel;
-import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
-import com.ProjetFinal.CarolineSDianaF.Models.ScheduleModel;
-import com.ProjetFinal.CarolineSDianaF.Models.UserModel;
+import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.AppointmentRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +29,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  *
@@ -79,12 +78,13 @@ public class DoctorController {
         return "doctor/editDoctor";
     }
 
+    // Process the form to update a doctor
     @PostMapping("/update")
     public String updateDoctorProfile(@ModelAttribute("doctor") DoctorModel doctor,
                                       @RequestParam Map<String, String> allParams,
                                       Authentication authentication, RedirectAttributes redirectAttributes) {
 
-        // Vérification de l'existence du médecin
+        // Vérification of the doctor's existence
         Optional<DoctorModel> existingDoctorOpt = doctorService.getDoctorById(doctor.getId());
         if (!existingDoctorOpt.isPresent()) {
             redirectAttributes.addFlashAttribute("error", "Médecin avec l'ID " + doctor.getId() + " non trouvé.");
@@ -93,17 +93,16 @@ public class DoctorController {
 
         DoctorModel existingDoctor = existingDoctorOpt.get();
 
-        // Mise à jour des informations de base du médecin
+        // Update doctor details
         doctorService.updateDoctor(doctor);
 
-        // Mise à jour de l'horaire
+        // Update doctor schedule
         ScheduleModel schedule = existingDoctor.getSchedule();
         if (schedule == null) {
             schedule = new ScheduleModel();
             existingDoctor.setSchedule(schedule);
         }
 
-        // Mise à jour des horaires pour chaque jour
         for (DayOfWeek day : DayOfWeek.values()) {
             String dayLower = day.toString().toLowerCase();
             LocalTime startTime = parseTime(allParams.get(dayLower + "Start"));
@@ -114,7 +113,7 @@ public class DoctorController {
                 return "redirect:/doctors/MedecinFiche";
             }
 
-            // Mise à jour des heures de début et de fin pour chaque jour
+            // Update the schedule
             switch (dayLower) {
                 case "monday":
                     schedule.setMondayStart(startTime);
@@ -147,7 +146,7 @@ public class DoctorController {
             }
         }
 
-        // Sauvegarder les modifications
+        // Save the updated schedule
         existingDoctor.setSchedule(schedule);
         doctorService.updateDoctor(existingDoctor);
 
@@ -155,28 +154,13 @@ public class DoctorController {
         return "redirect:/doctors/MedecinFiche";
     }
 
+    // Method to parse time
     private LocalTime parseTime(String timeString) {
         if (timeString != null && !timeString.isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             return LocalTime.parse(timeString, formatter);
         }
         return null;
-    }
-
-    // Display form to manage an appointment
-    @GetMapping("/{doctorId}/appointments/edit/{appointmentId}")
-    public String showEditAppointmentForm(@PathVariable Long doctorId, @PathVariable Long appointmentId, Model model) {
-        AppointmentModel appointment = doctorService.getAppointmentById(appointmentId)
-                .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
-        model.addAttribute("appointment", appointment);
-        return "doctor/editAppointment";
-    }
-
-    // Process the form to update or cancel an appointment
-    @PostMapping("/{doctorId}/appointments/edit/{appointmentId}")
-    public String manageAppointment(@PathVariable Long doctorId, @ModelAttribute AppointmentModel appointment) {
-        doctorService.manageAppointment(appointment);
-        return "redirect:/doctors/" + doctorId + "/appointments";
     }
 
     // Display the page 'MedecinFiche', the page of redirection after doctor login
@@ -192,6 +176,39 @@ public class DoctorController {
         return "MedecinFiche";
     }
 
+    // Display the page 'MedecinPatient'
+    @GetMapping("/MedecinPatient")
+    public String medecinPatient(Model model, Authentication authentication) {
+        Long professionalNumber = Long.valueOf(authentication.getName());
+        Optional<DoctorModel> doctorOpt = doctorService.getDoctorByProfessionalNumber(professionalNumber);
+
+        if (doctorOpt.isPresent()) {
+            DoctorModel doctorModel = doctorOpt.get();
+            Set<PatientModel> patients = doctorModel.getPatients();
+            model.addAttribute("patients", patients);
+            model.addAttribute("doctor", doctorModel);
+
+            // Get upcoming appointments
+            List<AppointmentModel> upcomingAppointments = doctorService.getUpcomingAppointments(doctorModel.getId());
+            model.addAttribute("upcomingAppointments", upcomingAppointments);
+        }
+
+        return "MedecinPatient";
+    }
+
+    @PostMapping("/cancelAppointment/{id}")
+    public String cancelAppointment(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            doctorService.cancelAppointment(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Appointment canceled successfully.");
+        } catch (EntityNotFoundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Appointment not found.");
+        }
+        return "redirect:/doctors/MedecinPatient";
+    }
+
+
+    // Initialize the schedule attributes
     private void initializeScheduleAttributes(DoctorModel doctorModel, Model model) {
         ScheduleModel schedule = doctorModel.getSchedule();
         if (schedule != null) {
@@ -217,5 +234,7 @@ public class DoctorController {
             model.addAttribute("sundayEnd", schedule.getSundayEnd());
         }
     }
+
+
 
 }

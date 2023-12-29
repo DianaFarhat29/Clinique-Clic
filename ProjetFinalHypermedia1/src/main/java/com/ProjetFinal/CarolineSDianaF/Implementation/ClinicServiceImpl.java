@@ -11,6 +11,7 @@ import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import com.ProjetFinal.CarolineSDianaF.Repository.ClinicRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.DoctorRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.PatientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,22 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public ClinicModel save(ClinicModel clinic) {
         return clinicRepository.save(clinic);
+    }
+
+    @Override
+    public ClinicModel updateClinic(ClinicModel updatedClinic) {
+        ClinicModel existingClinic = clinicRepository.findById(updatedClinic.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Clinic not found with ID: " + updatedClinic.getId()));
+
+        // Update fields of the existing clinic
+        existingClinic.setName(updatedClinic.getName());
+        existingClinic.setMinisterialNumber(updatedClinic.getMinisterialNumber());
+        existingClinic.setServices(updatedClinic.getServices());
+        existingClinic.setContactDetails(updatedClinic.getContactDetails());
+
+
+        // Save the updated doctor back to the database
+        return clinicRepository.save(existingClinic);
     }
 
     // Implementation of method to view clinic details

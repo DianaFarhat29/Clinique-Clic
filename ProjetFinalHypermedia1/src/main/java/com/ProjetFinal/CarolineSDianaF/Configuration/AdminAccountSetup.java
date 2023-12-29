@@ -27,14 +27,14 @@ public class AdminAccountSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Generate a random password if not set
+        // Generating a random password if not set
         if (adminPassword == null || adminPassword.isEmpty()) {
             /*adminPassword = UUID.randomUUID().toString();*/
             adminPassword = "admin";
             System.out.println("Generated Admin Password: " + adminPassword);
         }
 
-        // Check if the admin account already exists
+        // Checking if the admin account already exists
         if (userRepository.findByUsername("admin@example.com").isEmpty()) {
             // Admin account does not exist, create one
             UserModel adminUser = new UserModel();

@@ -56,7 +56,7 @@ public class DoctorModel {
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "patient_id")
     )
-    private Set<ClinicModel> patients = new HashSet<>();
+    private Set<PatientModel> patients = new HashSet<>();
 
     @Embedded
     private ScheduleModel schedule;
@@ -149,11 +149,11 @@ public class DoctorModel {
         this.clinics = clinics;
     }
 
-    public Set getPatients() {
+    public Set<PatientModel> getPatients() {
         return patients;
     }
 
-    public void setPatients(Set<ClinicModel> patients) {
+    public void setPatients(Set<PatientModel> patients) {
         this.patients = patients;
     }
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ControllerIndex {
 
+    // Display the view of the index
     @GetMapping("/Index")
     public String index(Model model) {
         model.addAttribute("message", "Welcome to our website!");
