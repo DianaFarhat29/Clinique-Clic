@@ -1,7 +1,7 @@
-#Introduction
+# Introduction
 Le projet Prise de Rendez-vous Médical est une application transactionnelle développée pour faciliter la gestion des rendez-vous médicaux. Elle permet aux patients et aux médecins de s'inscrire, se connecter et gérer les rendez-vous de manière intuitive et efficace.
 
-#Fonctionnalités
+# Fonctionnalités
 L'application offre plusieurs fonctionnalités clés pour différents acteurs :
 
   Pour les Patients :
@@ -21,7 +21,7 @@ L'application offre plusieurs fonctionnalités clés pour différents acteurs :
   Pour les Administrateurs :
       -Ajouter, supprimer et modifier les informations des patients, médecins et cliniques.
 
-#Technologies Utilisées
+# Technologies Utilisées
 Cette application utilise les technologies suivantes :
 
 -Front-end : HTML5, CSS3, Bootstrap, JavaScript, jQuery, Ajax.
@@ -29,7 +29,7 @@ Cette application utilise les technologies suivantes :
 -Base de données : MySQL.
 -Architecture : Modèle MVC (MVC2 éventuellement).
 
-#Mise en Route
+# Mise en Route
 Pour lancer le projet :
   1)Cloner le Dépôt : Clonez ce dépôt sur votre machine locale.
   
@@ -47,5 +47,5 @@ Pour lancer le projet :
 
   5)Utiliser l'Application : Ouvrez un navigateur et accédez à l'application via l'URL locale.
 
-#Conclusion
+# Conclusion
 Le projet Prise de Rendez-vous Médical est une solution complète et polyvalente pour la gestion des rendez-vous médicaux. Elle apporte une grande facilité d'utilisation tant pour les patients que pour les professionnels de santé, contribuant ainsi à une meilleure gestion du temps et des ressources dans le domaine médical.
