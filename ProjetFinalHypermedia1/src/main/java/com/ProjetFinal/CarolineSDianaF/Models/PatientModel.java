@@ -30,10 +30,10 @@ public class PatientModel {
     private String firstName;
     
     @Column(nullable = false)
-    private Long healthInsuranceNumber;
+    private String healthInsuranceNumber;
     
     @Column(nullable = false)
-    private Long sequentialNumber;
+    private Long healthSequentialNumber;
     
     @Column(nullable = false)
     private LocalDate dateBirth;
@@ -59,19 +59,19 @@ public class PatientModel {
             joinColumns = @JoinColumn(name = "patient_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
     )
-    private Set<ClinicModel> doctors = new HashSet<>();
+    private Set<DoctorModel> doctors = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserModel user;
 
     // Constructors
-    public PatientModel(Long id, String lastName, String firstName, Long healthInsuranceNumber, Long sequentialNumber, LocalDate dateBirth, String gender, ContactDetailsModel contactDetails, Set clinics, Set doctors, UserModel user) {
+    public PatientModel(Long id, String lastName, String firstName, String healthInsuranceNumber, Long healthSequentialNumber, LocalDate dateBirth, String gender, ContactDetailsModel contactDetails, Set clinics, Set doctors, UserModel user) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.healthInsuranceNumber = healthInsuranceNumber;
-        this.sequentialNumber = sequentialNumber;
+        this.healthSequentialNumber = healthSequentialNumber;
         this.dateBirth = dateBirth;
         this.gender = gender;
         this.contactDetails = contactDetails;
@@ -108,20 +108,20 @@ public class PatientModel {
         this.firstName = firstName;
     }
 
-    public Long getHealthInsuranceNumber() {
+    public String getHealthInsuranceNumber() {
         return healthInsuranceNumber;
     }
 
-    public void setHealthInsuranceNumber(Long healthInsuranceNumber) {
+    public void setHealthInsuranceNumber(String healthInsuranceNumber) {
         this.healthInsuranceNumber = healthInsuranceNumber;
     }
 
-    public Long getSequentialNumber() {
-        return sequentialNumber;
+    public Long getHealthSequentialNumber() {
+        return healthSequentialNumber;
     }
 
-    public void setSequentialNumber(Long sequentialNumber) {
-        this.sequentialNumber = sequentialNumber;
+    public void setHealthSequentialNumber(Long healthSequentialNumber) {
+        this.healthSequentialNumber = healthSequentialNumber;
     }
 
     public LocalDate getDateBirth() {
@@ -160,7 +160,7 @@ public class PatientModel {
         return doctors;
     }
 
-    public void setDoctors(Set<ClinicModel> doctors) {
+    public void setDoctors(Set<DoctorModel> doctors) {
         this.doctors = doctors;
     }
 
@@ -175,7 +175,7 @@ public class PatientModel {
     // toString() Method
     @Override
     public String toString() {
-        return "PatientModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", healthInsuranceNumber=" + healthInsuranceNumber + ", sequentialNumber=" + sequentialNumber + ", dateBirth=" + dateBirth + ", gender=" + gender + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", doctors=" + doctors + ", user=" + user + '}';
+        return "PatientModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", healthInsuranceNumber=" + healthInsuranceNumber + ", healthSequentialNumber=" + healthSequentialNumber + ", dateBirth=" + dateBirth + ", gender=" + gender + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", doctors=" + doctors + ", user=" + user + '}';
     }
    
 }

@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -24,19 +25,26 @@ public interface ClinicRepository extends JpaRepository<ClinicModel, Long> {
     // Standard methods of the JpaRepository already included (save, findById, deleteById, etc.)
 
     // Method to find doctor by clinic id
-    @Query("SELECT d FROM DoctorModel d WHERE d.clinic.id = :clinicId")
+    @Query("SELECT p FROM DoctorModel p JOIN p.clinics c WHERE c.id = :clinicId")
     List<DoctorModel> findDoctorsByClinicId(Long clinicId);
 
     // Method to find doctor by patient id
-    @Query("SELECT p FROM PatientModel p WHERE p.clinic.id = :clinicId")
+    @Query("SELECT p FROM PatientModel p JOIN p.clinics c WHERE c.id = :clinicId")
     List<PatientModel> findPatientsByClinicId(Long clinicId);
+
+    // Method to find all clinics with doctors
+    @Query("SELECT c FROM ClinicModel c JOIN FETCH c.doctors")
+    List<ClinicModel> findAllWithDoctors();
 
     // Method to find clinic by name
     List<ClinicModel> findByName(String name);
 
-    // Method to find clinic by coordinate
-    List<ClinicModel> findByCoordinate(String coordinate);
 
     // Method to find clinic by services
     List<ClinicModel> findByServices(String services);
+
+    // Method to find clinic by email
+    Optional<ClinicModel> findByContactDetails_Email(String email);
+
+
 }

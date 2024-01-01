@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -36,12 +37,6 @@ public class DoctorModel {
     
     @Column(nullable = false)
     private Double expectedSalary;
-    
-    @Column(nullable = false)
-    private String coordinate;
-    
-    @Column(nullable = false)
-    private String location;
 
     @Embedded
     @Column(nullable = false)
@@ -61,29 +56,27 @@ public class DoctorModel {
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "patient_id")
     )
-    private Set<ClinicModel> patients = new HashSet<>();
+    private Set<PatientModel> patients = new HashSet<>();
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ScheduleModel> schedules = new HashSet<>();
+    @Embedded
+    private ScheduleModel schedule;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserModel user;
 
     // Constructors
-    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, String coordinate, String location, ContactDetailsModel contactDetails, Set clinics, Set patients,Set<ScheduleModel> schedules, UserModel user) {
+    public DoctorModel(Long id, String lastName, String firstName, String speciality, Long professionalNumber, Double expectedSalary, ContactDetailsModel contactDetails, Set clinics, Set patients,ScheduleModel schedule, UserModel user) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.speciality = speciality;
         this.professionalNumber = professionalNumber;
         this.expectedSalary = expectedSalary;
-        this.coordinate = coordinate;
-        this.location = location;
         this.contactDetails = contactDetails;
         this.clinics = clinics;
         this.patients = patients;
-        this.schedules = schedules;
+        this.schedule = schedule;
         this.user = user;
     }
 
@@ -140,22 +133,6 @@ public class DoctorModel {
         this.expectedSalary = expectedSalary;
     }
 
-    public String getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public ContactDetailsModel getContactDetails() {
         return contactDetails;
     }
@@ -164,7 +141,7 @@ public class DoctorModel {
         this.contactDetails = contactDetails;
     }
 
-    public Set getClinics() {
+    public Set<ClinicModel> getClinics() {
         return clinics;
     }
 
@@ -172,20 +149,20 @@ public class DoctorModel {
         this.clinics = clinics;
     }
 
-    public Set getPatients() {
+    public Set<PatientModel> getPatients() {
         return patients;
     }
 
-    public void setPatients(Set<ClinicModel> patients) {
+    public void setPatients(Set<PatientModel> patients) {
         this.patients = patients;
     }
 
-    public Set<ScheduleModel> getSchedules() {
-        return schedules;
+    public ScheduleModel getSchedule() {
+        return schedule;
     }
 
-    public void setSchedules(Set<ScheduleModel> schedules) {
-        this.schedules = schedules;
+    public void setSchedule(ScheduleModel schedule) {
+        this.schedule = schedule;
     }
 
     public UserModel getUser() {
@@ -199,6 +176,6 @@ public class DoctorModel {
     // ToString() Method
     @Override
     public String toString() {
-        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", coordinate=" + coordinate + ", location=" + location + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedules=" + schedules + ", user=" + user + '}';
+        return "DoctorModel{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", speciality=" + speciality + ", professionalNumber=" + professionalNumber + ", expectedSalary=" + expectedSalary + ", contactDetails=" + contactDetails + ", clinics=" + clinics + ", patients=" + patients + ", schedule=" + schedule + ", user=" + user + '}';
     }
 }

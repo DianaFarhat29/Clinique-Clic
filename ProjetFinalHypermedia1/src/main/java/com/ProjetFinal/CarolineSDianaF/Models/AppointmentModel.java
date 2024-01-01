@@ -27,20 +27,16 @@ public class AppointmentModel {
     @Column(nullable = false)
     private String reason;
 
-    @Column(nullable = false)
-    private String status;
-
     // This attribute can be null because it's optional
     private String notes;
 
     // Constructors
-    public AppointmentModel(Long id, LocalDateTime dateTime, DoctorModel doctor, PatientModel patient, String reason, String status, String notes) {
+    public AppointmentModel(Long id, LocalDateTime dateTime, DoctorModel doctor, PatientModel patient, String reason, String notes) {
         this.id = id;
         this.dateTime = dateTime;
         this.doctor = doctor;
         this.patient = patient;
         this.reason = reason;
-        this.status = status;
         this.notes = notes;
     }
 
@@ -90,14 +86,6 @@ public class AppointmentModel {
         this.reason = reason;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getNotes() {
         return notes;
     }
@@ -115,7 +103,6 @@ public class AppointmentModel {
                 ", doctor=" + doctor +
                 ", patient=" + patient +
                 ", reason='" + reason + '\'' +
-                ", status='" + status + '\'' +
                 ", notes='" + notes + '\'' +
                 '}';
     }

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+    <title>Espace patient - Messages</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/EspaceConsultation.css}">
+
+    <!-- Timepicker CSS  -->
+    <link rel="stylesheet" th:href="@{/jquery-timepicker-1.3.5/jquery.timepicker.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <scriEEpt src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></scriEEpt>
+    <!-- Timepicker JS -->
+    <script th:src="@{/jquery-timepicker-1.3.5/jquery.timepicker.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/javascript/EspaceConsultation.js}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default" th:data-patient-id="${patientId}">
+    <p class="navbar-text"><span th:text="${patient.firstName}">Prénom</span> <span th:text="${patient.lastName}">Nom</span></p>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{PatientFiche}">Compte et documents</a></li>
+        <li><a th:href="@{EspaceConsultation}">Rendez-vous</a></li>
+        <li><a th:href="@{PatientClinique}">Liste des cliniques</a></li>
+    </ul>
+</nav>
+
+<a th:href="@{/Index}" class="image_container">
+    <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+</a>
+
+<div class="container">
+
+    <!-- Section rendez-vous -->
+    <div class="row">
+        <div class="col-md-9">
+            <h4>Liste des rendez-vous</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Date et Heure</th>
+                    <th>Médecin</th>
+                    <th>Raison</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="appointment : ${upcomingAppointments}">
+                    <td th:text="${#temporals.format(appointment.dateTime, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${appointment.doctor.firstName + ' ' + appointment.doctor.lastName}"></td>
+                    <td th:text="${appointment.reason}"></td>
+                    <td>
+                        <form th:action="@{/patients/appointments/cancel/{id}(id=${appointment.id})}" method="GET">
+                            <input type="hidden" name="id" th:value="${appointment.id}">
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Confirmer la suppression?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-3">
+            <h4>Nouveau rendez-vous</h4>
+        </div>
+    </div>
+
+    <form id="appointmentForm" action="/patients/bookAppointment" method="POST">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Liste des médecins</h5>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" id="doctorsSelect" name="doctorId">
+                    <option disabled selected hidden value="">Choisir un médecin</option>
+                    <th:block th:each="doctor : ${patient.doctors}">
+                        <option th:value="${doctor.id}" th:text="${doctor.firstName + ' ' + doctor.lastName}"></option>
+                    </th:block>
+                </select>
+                <div id="doctorCheck" class="errorForm" style="display:none;">
+                    Veuillez choisir un médecin.
+                </div>
+            </div>
+
+        </div>
+
+
+        <input type="hidden" id="patientId" name="patientId">
+
+        <!-- Date de rendez-vous -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="raison-consultation">Date et heure de rendez-vous</h5>
+            </div>
+            <div class="col-md-6">
+                <input type="date" class="form-control" id="dateRendezvous" name="appointmentDate" rows="2" />
+                <div id="dateCheck" class="errorForm" style="display:none;">
+                    Veuillez choisir une date.
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-6">
+                <select class="form-control" id="hourSelect" name="appointmentTime" >
+                    <option disabled selected hidden value="">Choisir une heure</option>
+                </select>
+                <div id="hourCheck" class="errorForm" style="display:none;">
+                    Veuillez choisir une heure.
+                </div>
+            </div>
+        </div>
+
+        <!-- Message au medecin -->
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="raison-consultation">Raison de consultation</h5>
+            </div>
+            <div class="col-md-6">
+                <textarea class="form-control" id="detailConsultation" name="appointmentReason" ></textarea>
+                <div id="reasonCheck" class="errorForm" style="display:none;">
+                    Veuillez indiquer la raison du rendez-vous.
+                </div>
+                <br><br>
+            </div>
+        </div>
+
+        <!-- Bouton de soumission 2 et déconnection -->
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Espace vide pour l'alignement -->
+            </div>
+            <div class="col-md-3">
+                <button type="submit" id="submitbtn2" class="btn btn-default">Demander le rendez-vous</button>
+            </div>
+            <div class="col-md-3">
+                <a th:href="@{/logout}" id="disconnectbtn" class="btn ">Se déconnecter</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+</body>
+
+</html>

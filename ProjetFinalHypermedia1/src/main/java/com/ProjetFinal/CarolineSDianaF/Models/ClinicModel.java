@@ -6,7 +6,11 @@ package com.ProjetFinal.CarolineSDianaF.Models;
 
 import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,26 +18,26 @@ import java.util.Set;
  * @author Diana
  */
 @Entity
-@Table(name = "clinics") 
+@Table(name = "clinics")
 public class ClinicModel {
 
     // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private String name;
-    
+
     @Column(nullable = false)
-    private String coordinate;
-    
-    @Column(nullable = false)
-    private String services;
+    private String ministerialNumber;
 
     @Embedded
     @Column(nullable = false)
     private ContactDetailsModel contactDetails;
+
+    @Column(nullable = false)
+    private String services;
 
     @ManyToMany
     @JoinTable(
@@ -41,25 +45,20 @@ public class ClinicModel {
             joinColumns = @JoinColumn(name = "clinic_id"),
             inverseJoinColumns = @JoinColumn(name = "patient_id")
     )
-    private Set<ClinicModel> patients = new HashSet<>();
+    private Set<PatientModel> patients = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "clinic_patient",
-            joinColumns = @JoinColumn(name = "clinic_id"),
-            inverseJoinColumns = @JoinColumn(name = "doctor_id")
-    )
-    private Set<ClinicModel> doctors = new HashSet<>();
+    @ManyToMany(mappedBy = "clinics")
+    private Set<DoctorModel> doctors = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserModel user;
 
     // Constructors
-    public ClinicModel(Long id, String name, String coordinate, String services, ContactDetailsModel contactDetails, Set patients, Set doctors, UserModel user) {
+    public ClinicModel(Long id, String name, String ministerialNumber , String services,  ContactDetailsModel contactDetails, Set patients, Set doctors, UserModel user) {
         this.id = id;
         this.name = name;
-        this.coordinate = coordinate;
+        this.ministerialNumber = ministerialNumber;
         this.services = services;
         this.contactDetails = contactDetails;
         this.patients = patients;
@@ -88,12 +87,11 @@ public class ClinicModel {
         this.name = name;
     }
 
-    public String getCoordinate() {
-        return coordinate;
+    public String getMinisterialNumber() {
+        return ministerialNumber;
     }
-
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
+    public void setMinisterialNumber(String ministerialNumber) {
+        this.ministerialNumber = ministerialNumber;
     }
 
     public String getServices() {
@@ -112,19 +110,18 @@ public class ClinicModel {
         this.contactDetails = contactDetails;
     }
 
-    public Set getPatients() {
+    public Set<PatientModel> getPatients() {
         return patients;
     }
 
-    public void setPatients(Set<ClinicModel> patients) {
+    public void setPatients(Set<PatientModel> patients) {
         this.patients = patients;
     }
-
-    public Set getDoctors() {
+    public Set<DoctorModel> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(Set<ClinicModel> doctors) {
+    public void setDoctors(Set<DoctorModel> doctors) {
         this.doctors = doctors;
     }
 
@@ -135,11 +132,20 @@ public class ClinicModel {
     public void setUser(UserModel user) {
         this.user = user;
     }
+
+    // Methods to convert services from list to string and vice versa
+    public List<String> getServicesAsList() {
+        return services != null ? Arrays.asList(services.split(",")) : new ArrayList<>();
+    }
+
+    public void setServicesFromList(List<String> servicesList) {
+        this.services = String.join(",", servicesList);
+    }
     
     // ToString() Method
     @Override
     public String toString() {
-        return "ClinicModel{" + "id=" + id + ", name=" + name + ", coordinate=" + coordinate + ", services=" + services + ", contactDetails=" + contactDetails + ", patients=" + patients + ", doctors=" + doctors + ", user=" + user + '}';
+        return "ClinicModel{" + "id=" + id + ", ministerialNumber=" + ministerialNumber + ", mi=" + name + ", services=" + services + ", contactDetails=" + contactDetails + ", patients=" + patients + ", doctors=" + doctors + ", user=" + user + '}';
     }
        
 }

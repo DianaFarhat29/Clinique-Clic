@@ -5,10 +5,13 @@
 package com.ProjetFinal.CarolineSDianaF.Repository;
 
 import com.ProjetFinal.CarolineSDianaF.Models.DoctorModel;
+import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -18,6 +21,10 @@ import java.util.List;
 public interface DoctorRepository extends JpaRepository<DoctorModel, Long>{
 
     // Standard methods of the JpaRepository already included (save, findById, deleteById, etc.)
+
+    // Method to find all patients with doctors
+    @Query("SELECT c FROM DoctorModel c JOIN FETCH c.patients")
+    List<PatientModel> findAllWithDoctors();
 
     // Method to find doctor by speciality
     List<DoctorModel> findBySpeciality(String speciality);
@@ -32,8 +39,5 @@ public interface DoctorRepository extends JpaRepository<DoctorModel, Long>{
     List<DoctorModel> findByLastName(String lastName);
 
     // Method to find doctor by professional number
-    List<DoctorModel> findByProfessionalNumber(Long professionalNumber);
-
-    // Method to find doctor by location
-    List<DoctorModel> findByLocation(String location);
+    Optional<DoctorModel> findByProfessionalNumber(Long professionalNumber);
 }

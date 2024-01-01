@@ -16,17 +16,19 @@ import java.util.Optional;
  */
 public interface PatientService {
 
+    List<PatientModel> getAllPatients();
+
     // Method to save or update a patient's information
     PatientModel save(PatientModel patient);
+
+    // Method to update a patient's information
+    PatientModel updatePatient(PatientModel patient);
 
     // Method to book a new appointment
     void bookAppointment(AppointmentModel appointment);
 
     // Method to search for healthcare providers based on criteria
     List<DoctorModel> searchHealthcareProvider(SearchCriteriaModel criteria);
-
-    // Method to view appointments for a specific patient
-    List<AppointmentModel> viewAppointments(Long patientId);
 
     // Method to update an existing appointment
     void updateAppointment(AppointmentModel appointment);
@@ -42,5 +44,20 @@ public interface PatientService {
 
     // Method to get a specific appointment by ID
     Optional<AppointmentModel> getAppointmentById(Long appointmentId);
+
+    // Method to find patient by Health Insurance Number
+    Optional<PatientModel> getPatientByHealthInsuranceNumber(String healthInsuranceNumber);
+
+    // Method to find patient by id
+    Optional<PatientModel> getPatientById(Long id);
+
+    // Method to get patients with doctor
+    List<PatientModel> getAllPatientsWithDoctors();
+
+    // Method to add doctor to patient
+    void addDoctorToPatient(Long doctorId, Long patientId, Long clinicId);
+
+    // Method to get coming appointments
+    List<AppointmentModel> getUpcomingAppointments(Long patientId);
 
 }

@@ -16,7 +16,7 @@ public class EmailServiceImpl implements EmailService {
     // Implementation for sending an email reminder
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@example.com");
+        message.setFrom("clinique_clic@outlook.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);

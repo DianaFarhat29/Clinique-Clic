@@ -13,21 +13,23 @@ import java.util.Set;
 @Component
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    // Redirect the user to the appropriate page after login
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
+
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if (roles.contains("ROLE_DOCTOR")) {
-            setDefaultTargetUrl("/doctor/home");
+            setDefaultTargetUrl("/doctors/MedecinFiche");
         } else if (roles.contains("ROLE_CLINIC")) {
-            setDefaultTargetUrl("/clinic/home");
+            setDefaultTargetUrl("/clinics/CliniqueFiche");
         } else if (roles.contains("ROLE_PATIENT")) {
-            setDefaultTargetUrl("/patient/home");
+            setDefaultTargetUrl("/patients/PatientFiche");
         } else if (roles.contains("ROLE_ADMIN")) {
-            setDefaultTargetUrl("/admin/home");
+            setDefaultTargetUrl("/admin/AdminViewsPatient");
         } else {
-            setDefaultTargetUrl("/login?error");
+            setDefaultTargetUrl("/Index?error");
         }
 
         super.onAuthenticationSuccess(request, response, authentication);

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Page Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/AdminViews.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-default">
+    <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{/admin/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/admin/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/admin/AdminViewsClinique}">Clinique</a></li>
+    </ul>
+</nav>
+
+
+<div class="container">
+
+    <h2>Liste des cliniques</h2><br>
+    <table id="myTable" class="table" data-toggle="table" data-pagination="true" data-search="true"
+           data-sortable="true" data-locale="fr-FR" data-loading-message="">
+
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>No. ministériel</th>
+                <th>No. téléphone</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="clinic : ${clinics}">
+                <td th:text="${clinic.id}"></td>
+                <td th:text="${clinic.name}"></td>
+                <td th:text="${clinic.ministerialNumber}"></td>
+                <td th:text="${clinic.contactDetails.phoneNumber}"></td>
+
+                <td>
+                    <a onclick="return confirm('Confirmer la supression?')" class="btn btn-danger" th:href="@{/admin/deleteClinic/{id}(id=${clinic.id})}">
+                        Supprimer
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-success" th:href="@{/admin/AdminEditClinique/{id}(id=${clinic.id})}">
+                        Modifier
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    <div th:if="${param.success}" class="alert alert-success">
+        <p th:text="${param.success}"></p>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger">
+        <p th:text="${param.error}"></p>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-fr-FR.min.js"></script>
+
+
+<script src="CliniquePatients.js"></script>
+</body>
+
+</html>

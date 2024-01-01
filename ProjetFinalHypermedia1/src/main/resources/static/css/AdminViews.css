@@ -1,0 +1,126 @@
+
+
+body {
+    display: flex;
+    background-image: url('http://localhost:8080/images/AdminLogin.png');
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+}
+
+img {
+    margin-top: 7em;
+    width: auto;
+    height: 100%;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 1000;
+
+}
+
+.navbar-text {
+    color: #25455E !important;
+    font-size: large;
+    font-weight: 600;
+}
+
+.nav.navbar-nav li {
+    margin: 0 5px;
+}
+
+.nav.navbar-nav li:last-child {
+    margin-right: 50px;
+}
+
+.nav.navbar-nav li a {
+    color: #25455E;
+    font-weight: bold;
+}
+
+
+table th {
+    color: #E89255;
+    font-weight: bold;
+    text-align: left;
+    border: none !important;
+}
+
+/* Style pour les cellules de données de tableau */
+table td {
+
+    color: #598BC5 !important;
+    border: none !important;
+
+}
+
+.table-bordered {
+    border: none;
+}
+
+
+.row {
+    margin-bottom: 20px;
+}
+
+h5{
+    color: #25455E;
+    font-weight: bold;
+}
+
+
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+width:75%;
+    margin-right: 0;
+    margin-top: 7em;
+    height: fit-content;
+}
+.errorForm{
+    color:#E89255;
+    margin-left: 17%;
+
+}
+
+#submitbtn {
+    background-color: #E89255;
+    color: #25455E;
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 70%;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    img {
+        display: none;
+    }
+}

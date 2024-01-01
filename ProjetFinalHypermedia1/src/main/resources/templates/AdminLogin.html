@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>ADMINISTRATEUR</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/AdminLogin.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+   
+
+    <div class="container">
+        <img src="/images/LogoCliniqueClic.png" alt="Logo" class="img">
+        <h2>Se connecter</h2>
+        <form id="ConnexionForm">
+
+ 
+            <div class="form-group">
+                <label for="adminUser"></label>
+                <input type="text" class="form-control" id="adminUser" placeholder="Nom d'utilisateur" name="adminUser">
+                <div id="userNameCheck" class="errorForm">
+                    Entrez votre nom d'utilisateur
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="pwd"></label>
+                <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd">
+                   <div id="passCheck" class="errorForm">
+                    Le mot de passe est incorect
+                </div>
+            </div>
+
+            <input type="submit" id="submitbtn" value="Soumettre" class="btn btn-default">
+        </form>
+       
+
+    </div>
+
+ <!-- <script src="@{/javascript/}"></script> -->
+</body>
+
+</html>

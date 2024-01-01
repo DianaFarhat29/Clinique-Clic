@@ -1,30 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}"> <!-- This is your compiled TailwindCSS file -->
+    <title>Connexion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-gray-200">
 
-<div class="container mx-auto mt-10">
-    <h1 class="text-2xl font-bold text-blue">Login</h1>
-    <form th:action="@{/perform_login}" method="POST">
-        <div class="mb-4">
-            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>U
-            <input type="text" id="username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-        </div>
-        <div class="mb-4">
-            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-            <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-        </div>
-        <div class="mb-4">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Log in
-            </button>
-        </div>
-    </form>
-    <p th:text="${message}" class="text-red-500"></p>
-</div>
+<body>
+<main>
+<a th:href="@{/Index}" id="logoContainer" class="image_container">
+    <img id="roleImage" src="/images/LogoPatientBlanc.png" alt="Image de rôle">
+</a>
+    <div class="container">
 
+        <h2>Se connecter</h2>
+        <form th:action="@{/login}" method="POST" id="ConnexionForm">
+            <div class="form-group">
+                <label id="roleLabel" for="roleSelect">Rôle</label>
+                <select class="form-control" id="roleSelect">
+                    <option value="patient">Patient</option>
+                    <option value="clinique">Clinique</option>
+                    <option value="medecin">Médecin</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <h5>Informations de connexion</h5>
+            </div>
+
+            <div class="form-group" id="usernameField">
+                <!-- Le champ mis à jour par JavaScript selon le role sélectionné-->
+                <label for="username"></label>
+                <input type="text" class="form-control" id="username" placeholder="Numéro d'assurance maladie" name="username">
+                <div id="usernameCheck" class="errorForm"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="password"></label>
+                <input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password">
+                <div id="passcheck" class="errorForm">Entrez votre mot de passe.</div>
+            </div>
+            <div class="row">
+                <div th:if="${errorMsg}" th:text="${errorMsg}" class="errorMsg"></div>
+            </div>
+            <input type="submit" id="submitbtn" value="Soumettre" class="btn btn-default">
+        </form>
+
+        <p class="no-account">Vous n'avez pas de compte? <a th:href="@{/ComptePatient}" class="signup-link">S'inscrire</a></p>
+
+
+
+    </div>
+        <script th:src="@{/javascript/login.js}"></script>
+</main>
 </body>
+
+
 </html>

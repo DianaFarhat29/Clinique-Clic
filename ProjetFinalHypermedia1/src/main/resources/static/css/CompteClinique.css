@@ -1,0 +1,187 @@
+body {
+    display: flex;
+    background-color: #E89255;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    max-width: 100%;
+    min-height: 100vh;
+    margin-right: 0;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.row {
+    margin-left: 50px;
+    font-weight: bold;
+    color: #E89255;
+}
+
+
+
+img {
+    width: auto;
+    height: 70%;
+}
+
+h2 {
+    margin-left: 4%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    color: #25455E;
+    font-weight: bold;
+}
+
+.servicesTexte {
+    font-weight: normal !important;
+    margin-top: 1.5%;
+}
+
+.dropdown-menu {
+    font-weight: normal !important;
+    color: #555555;
+    width: 35%;
+    padding-left: 2%;
+    padding-bottom: 2%;
+    padding-top: 1.5%;
+
+}
+
+.dropdown {
+    margin-left: 15%;
+}
+
+.dropdown-menu li {
+    display: flex;
+    align-items: start;
+    gap:5px;
+}
+
+input[type="checkbox"]:checked + label {
+    color: #E89255 !important;
+}
+
+#servicesDropdown {
+    color: #598BC5;
+    margin-top: 2%;
+    margin-bottom: 1.5%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: normal !important;
+}
+.form-control {
+    margin-left: 15%;
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: #598BC5;
+    /* Couleur du texte du placeholder */
+}
+
+.form-group input[type="cliniqueId"],
+.form-group input[type="password"],
+.form-group input[type="prenom"],
+.form-group input[type="nom"] {
+    margin-left: 15%;
+    width: 70%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.form-group input[type="cliniqueId"]::placeholder,
+.form-group input[type="password"]::placeholder,
+.form-group input[type="prenom"]::placeholder,
+.form-group input[type="nom"]::placeholder {
+    color: #598BC5;
+    /* Couleur du texte du placeholder */
+}
+
+.errorForm{
+    color:#E89255;
+    margin-left: 17%;
+    display: none;
+}
+
+input[type="submit"] {
+    background-color: #E89255;
+    color: #25455E;
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 5%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 70%;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #E89255;
+    color: #fff;
+    font-weight: bold;
+}
+input[type="submit"]:active {
+    background-color: #25455E !important; /* Couleur de fond au clic */
+    color: #E89255!important; /* Couleur du texte au clic */
+    border: none !important;
+}
+
+.no-account {
+    color: #598BC5;
+    margin-left: 15%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+.no-account .signup-link {
+    font-weight: bold;
+    color: #E89255;
+}
+
+.no-account .signup-link:hover {
+    color: #25455E;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    img {
+        display: none;
+        max-width: 50%;
+    }
+}

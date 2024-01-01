@@ -5,13 +5,18 @@
 package com.ProjetFinal.CarolineSDianaF.Repository;
 
 
+import com.ProjetFinal.CarolineSDianaF.Models.ClinicModel;
 import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import com.ProjetFinal.CarolineSDianaF.Models.AppointmentModel;
+import java.time.LocalDateTime;
+
 
 
 /**
@@ -23,6 +28,11 @@ import java.util.Optional;
 public interface PatientRepository extends JpaRepository<PatientModel, Long> {
 
     // Standard methods of the JpaRepository already included (save, findById, deleteById, etc.)
+
+    // Method to find all patients with doctors
+    @Query("SELECT c FROM PatientModel c JOIN FETCH c.doctors")
+    List<PatientModel> findAllWithDoctors();
+
 
     // Method to find patient by first name
     List<PatientModel> findByFirstName(String firstName);
@@ -40,10 +50,10 @@ public interface PatientRepository extends JpaRepository<PatientModel, Long> {
     List<PatientModel> findByGender(String gender);
 
     // Method to find patient by Health Insurance Number
-    Optional<PatientModel> findByHealthInsuranceNumber(Long healthInsuranceNumber);
+    Optional<PatientModel> findByHealthInsuranceNumber(String healthInsuranceNumber);
 
     // Method to find patient by Health Sequential Number
-    Optional<PatientModel> findByHealthSequentialNumber(Long sequentialNumber);
+    Optional<PatientModel> findByHealthSequentialNumber(Long healthSequentialNumber);
 
     // Method to find patient by clinic
     List<PatientModel> findByClinicsId(Long clinicId);

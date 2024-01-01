@@ -11,6 +11,7 @@ import com.ProjetFinal.CarolineSDianaF.Models.PatientModel;
 import com.ProjetFinal.CarolineSDianaF.Repository.ClinicRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.DoctorRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.PatientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,22 @@ public class ClinicServiceImpl implements ClinicService {
         return clinicRepository.save(clinic);
     }
 
+    @Override
+    public ClinicModel updateClinic(ClinicModel updatedClinic) {
+        ClinicModel existingClinic = clinicRepository.findById(updatedClinic.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Clinic not found with ID: " + updatedClinic.getId()));
+
+        // Update fields of the existing clinic
+        existingClinic.setName(updatedClinic.getName());
+        existingClinic.setMinisterialNumber(updatedClinic.getMinisterialNumber());
+        existingClinic.setServices(updatedClinic.getServices());
+        existingClinic.setContactDetails(updatedClinic.getContactDetails());
+
+
+        // Save the updated doctor back to the database
+        return clinicRepository.save(existingClinic);
+    }
+
     // Implementation of method to view clinic details
     @Override
     public Optional<ClinicModel> viewClinicDetails(Long clinicId) {
@@ -66,5 +83,22 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public List<ClinicModel> getAllClinics() {
         return clinicRepository.findAll();
+    }
+
+    // Implementation for finding clinic by Email
+    @Override
+    public Optional<ClinicModel> getClinicByEmail(String email) {
+        return clinicRepository.findByContactDetails_Email(email);
+    }
+
+    // Implementation for finding clinic by id
+    @Override
+    public Optional<ClinicModel> getClinicById(Long id) {
+        return clinicRepository.findById(id);
+    }
+
+
+    public List<ClinicModel> getAllClinicsWithDoctors() {
+        return clinicRepository.findAllWithDoctors();
     }
 }

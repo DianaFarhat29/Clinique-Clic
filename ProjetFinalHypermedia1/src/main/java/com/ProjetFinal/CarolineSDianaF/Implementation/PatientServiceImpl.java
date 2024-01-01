@@ -9,6 +9,7 @@ import com.ProjetFinal.CarolineSDianaF.Interface.PatientService;
 import com.ProjetFinal.CarolineSDianaF.Models.*;
 import com.ProjetFinal.CarolineSDianaF.Repository.AppointmentRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.DoctorRepository;
+import com.ProjetFinal.CarolineSDianaF.Repository.ClinicRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.DocumentRepository;
 import com.ProjetFinal.CarolineSDianaF.Repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -49,6 +51,9 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private ClinicRepository clinicRepository;
+
     // Logger for logging error messages
     private static final Logger LOGGER = Logger.getLogger(PatientServiceImpl.class.getName());
 
@@ -57,10 +62,31 @@ public class PatientServiceImpl implements PatientService {
         this.patientRepository = patientRepository;
     }
 
+
+    @Override
+    public List<PatientModel> getAllPatients() {
+        return patientRepository.findAll();
+    }
+
     // Implementation of method to add or upgrade
     @Override
     public PatientModel save(PatientModel patient) {
         return patientRepository.save(patient);
+    }
+
+    // Implementation of method to update a patient's information
+    @Override
+    public PatientModel updatePatient(PatientModel updatedPatient) {
+        PatientModel existingPatient = patientRepository.findById(updatedPatient.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found with ID: " + updatedPatient.getId()));
+
+        // Update fields of the existing patient
+        existingPatient.setFirstName(updatedPatient.getFirstName());
+        existingPatient.setLastName(updatedPatient.getLastName());
+        existingPatient.setContactDetails(updatedPatient.getContactDetails());
+
+        // Save the updated doctor back to the database
+        return patientRepository.save(existingPatient);
     }
 
     // Implementation of method to book an appointment
@@ -77,11 +103,13 @@ public class PatientServiceImpl implements PatientService {
         return doctorRepository.findBySpeciality(criteria.getSpeciality());
     }
 
-    // Implementation of method to view appointments for a specific patient
     @Override
-    public List<AppointmentModel> viewAppointments(Long patientId) {
-        // Assuming AppointmentRepository has a method to find appointments by patientId
-        return appointmentRepository.findByPatientId(patientId);
+    public List<AppointmentModel> getUpcomingAppointments(Long patientId) {
+        // Récupérer la date et l'heure actuelles
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Récupérer les rendez-vous à venir du patient (après la date actuelle)
+        return appointmentRepository.findUpcomingAppointmentsByPatientId(patientId, currentDateTime);
     }
 
     // Implementation of method to update an existing appointment
@@ -95,7 +123,6 @@ public class PatientServiceImpl implements PatientService {
         existingAppointment.setDoctor(appointment.getDoctor());
         existingAppointment.setDateTime(appointment.getDateTime());
         existingAppointment.setReason(appointment.getReason());
-        existingAppointment.setReason(appointment.getStatus());
         existingAppointment.setNotes(appointment.getNotes());
 
         // Save the updated appointment
@@ -145,5 +172,38 @@ public class PatientServiceImpl implements PatientService {
     public Optional<AppointmentModel> getAppointmentById(Long appointmentId) {
         return appointmentRepository.findById(appointmentId);
     }
+
+    // Implementation for finding doctor by Professional Number
+    @Override
+    public Optional<PatientModel> getPatientByHealthInsuranceNumber(String healthInsuranceNumber) {
+        return patientRepository.findByHealthInsuranceNumber(healthInsuranceNumber);
+    }
+
+    // Implementation for getting a patient by id
+    @Override
+    public Optional<PatientModel> getPatientById(Long id) {
+        return patientRepository.findById(id);
+    }
+
+
+    public List<PatientModel> getAllPatientsWithDoctors() {
+        return patientRepository.findAllWithDoctors();
+    }
+
+    @Override
+    public void addDoctorToPatient(Long doctorId, Long patientId, Long clinicId) {
+        DoctorModel doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+        PatientModel patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
+        ClinicModel clinic = clinicRepository.findById(clinicId)
+                .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
+
+        // Ajoutez le médecin à la liste des médecins du patient
+        patient.getDoctors().add(doctor);
+        patientRepository.save(patient);
+    }
+
+
 
 }

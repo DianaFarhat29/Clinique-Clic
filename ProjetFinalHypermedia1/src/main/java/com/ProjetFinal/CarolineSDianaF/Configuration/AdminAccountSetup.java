@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import java.util.UUID;
 
 @Component
 public class AdminAccountSetup implements CommandLineRunner {
@@ -18,21 +19,28 @@ public class AdminAccountSetup implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Value("${ADMIN_USERNAME}")
+    @Value("${admin.username:}")
     private String adminUsername;
 
-    @Value("${ADMIN_PASSWORD}")
+    @Value("${admin.password:}")
     private String adminPassword;
 
     @Override
     public void run(String... args) {
-        // Check if the admin account already exists
-        if (userRepository.findByUsername(adminUsername).isEmpty()) {
-            // Admin account does not exist, create one
+        // Generating a random password if not set
+        if (adminPassword == null || adminPassword.isEmpty()) {
+            /*adminPassword = UUID.randomUUID().toString();*/
+            adminPassword = "admin";
+            System.out.println("Generated Admin Password: " + adminPassword);
+        }
 
+        // Checking if the admin account already exists
+        if (userRepository.findByUsername("admin@example.com").isEmpty()) {
+            // Admin account does not exist, create one
             UserModel adminUser = new UserModel();
-            adminUser.setUsername(adminUsername);
+            adminUser.setUsername("admin@example.com");
             adminUser.setPassword(passwordEncoder.encode(adminPassword));
+            adminUser.setEmail("admin@example.com");
             adminUser.setRole(Role.ADMIN);
 
             userRepository.save(adminUser);

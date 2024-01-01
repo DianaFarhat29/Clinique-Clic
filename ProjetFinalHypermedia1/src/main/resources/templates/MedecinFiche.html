@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+    <title>Espace medecin - Fiche</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/MedecinFiche.css}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Timepicker CSS  -->
+    <link rel="stylesheet" th:href="@{/jquery-timepicker-1.3.5/jquery.timepicker.css}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Timepicker JS -->
+    <script th:src="@{/jquery-timepicker-1.3.5/jquery.timepicker.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/javascript/MedecinFiche.js}"></script>
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Dr <span th:text="${doctor.firstName}">Prénom</span> <span th:text="${doctor.lastName}">Nom</span></p>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{MedecinPatient}">Liste des rendez-vous</a></li>
+            <li><a th:href="@{MedecinFiche}">Fiche du médecin</a></li>
+        </ul>
+    </nav>
+    <main>
+    <a th:href="@{/Index}" class="image_container">
+        <img src="/images/LogoPatientBlanc.png" alt="Logo Clinique Clic">
+    </a>
+
+    <div class="container">
+        <form id="medecinForm" th:action="@{/doctors/update}" th:object="${doctor}" method="post">
+
+            <h5 class="titre_donnee_modifiables_ou_non">Informations personnelles</h5>
+            <div class="donnee_non_modifiables">
+                <!-- Section Informations Personnelles -->
+                <div class="row non_modifiable">
+                        <div class="col-md-2 non_modifiable">
+                            <h5 style="padding:2px;width:40%">Prénom</h5>
+                            <h5 style="padding:2px;width:40%">Nom</h5>
+                            <h5 style="padding:2px;width:40%">Spécialité</h5>
+                            <h5 style="padding:2px;width:40%">#License</h5>
+                            <h5 style="padding:2px;width:40%">Clinique</h5>
+                        </div>
+                    <div class="col-md-10 ">
+                                <input readonly  type="text" name="firstName" th:field="*{firstName}" />
+                                <input readonly  type="text" name="lastName" th:field="*{lastName}" />
+                                <input readonly  type="text" name="speciality" th:field="*{speciality}" />
+                                <input readonly  type="text" name="professionalNumber" th:field="*{professionalNumber}" />
+                                <th:block th:each="clinic : *{clinics}">
+                                    <input type="text" th:value="${clinic.name}" readonly />
+                                </th:block>
+                                <input type="hidden" name="id" th:field="*{id}" />
+                            </div>
+                </div>
+            </div>
+
+            <h5 class="titre_donnee_modifiables_ou_non">Données modifiables</h5>
+            <!-- Section Adresse -->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Adresse</h5>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noCivique" placeholder="Numéro civique"
+                               name="noCivique" th:field="*{contactDetails.noCivique}" />
+                        <div id="noCiviqueCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="rue" placeholder="Nom de la rue" name="rue"
+                               th:field="*{contactDetails.rue}" />
+                        <div id="rueCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noLocal" placeholder="Numéro de local"
+                                name="noLocal" th:field="*{contactDetails.noLocal}" />
+                        <div id="noLocalCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="ville"
+                               th:field="*{contactDetails.ville}" />
+                        <div id="villeCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal"
+                               name="codePostal" th:field="*{contactDetails.codePostal}" />
+                        <div id="codePostalCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="noTel" placeholder="Numéro de téléphone"
+                               name="noTel" th:field="*{contactDetails.phoneNumber}" />
+                        <div id="phoneNumberCheck" class="errorForm"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" th:field="*{contactDetails.email}" placeholder="Adresse courriel" name="email">
+                        <div id="courrielCheck" class="errorForm">
+                            Entrez une adresse courriel professionnelle valide.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Section Heures dispoibilité semaine-->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Heures de pratique</h5>
+                </div>
+                <div class="col-md-10">
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Lundi</h5>
+                            <input type="text" step="900" class="form-control timepicker" id="mondayStart" th:value="${mondayStart}" name="mondayStart" placeholder="Date de début" />
+                            <input type="text" step="900" class="form-control timepicker" id="mondayEnd" th:value="${mondayEnd}" name="mondayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck monday" class="errorForm"></div>
+                        </div>
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Mardi</h5>
+                            <input type="text" class="form-control timepicker" id="tuesdayStart" th:value="${tuesdayStart}" name="tuesdayStart" placeholder="Date de début"/>
+                            <input type="text" class="form-control timepicker" id="tuesdayEnd" th:value="${tuesdayEnd}" name="tuesdayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck tuesday" class="errorForm"></div>
+                        </div>
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Mercredi</h5>
+                            <input type="text" class="form-control timepicker" id="wednesdayStart" th:value="${wednesdayStart}" name="wednesdayStart" placeholder="Date de début"/>
+                            <input type="text" class="form-control timepicker" id="wednesdayEnd" th:value="${wednesdayEnd}" name="wednesdayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck wednesday" class="errorForm"></div>
+                        </div>
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Jeudi</h5>
+                            <input type="text" class="form-control timepicker" id="thursdayStart" th:value="${thursdayStart}" name="thursdayStart" placeholder="Date de début"/>
+                            <input type="text" class="form-control timepicker" id="thursdayEnd" th:value="${thursdayEnd}" name="thursdayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck thursday" class="errorForm"></div>
+                        </div>
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Vendredi</h5>
+                            <input type="text" class="form-control timepicker" id="fridayStart" th:value="${fridayStart}" name="fridayStart" placeholder="Date de début"/>
+                            <input type="text" class="form-control timepicker" id="fridayEnd" th:value="${fridayEnd}" name="fridayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck friday" class="errorForm"></div>
+                        </div>
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Samedi</h5>
+                            <input type="text" class="form-control timepicker" id="saturdayStart" th:value="${saturdayStart}" name="saturdayStart" placeholder="Date de début"/>
+                            <input type="text" class="form-control timepicker" id="saturdayEnd" th:value="${saturdayEnd}" name="saturdayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck saturday" class="errorForm"></div>
+                        </div>
+
+                        <div class="day-schedule">
+                            <h5 class="jour-semaine">Dimanche</h5>
+                            <input type="text" class="form-control timepicker" id="sundayStart" th:value="${sundayStart}" name="sundayStart" placeholder="Date de début"/>
+                            <input type="text" class="form-control timepicker" id="sundayEnd" th:value="${sundayEnd}" name="sundayEnd" placeholder="Date de fin"/>
+                            <div id="scheduleCheck sunday" class="errorForm"></div>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Section tarif de consultation -->
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Tarif de consultation($)</h5>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="tarif" th:field="*{expectedSalary}" placeholder="Utiliser la flèche pour entrer votre tarif"
+                               name="expectedSalary" min="0" step="5.00">
+                        <div id="tarifCheck" class="errorForm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bouton de déconnection et soumettre -->
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Espace vide pour l'alignement -->
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" id="submitbtn2" class="btn btn-default">Soumettre</button>
+                </div>
+                <div class="col-md-3">
+                    <a th:href="@{/logout}" value="Se déconnecter" id="disconnectbtn" class="btn btn-default">Se déconnecter</a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</main>
+</body>
+
+</html>

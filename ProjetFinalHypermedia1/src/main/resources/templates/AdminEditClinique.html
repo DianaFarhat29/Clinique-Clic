@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin_ModifierClinique</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/AdminViews.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <p class="navbar-text"><a th:href="@{/Index}">Accueil</a></p>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{/admin/AdminViewsPatient}">Patients</a></li>
+        <li><a th:href="@{/admin/AdminViewsMedicin}">Médecins</a></li>
+        <li><a th:href="@{/admin/AdminViewsClinique}">Clinique</a></li>
+    </ul>
+</nav>
+<div class="container">
+
+    <h2>Modifier le compte de la clinique</h2> <br>
+
+    <form th:action="@{/admin/editPatient/{id}(id=${clinic.id})}" th:object="${clinic}" method="post" id="patientRegistrationForm">
+
+        <!-- Informations -->
+        <div class="row">
+            <div class="col-md-2">
+                <h5>Informations</h5>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" th:field="*{name}"
+                           placeholder="Nom de la clinique" name="nom">
+                </div>
+                <div class="form-group">
+                    <label for="cliniqueId">Numéro d'identifiant ministériel</label>
+                    <input type="text" class="form-control" id="cliniqueId" th:field="*{ministerialNumber}"
+                           placeholder="Numéro d'identifiant ministériel" name="cliniqueId">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Numéro de téléphone</label>
+                    <input type="text" class="form-control" id="phoneNumber"
+                           th:field="*{contactDetails.phoneNumber}" placeholder="Numéro de téléphone"
+                           name="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse courriel</label>
+                    <input type="email" class="form-control" id="email" th:field="*{contactDetails.email}"
+                           placeholder="Adresse courriel" name="email">
+                </div>
+            </div>
+        </div>
+
+        <!-- Services offerts par la clinique -->
+        <div class="row">
+            <div class="col-md-2">
+                <h5>Services</h5>
+            </div>
+            <div class="col-md-10">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="servicesDropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Dermatologie"
+                                   id="dermatologie"><label for="dermatologie"> Dermatologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Cardiologie"
+                                   id="cardiologie"><label for="cardiologie"> Cardiologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Gynécologie"
+                                   id="gynecologie"><label for="gynecologie"> Gynécologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Orthopédie"
+                                   id="orthopedie"><label for="orthopedie"> Orthopédie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Ophtalmologie"
+                                   id="ophtalmologie"><label for="ophtalmologie"> Ophtalmologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services"
+                                   value="Oto-rhino-laryngologie" id="orl"><label for="orl"> Oto-rhino-laryngologie
+                            (ORL)</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Psychiatrie"
+                                   id="psychiatrie"><label for="psychiatrie"> Psychiatrie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Radiologie"
+                                   id="radiologie"><label for="radiologie"> Radiologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Endocrinologie"
+                                   id="endocrinologie"><label for="endocrinologie"> Endocrinologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Urologie"
+                                   id="urologie"><label for="urologie"> Urologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Neurologie"
+                                   id="neurologie"><label for="neurologie"> Neurologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Gastro-entérologie"
+                                   id="gastroenterologie"><label for="gastroenterologie"> Gastro-entérologie</label>
+                        </li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Chirurgie générale"
+                                   id="chirurgieGenerale"><label for="chirurgieGenerale"> Chirurgie générale</label>
+                        </li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Anesthésiologie"
+                                   id="anesthesiologie"><label for="anesthesiologie"> Anesthésiologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Kinésithérapie"
+                                   id="kinesitherapie"><label for="kinesitherapie"> Kinésithérapie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Dentisterie"
+                                   id="dentisterie"><label for="dentisterie"> Dentisterie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Oncologie"
+                                   id="oncologie"><label for="oncologie"> Oncologie</label></li>
+                        <li><input type="checkbox" th:field="*{services}" name="services" value="Immunologie"
+                                   id="immunologie"><label for="immunologie"> Immunologie</label></li>
+                    </ul>
+
+                </div>
+                <div id="servicesCheck" class="errorForm"></div>
+            </div>
+        </div>
+
+        <!-- Adresse -->
+        <div class="row">
+            <div class="col-md-2">
+                <h5>Adresse</h5>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="noCivique">Numéro civique</label>
+                    <input type="text" class="form-control" id="noCivique"
+                           th:field="*{contactDetails.noCivique}" placeholder="Numéro civique" name="noCivique">
+                </div>
+                <div class="form-group">
+                    <label for="rue">Nom de la rue</label>
+                    <input type="text" class="form-control" id="rue" th:field="*{contactDetails.rue}"
+                           placeholder="Nom de la rue" name="rue">
+                </div>
+                <div class="form-group">
+                    <label for="noLocal">Numéro de local</label>
+                    <input type="text" class="form-control" id="noLocal" th:field="*{contactDetails.noLocal}"
+                           placeholder="Numéro de local" name="noLocal">
+                </div>
+                <div class="form-group">
+                    <label for="ville">Ville</label>
+                    <input type="text" class="form-control" id="ville" th:field="*{contactDetails.ville}"
+                           placeholder="Ville" name="ville">
+                </div>
+                <div class="form-group">
+                    <label for="codePostal">Code postal</label>
+                    <input type="text" class="form-control" id="codePostal"
+                           th:field="*{contactDetails.codePostal}" placeholder="Code postal" name="codePostal">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- Informations de connexion -->
+        <div class="row">
+            <div class="col-md-2">
+                <h5>Connexion</h5>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" placeholder="Mot de passe"
+                           name="password">
+                </div>
+                <div class="form-group">
+                    <label for="passwordConfirm">Confirmation du mot de passe</label>
+                    <input type="password" class="form-control" id="passwordConfirm"
+                           placeholder="Confirmation du mot de passe" name="passwordConfirm">
+                </div>
+            </div>
+        </div>
+
+
+        <input type="submit" id="submitbtn" value="Soumettre" class="btn btn-default">
+
+    </form>
+
+
+
+</div>
+
+<script th:src="@{/javascript/CompteClinique.js}"></script>
+
+
+</body>
+
+</html>
