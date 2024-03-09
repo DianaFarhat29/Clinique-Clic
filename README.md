@@ -34,7 +34,7 @@ Pour lancer le projet :
   1) Cloner le Dépôt : Clonez ce dépôt sur votre machine locale.
   
       Exécuter ce code dans le terminal:
-      git clone https://github.com/DianaFarhat29/ClicClinique.git
+      git clone https://github.com/DianaFarhat29/Clinique-Clic.git
   
   2) Ouvrir le Projet : Ouvrez le projet dans un IDE supportant Java et Spring Boot, comme IntelliJ IDEA ou Eclipse.
 
